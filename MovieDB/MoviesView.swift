@@ -20,23 +20,13 @@ struct MoviesView: View {
     
     var body: some View {
         NavigationView {
-            ScrollView{
-                LazyVGrid(columns: columns) {
-                    ForEach(movies) { movie in
-                        GridView(movie: movie)
-                    }
-//                    List(movies, rowContent: MovieRow.init)
-//                    .task {
-//                        await downloadMovies()
-//                    }
-//                    .navigationTitle("Movies")
+            List(movies, rowContent: MovieRow.init)
+                .task {
+                    await downloadMovies()
                 }
                 .navigationTitle("Movies")
-            }
         }
-        .task {
-            await downloadMovies()
-        }
+        .navigationViewStyle(.stack)
     }
     
     

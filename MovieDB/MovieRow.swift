@@ -9,6 +9,13 @@ import SwiftUI
 import ExpandableText
 import Kingfisher
 
+extension View {
+    func Print(_ vars: Any...) -> some View {
+        for v in vars { print(v) }
+        return EmptyView()
+    }
+}
+
 struct MovieRow: View {
     let movie: Movie
     private let url = "https://image.tmdb.org/t/p/original/"
@@ -20,35 +27,28 @@ struct MovieRow: View {
             HStack {
                 if let unwrappedPath = movie.posterPath {
                     let unwrappedPath = URL(string: "\(url)\(unwrappedPath)")
-                    
-                    AsyncImage(url: unwrappedPath) { phase in
-                        switch phase {
-                        case .empty:
+                    KFImage(unwrappedPath)
+                        .placeholder {
                             ProgressView()
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .scaledToFit()
-                        default:
-                            Image(systemName: "photo")
                         }
-                    }
-                    .frame(width: 80, height: 120)
-                    .clipped()
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .resizable()
+                        .posterStyle()
+                        
                 } else {
                     Image(systemName: "photo")
-                        .frame(width: 80, height: 120)
-                        .background(.ultraThinMaterial)
-                        .clipped()
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .posterStyle()
                 }
                 
                 VStack(alignment: .leading) {
                     Text(movie.originalTitle)
-                        .font(.caption.weight(.heavy))
+                        .font(.headline.bold())
+//                        .shadow(radius: 10)
+                    Text(movie.releaseDate)
+                        .font(.footnote.weight(.light))
                     ExpandableText(text: movie.overview)
                         .expandButton(TextSet(text: "more", font: .body, color: .blue))
+                        .font(.body)
+
                 }
             }
         }

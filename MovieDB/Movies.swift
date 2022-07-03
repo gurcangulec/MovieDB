@@ -22,13 +22,15 @@ struct Movie: Codable, Identifiable {
     var originalTitle: String
     var overview: String
     var posterPath: String?
+    var releaseDate: String
 
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case originalTitle = "original_title"
         case overview = "overview"
         case posterPath = "poster_path"
+        case releaseDate = "release_date"
     }
 
-    static let example = Movie(id: 12, originalTitle: "Some Movie", overview: "An amazing title to be watched and remembered for the rest of our lives.", posterPath: "/huD4cMhHtLkxcdM6PbKBcivBZuE.jpg")
+    static let example = Movie(id: 12, originalTitle: "Some Movie", overview: "An amazing title to be watched and remembered for the rest of our lives.", posterPath: "/huD4cMhHtLkxcdM6PbKBcivBZuE.jpg", releaseDate: "12.01.2022")
 }
