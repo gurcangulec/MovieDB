@@ -11,7 +11,7 @@
 		797863CD286F983A00A05498 /* MoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797863CC286F983A00A05498 /* MoviesView.swift */; };
 		797863CF286F985E00A05498 /* MovieRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797863CE286F985E00A05498 /* MovieRow.swift */; };
 		797863DB2870402D00A05498 /* GridRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797863DA2870402D00A05498 /* GridRow.swift */; };
-		797863DD2870B68300A05498 /* PosterImageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797863DC2870B68300A05498 /* PosterImageModifier.swift */; };
+		797863DD2870B68300A05498 /* PosterImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797863DC2870B68300A05498 /* PosterImageExtension.swift */; };
 		79A50EE1286C59B9002D2B1F /* ExpandableText in Frameworks */ = {isa = PBXBuildFile; productRef = 79A50EE0286C59B9002D2B1F /* ExpandableText */; };
 		79A50EE4286C5BB6002D2B1F /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 79A50EE3286C5BB6002D2B1F /* Kingfisher */; };
 		79C2DD0B285DD0F900D6E6E4 /* MovieDBApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C2DD0A285DD0F900D6E6E4 /* MovieDBApp.swift */; };
@@ -25,7 +25,7 @@
 		797863CC286F983A00A05498 /* MoviesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesView.swift; sourceTree = "<group>"; };
 		797863CE286F985E00A05498 /* MovieRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieRow.swift; sourceTree = "<group>"; };
 		797863DA2870402D00A05498 /* GridRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridRow.swift; sourceTree = "<group>"; };
-		797863DC2870B68300A05498 /* PosterImageModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterImageModifier.swift; sourceTree = "<group>"; };
+		797863DC2870B68300A05498 /* PosterImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterImageExtension.swift; sourceTree = "<group>"; };
 		79C2DD07285DD0F900D6E6E4 /* MovieDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79C2DD0A285DD0F900D6E6E4 /* MovieDBApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDBApp.swift; sourceTree = "<group>"; };
 		79C2DD0C285DD0F900D6E6E4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -67,7 +67,7 @@
 			children = (
 				79C2DD0A285DD0F900D6E6E4 /* MovieDBApp.swift */,
 				79C2DD0C285DD0F900D6E6E4 /* ContentView.swift */,
-				797863DC2870B68300A05498 /* PosterImageModifier.swift */,
+				797863DC2870B68300A05498 /* PosterImageExtension.swift */,
 				797863CC286F983A00A05498 /* MoviesView.swift */,
 				797863CE286F985E00A05498 /* MovieRow.swift */,
 				797863DA2870402D00A05498 /* GridRow.swift */,
@@ -170,7 +170,7 @@
 				79C2DD0B285DD0F900D6E6E4 /* MovieDBApp.swift in Sources */,
 				797863DB2870402D00A05498 /* GridRow.swift in Sources */,
 				797863CB286F967400A05498 /* Movies.swift in Sources */,
-				797863DD2870B68300A05498 /* PosterImageModifier.swift in Sources */,
+				797863DD2870B68300A05498 /* PosterImageExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

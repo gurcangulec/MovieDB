@@ -1,5 +1,5 @@
 //
-//  PosterImageModifier.swift
+//  PosterImageExtension.swift
 //  MovieDB
 //
 //  Created by Gürcan Güleç on 02.07.2022.
