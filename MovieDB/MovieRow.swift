@@ -22,7 +22,7 @@ struct MovieRow: View {
     
     var body: some View {
         NavigationLink {
-            Text(movie.originalTitle)
+            MovieView(movie: movie)
         } label: {
             HStack {
                 if let unwrappedPath = movie.posterPath {
@@ -43,8 +43,11 @@ struct MovieRow: View {
                     Text(movie.originalTitle)
                         .font(.headline.bold())
 //                        .shadow(radius: 10)
-                    Text(movie.releaseDate)
-                        .font(.footnote.weight(.light))
+                    
+                    Text(movie.formattedReleaseDate)
+                    
+//                    Text(movie.formattedDate )
+//                        .font(.footnote.weight(.light))
                     ExpandableText(text: movie.overview)
                         .expandButton(TextSet(text: "more", font: .body, color: .blue))
                         .font(.body)

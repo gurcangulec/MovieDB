@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Not used currently
 struct GridView: View {
     let movie: Movie
     private let url = "https://image.tmdb.org/t/p/original/"
