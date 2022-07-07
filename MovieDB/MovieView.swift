@@ -10,6 +10,7 @@ import Kingfisher
 
 struct MovieView: View {
     let movie: Movie
+//    let cast: CastMember
     private let url = "https://image.tmdb.org/t/p/original/"
     
     var body: some View {

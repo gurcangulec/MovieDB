@@ -9,13 +9,6 @@ import SwiftUI
 import ExpandableText
 import Kingfisher
 
-extension View {
-    func Print(_ vars: Any...) -> some View {
-        for v in vars { print(v) }
-        return EmptyView()
-    }
-}
-
 struct MovieRow: View {
     let movie: Movie
     private let url = "https://image.tmdb.org/t/p/original/"
