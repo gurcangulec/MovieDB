@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		794A0FFC2876FDA4008BF0F5 /* FetchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A0FFB2876FDA4008BF0F5 /* FetchData.swift */; };
 		797863CB286F967400A05498 /* Movies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797863CA286F967400A05498 /* Movies.swift */; };
 		797863CD286F983A00A05498 /* MoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797863CC286F983A00A05498 /* MoviesView.swift */; };
 		797863CF286F985E00A05498 /* MovieRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797863CE286F985E00A05498 /* MovieRow.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		794A0FFB2876FDA4008BF0F5 /* FetchData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchData.swift; sourceTree = "<group>"; };
 		797863CA286F967400A05498 /* Movies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movies.swift; sourceTree = "<group>"; };
 		797863CC286F983A00A05498 /* MoviesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesView.swift; sourceTree = "<group>"; };
 		797863CE286F985E00A05498 /* MovieRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieRow.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 				79C2DD0A285DD0F900D6E6E4 /* MovieDBApp.swift */,
 				79C2DD0C285DD0F900D6E6E4 /* ContentView.swift */,
 				797863CC286F983A00A05498 /* MoviesView.swift */,
+				794A0FFB2876FDA4008BF0F5 /* FetchData.swift */,
 				799EC4762875D9EC00680D07 /* SearchView.swift */,
 				797863CE286F985E00A05498 /* MovieRow.swift */,
 				799EC4742875A73000680D07 /* MovieView.swift */,
@@ -175,6 +178,7 @@
 			files = (
 				79C2DD0D285DD0F900D6E6E4 /* ContentView.swift in Sources */,
 				799EC4772875D9EC00680D07 /* SearchView.swift in Sources */,
+				794A0FFC2876FDA4008BF0F5 /* FetchData.swift in Sources */,
 				79C3F6C62876F1FC005CB367 /* Cast.swift in Sources */,
 				797863CF286F985E00A05498 /* MovieRow.swift in Sources */,
 				797863CD286F983A00A05498 /* MoviesView.swift in Sources */,
