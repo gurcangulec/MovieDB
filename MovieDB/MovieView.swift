@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Kingfisher
+import ExpandableText
 
 struct MovieView: View {
     let movie: Movie
@@ -29,19 +30,26 @@ struct MovieView: View {
                             
                     } else {
                         Image(systemName: "photo")
-                            .frame(width: geo.size.width)
+                            .font(.system(size: 60))
+                            .frame(width: geo.size.width, height: geo.size.width * 0.55)
                     }
                     
                     VStack(alignment: .leading) {
                         Divider()
                         
-                        Text("Overview")
+                        Text(movie.originalTitle)
                             .font(.title)
                             .padding(.bottom, 5)
                         
                         Text(movie.overview)
                             .font(.body)
                             .padding(.bottom, 5)
+                        
+                        HStack {
+                            Image(systemName: "star.fill")
+                            Text("\(movie.convertToString)/10")
+                                .font(.footnote)
+                        }
                         
                         Divider()
                         
@@ -53,84 +61,71 @@ struct MovieView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
                                 ForEach(cast) {castMember in
-                                    if let unwrappedPath = castMember.profilePath {
-                                        let unwrappedPath = URL(string: "\(url)\(unwrappedPath)")
-                                        KFImage(unwrappedPath)
-                                            .placeholder {
-                                                ProgressView()
-                                                    .frame(width: 75, height: 125)
-                                            }
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: geo.size.width * 0.2)
-                                            .clipped()
-                                            .cornerRadius(10)
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 10)
-                                                    .stroke(
-                                                        Color.gray
-                                                            .opacity(0.5)
-                                                    )
-                                            )
-                                            .padding([.top, .bottom, .trailing], 5)
-
-                                    } else {
-                                        Image(systemName: "photo")
-                                            .frame(width: 75, height: 125)
-                                            .clipped()
-                                            .cornerRadius(10)
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 10)
-                                                    .stroke(
-                                                        Color.gray
-                                                            .opacity(0.5)
-                                                    )
-                                            )
-                                            .padding([.top, .bottom, .trailing], 5)
-                                    }
-                                    
                                     VStack {
-                                        Text(castMember.originalName)
-                                            .font(.headline)
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                        Text("as \(castMember.character)")
-                                            .font(.caption)
-                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        if let unwrappedPath = castMember.profilePath {
+                                            let unwrappedPath = URL(string: "\(url)\(unwrappedPath)")
+                                            KFImage(unwrappedPath)
+                                                .placeholder {
+                                                    ProgressView()
+                                                        .frame(width: geo.size.width * 0.3)
+                                                }
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: geo.size.width * 0.3, height: geo.size.width * 0.45)
+                                                .clipped()
+                                                .cornerRadius(10)
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 10)
+                                                        .stroke(
+                                                            Color.gray
+                                                                .opacity(0.5)
+                                                        )
+                                                )
+                                                .padding([.top, .bottom, .trailing], 5)
+
+                                        } else {
+                                            Image(systemName: "photo")
+                                                .font(.system(size: 20))
+                                                .frame(width: geo.size.width * 0.3, height: geo.size.width * 0.45)
+                                                .aspectRatio(3.8, contentMode: .fit)
+                                                .clipped()
+                                                .cornerRadius(10)
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 10)
+                                                        .stroke(
+                                                            Color.gray
+                                                                .opacity(0.5)
+                                                        )
+                                                )
+                                                .padding([.top, .bottom, .trailing], 5)
+                                        }
+                                        
+                                        VStack(spacing: 10) {
+                                            Text(castMember.originalName)
+                                                .font(.headline)
+                                                .frame(maxWidth: geo.size.width * 0.3, alignment: .leading)
+                                            
+                                            Text(castMember.character)
+                                                .font(.caption)
+                                                .frame(maxWidth: geo.size.width * 0.3, alignment: .leading)
+                                        }
+                                        .frame(alignment: .leading)
                                     }
-                                    .frame(alignment: .leading)
+                                    .padding(.bottom)
+                                    
                                 }
                             }
                         }
                     }
                     .padding(.horizontal)
                     .task {
-                        await downloadCast()
+                        cast = await FetchData.downloadCast(movieId: movie.id)
                     }
                 }
             }
             .navigationTitle(movie.originalTitle)
         }
         .navigationBarTitleDisplayMode(.inline)
-    }
-    
-    @Sendable func downloadCast() async {
-
-            // Check URL
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/\(movie.id)/credits?api_key=c74260965badd03144f9a327f254f0a2&language=en-US") else {
-                print("Invalid URL")
-                return
-            }
-            
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                let decoder = JSONDecoder()
-                // Decode from data
-                if let decoded = try? decoder.decode(Cast.self, from: data) {
-                    cast = decoded.results
-                }
-            } catch {
-                print("Invalid Something")
-            }
     }
 }
 

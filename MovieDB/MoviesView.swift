@@ -26,58 +26,15 @@ struct MoviesView: View {
                 .navigationTitle("Movies")
         }
         .task {
-            await downloadPopularMovies()
+            movies = await FetchData.downloadPopularMovies()
         }
         .searchable(text: $searchQuery, prompt: "Search for a movie")
         .onSubmit(of: .search) {
             Task {
-                await downloadMovies()
+                movies = await FetchData.downloadMovies(searchQuery: searchQuery)
             }
         }
         .navigationViewStyle(.stack)
-    }
-    
-    @Sendable func downloadPopularMovies() async {
-            // Check URL
-            guard let url = URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=c74260965badd03144f9a327f254f0a2&language=en-US&page=1") else {
-                print("Invalid URL")
-                return
-            }
-            
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                
-                let decoder = JSONDecoder()
-                
-                // Decode from data
-                if let decoded = try? decoder.decode(Movies.self, from: data) {
-                    movies = decoded.results
-                }
-            } catch {
-                print("Invalid Something")
-            }
-    }
-    
-    @Sendable func downloadMovies() async {
-            let replaced = searchQuery.replacingOccurrences(of: " ", with: "+").lowercased()
-            // Check URL
-            guard let url = URL(string: "https://api.themoviedb.org/3/search/movie?api_key=c74260965badd03144f9a327f254f0a2&query=\(replaced)") else {
-                print("Invalid URL")
-                return
-            }
-            
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                
-                let decoder = JSONDecoder()
-                
-                // Decode from data
-                if let decoded = try? decoder.decode(Movies.self, from: data) {
-                    movies = decoded.results
-                }
-            } catch {
-                print("Invalid Something")
-            }
     }
 }
 

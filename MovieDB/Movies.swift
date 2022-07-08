@@ -24,6 +24,7 @@ struct Movie: Codable, Identifiable {
     var posterPath: String?
     var releaseDate: String?
     var backdropPath: String?
+    var voteAverage: Double
 
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -32,6 +33,7 @@ struct Movie: Codable, Identifiable {
         case posterPath = "poster_path"
         case releaseDate = "release_date"
         case backdropPath = "backdrop_path"
+        case voteAverage = "vote_average"
     }
     
     var formattedReleaseDate: String {
@@ -50,5 +52,9 @@ struct Movie: Codable, Identifiable {
         return "N/A"
     }
     
-    static let example = Movie(id: 12, originalTitle: "Some Movie", overview: "An amazing title to be watched and remembered for the rest of our lives.", posterPath: "/huD4cMhHtLkxcdM6PbKBcivBZuE.jpg", releaseDate: "11-11-2022", backdropPath: "/huD4cMhHtLkxcdM6PbKBcivBZuE.jpg")
+    var convertToString: String {
+           return String(format: "%.1f", voteAverage)
+    }
+    
+    static let example = Movie(id: 12, originalTitle: "Some Movie", overview: "An amazing title to be watched and remembered for the rest of our lives.", posterPath: "/huD4cMhHtLkxcdM6PbKBcivBZuE.jpg", releaseDate: "11-11-2022", backdropPath: "/huD4cMhHtLkxcdM6PbKBcivBZuE.jpg", voteAverage: 1.0)
 }

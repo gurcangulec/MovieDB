@@ -8,6 +8,7 @@
 import SwiftUI
 import ExpandableText
 import Kingfisher
+import Accelerate
 
 struct MovieRow: View {
     let movie: Movie
@@ -31,20 +32,22 @@ struct MovieRow: View {
                     Image(systemName: "photo")
                         .posterStyle()
                 }
-                
-                VStack(alignment: .leading) {
-                    Text(movie.originalTitle)
-                        .font(.headline.bold())
-//                        .shadow(radius: 10)
-                    
-                    Text(movie.formattedReleaseDate)
-                    
-//                    Text(movie.formattedDate )
-//                        .font(.footnote.weight(.light))
-                    ExpandableText(text: movie.overview)
-                        .expandButton(TextSet(text: "more", font: .body, color: .blue))
-                        .font(.body)
+                GeometryReader { geo in
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(movie.originalTitle)
+                            .font(.headline.bold())
+    //                        .shadow(radius: 10)
+                        
+                        Text(movie.formattedReleaseDate)
+                            .padding(.bottom)
+                        
+    //                    Text(movie.formattedDate )
+    //                        .font(.footnote.weight(.light))
+                        Text(movie.overview)
+                            .font(.body)
 
+                    }
+                    .frame(height: geo.size.height)
                 }
             }
         }
