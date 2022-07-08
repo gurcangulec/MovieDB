@@ -12,6 +12,7 @@ import ExpandableText
 struct MoviesView: View {
     // The movies downloaded from server
     @State private var movies = [Movie]()
+    @State private var cast = [CastMember]()
     private let url = "https://image.tmdb.org/t/p/original/"
     @State var searchQuery = ""
 

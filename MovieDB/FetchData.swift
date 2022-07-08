@@ -74,4 +74,24 @@ struct FetchData {
             }
         return []
     }
+    
+    static func downloadPerson(personId: Int) async -> Actor {
+            // Check URL
+        guard let url = URL(string: "https://api.themoviedb.org/3/person/\(personId)?api_key=c74260965badd03144f9a327f254f0a2&language=en-US") else {
+                print("Invalid URL")
+                return Actor.example
+            }
+
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                let decoder = JSONDecoder()
+                // Decode from data
+                if let decoded = try? decoder.decode(Actor.self, from: data) {
+                    return decoded
+                }
+            } catch {
+                print("Invalid Something")
+            }
+        return Actor.example
+    }
 }

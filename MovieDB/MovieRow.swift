@@ -47,7 +47,7 @@ struct MovieRow: View {
                             .font(.body)
 
                     }
-                    .frame(height: geo.size.height)
+                    .frame(height: geo.size.height * 0.98)
                 }
             }
         }

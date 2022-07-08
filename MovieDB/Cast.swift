@@ -28,5 +28,5 @@ struct CastMember: Codable, Identifiable {
         case profilePath = "profile_path"
     }
     
-//    static let example = CastMember(id: 100, originalName: "Matthew Mcconaughey", character: "Cooper", profilePath: "/2mcg07areWJ4EAtDvafRz7eDVvb")
+    static let example = CastMember(id: 100, originalName: "Matthew Mcconaughey", character: "Cooper", profilePath: "/2mcg07areWJ4EAtDvafRz7eDVvb")
 }
