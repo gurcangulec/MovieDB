@@ -12,6 +12,7 @@ struct ActorView: View {
     let movie: Movie
     let cast: CastMember
     @State private var actor = Actor.example
+    @State private var relatedMovies = [Movie]()
     private let url = "https://image.tmdb.org/t/p/original/"
     
     var body: some View {
@@ -63,6 +64,80 @@ struct ActorView: View {
                             .padding(.bottom, geo.size.height * 0.01)
                         Text(actor.biography)
                             .font(.body)
+                            .padding(.bottom, geo.size.height * 0.01)
+                        
+                        Divider()
+                        
+                        Text("Movies")
+                            .font(.title.bold())
+                            .frame(maxWidth: geo.size.width, alignment: .leading)
+                        
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            LazyHStack {
+                                ForEach(relatedMovies) { relatedMovie in
+                                    NavigationLink {
+                                        MovieView(movie: relatedMovie)
+                                    } label: {
+                                        VStack {
+                                            if let unwrappedPath = relatedMovie.posterPath {
+                                                let unwrappedPath = URL(string: "\(url)\(unwrappedPath)")
+                                                KFImage(unwrappedPath)
+                                                    .placeholder {
+                                                        ProgressView()
+                                                            .frame(width: geo.size.width * 0.3)
+                                                    }
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: geo.size.width * 0.3, height: geo.size.width * 0.45)
+                                                    .clipped()
+                                                    .cornerRadius(10)
+                                                    .overlay(
+                                                        RoundedRectangle(cornerRadius: 10)
+                                                            .stroke(
+                                                                Color.gray
+                                                                    .opacity(0.5)
+                                                            )
+                                                    )
+                                                    .padding([.top, .bottom, .trailing], 5)
+
+                                            } else {
+                                                Image(systemName: "photo")
+                                                    .font(.system(size: 20))
+                                                    .frame(width: geo.size.width * 0.28, height: geo.size.width * 0.45)
+                                                    .aspectRatio(3.8, contentMode: .fit)
+                                                    .clipped()
+                                                    .cornerRadius(10)
+                                                    .overlay(
+                                                        RoundedRectangle(cornerRadius: 10)
+                                                            .stroke(
+                                                                Color.gray
+                                                                    .opacity(0.5)
+                                                            )
+                                                    )
+                                                    .padding([.top, .bottom, .trailing], 5)
+                                            }
+                                            
+                                            VStack(spacing: 10) {
+                                                Text(relatedMovie.originalTitle)
+                                                    .font(.headline)
+                                                    .frame(maxWidth: geo.size.width * 0.3, alignment: .leading)
+                                                
+//                                                Text(relatedMovie.character)
+//                                                    .font(.caption)
+//                                                    .frame(maxWidth: geo.size.width * 0.3, alignment: .leading)
+                                            }
+                                            .frame(alignment: .leading)
+                                        }
+                                        .padding(.bottom)
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
+                                }
+                            }
+                        }
+                        .task {
+                            relatedMovies = await FetchData.downloadRelatedMovies(personId: cast.id)
+                        }
+                        
                     }
                     .padding()
                     

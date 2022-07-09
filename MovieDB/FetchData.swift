@@ -75,6 +75,26 @@ struct FetchData {
         return []
     }
     
+    static func downloadCrew(movieId: Int) async -> [CrewMember] {
+            // Check URL
+        guard let url = URL(string: "https://api.themoviedb.org/3/movie/\(movieId)/credits?api_key=c74260965badd03144f9a327f254f0a2&language=en-US") else {
+                print("Invalid URL")
+                return []
+            }
+            
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                let decoder = JSONDecoder()
+                // Decode from data
+                if let decoded = try? decoder.decode(Crew.self, from: data) {
+                    return decoded.results
+                }
+            } catch {
+                print("Invalid Something")
+            }
+        return []
+    }
+    
     static func downloadPerson(personId: Int) async -> Actor {
             // Check URL
         guard let url = URL(string: "https://api.themoviedb.org/3/person/\(personId)?api_key=c74260965badd03144f9a327f254f0a2&language=en-US") else {
@@ -93,5 +113,25 @@ struct FetchData {
                 print("Invalid Something")
             }
         return Actor.example
+    }
+    
+    static func downloadRelatedMovies(personId: Int) async -> [Movie] {
+            // Check URL
+        guard let url = URL(string: "https://api.themoviedb.org/3/person/\(personId)/movie_credits?api_key=c74260965badd03144f9a327f254f0a2&language=en-US") else {
+                print("Invalid URL")
+                return []
+            }
+
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                let decoder = JSONDecoder()
+                // Decode from data
+                if let decoded = try? decoder.decode(RelatedMovies.self, from: data) {
+                    return decoded.results
+                }
+            } catch {
+                print("Invalid Something")
+            }
+        return []
     }
 }

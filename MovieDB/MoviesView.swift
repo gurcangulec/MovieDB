@@ -29,6 +29,9 @@ struct MoviesView: View {
         .task {
             movies = await FetchData.downloadPopularMovies()
         }
+        .refreshable {
+            movies = await FetchData.downloadPopularMovies()
+        }
         .searchable(text: $searchQuery, prompt: "Search for a movie")
         .onSubmit(of: .search) {
             Task {

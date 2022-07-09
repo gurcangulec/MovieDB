@@ -9,9 +9,17 @@ import SwiftUI
 import Kingfisher
 import ExpandableText
 
+extension View {
+    func Print(_ vars: Any...) -> some View {
+        for v in vars { print(v) }
+        return EmptyView()
+    }
+}
+
 struct MovieView: View {
     let movie: Movie
     @State private var cast = [CastMember]()
+    @State private var crew = [CrewMember]()
     private let url = "https://image.tmdb.org/t/p/original/"
     
     var body: some View {
@@ -59,7 +67,7 @@ struct MovieView: View {
                             .padding(.bottom, geo.size.height * 0.01)
                         
                         ScrollView(.horizontal, showsIndicators: false) {
-                            HStack {
+                            LazyHStack {
                                 ForEach(cast) {castMember in
                                     NavigationLink {
                                         ActorView(movie: movie, cast: castMember)
