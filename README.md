@@ -1,6 +1,7 @@
 # MovieDB App
 #### Video Demo:  <URL HERE>
-#### Description: This application uses the [Movie Database](https://www.themoviedb.org/) API to fetch data related to movies, actors, release dates, movie ratings etc. and uses that information to display movie and actor information pages. When the application is first opened it displays popular movie titles. You can scroll down and tap on any movie that interests you and it will display information related to that movie or you can use the search field on the top to search for any movie that exists on the Movie Database and see related information about the movie you searched for.
+#### Description: 
+This application uses the [Movie Database](https://www.themoviedb.org/) API to fetch data related to movies, actors, release dates, movie ratings etc. and uses that information to display movie and actor information pages. When the application is first opened it displays popular movie titles. You can scroll down and tap on any movie that interests you and it will display information related to that movie or you can use the search field on the top to search for any movie that exists on the Movie Database and see related information about the movie you searched for.
 
 MovieDBApp.swift and ContentView.swift files are created automatically after creating an XCode project. The files named Movies, Cast, Actor, RelatedMovies, MovieListView, MovieView, MovieRow, ActorView, FetchData, and PosterImageStyle files are created by me. Let me quickly go over them and explain what they do.
 
