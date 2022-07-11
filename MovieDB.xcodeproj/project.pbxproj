@@ -23,6 +23,7 @@
 		79C2DD12285DD0FB00D6E6E4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79C2DD11285DD0FB00D6E6E4 /* Preview Assets.xcassets */; };
 		79C3F6C62876F1FC005CB367 /* Cast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C3F6C52876F1FC005CB367 /* Cast.swift */; };
 		79EA9F74287ADB5B0076D18A /* CodableX in Frameworks */ = {isa = PBXBuildFile; productRef = 79EA9F73287ADB5B0076D18A /* CodableX */; };
+		79EA9F79287C81A90076D18A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 79EA9F78287C81A90076D18A /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		79C2DD0E285DD0FB00D6E6E4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		79C2DD11285DD0FB00D6E6E4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		79C3F6C52876F1FC005CB367 /* Cast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cast.swift; sourceTree = "<group>"; };
+		79EA9F78287C81A90076D18A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 		79C2DCFE285DD0F900D6E6E4 = {
 			isa = PBXGroup;
 			children = (
+				79EA9F78287C81A90076D18A /* README.md */,
 				79C2DD09285DD0F900D6E6E4 /* MovieDB */,
 				79C2DD08285DD0F900D6E6E4 /* Products */,
 			);
@@ -175,6 +178,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79EA9F79287C81A90076D18A /* README.md in Resources */,
 				79C2DD12285DD0FB00D6E6E4 /* Preview Assets.xcassets in Resources */,
 				79C2DD0F285DD0FB00D6E6E4 /* Assets.xcassets in Resources */,
 			);
