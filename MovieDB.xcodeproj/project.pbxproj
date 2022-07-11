@@ -16,7 +16,6 @@
 		797863CF286F985E00A05498 /* MovieRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797863CE286F985E00A05498 /* MovieRow.swift */; };
 		797863DD2870B68300A05498 /* PosterImageStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797863DC2870B68300A05498 /* PosterImageStyle.swift */; };
 		799EC4752875A73000680D07 /* MovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799EC4742875A73000680D07 /* MovieView.swift */; };
-		79A50EE1286C59B9002D2B1F /* ExpandableText in Frameworks */ = {isa = PBXBuildFile; productRef = 79A50EE0286C59B9002D2B1F /* ExpandableText */; };
 		79A50EE4286C5BB6002D2B1F /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 79A50EE3286C5BB6002D2B1F /* Kingfisher */; };
 		79C2DD0B285DD0F900D6E6E4 /* MovieDBApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C2DD0A285DD0F900D6E6E4 /* MovieDBApp.swift */; };
 		79C2DD0D285DD0F900D6E6E4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C2DD0C285DD0F900D6E6E4 /* ContentView.swift */; };
@@ -50,7 +49,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				79A50EE4286C5BB6002D2B1F /* Kingfisher in Frameworks */,
-				79A50EE1286C59B9002D2B1F /* ExpandableText in Frameworks */,
 				79EA9F74287ADB5B0076D18A /* CodableX in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -128,7 +126,6 @@
 			);
 			name = MovieDB;
 			packageProductDependencies = (
-				79A50EE0286C59B9002D2B1F /* ExpandableText */,
 				79A50EE3286C5BB6002D2B1F /* Kingfisher */,
 				79EA9F73287ADB5B0076D18A /* CodableX */,
 			);
@@ -161,7 +158,6 @@
 			);
 			mainGroup = 79C2DCFE285DD0F900D6E6E4;
 			packageReferences = (
-				79A50EDF286C59B9002D2B1F /* XCRemoteSwiftPackageReference "ExpandableText" */,
 				79A50EE2286C5BB6002D2B1F /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				79EA9F72287ADB5B0076D18A /* XCRemoteSwiftPackageReference "CodableX" */,
 			);
@@ -405,14 +401,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		79A50EDF286C59B9002D2B1F /* XCRemoteSwiftPackageReference "ExpandableText" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/NuPlay/ExpandableText";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		79A50EE2286C5BB6002D2B1F /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
@@ -432,11 +420,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		79A50EE0286C59B9002D2B1F /* ExpandableText */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 79A50EDF286C59B9002D2B1F /* XCRemoteSwiftPackageReference "ExpandableText" */;
-			productName = ExpandableText;
-		};
 		79A50EE3286C5BB6002D2B1F /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 79A50EE2286C5BB6002D2B1F /* XCRemoteSwiftPackageReference "Kingfisher" */;
