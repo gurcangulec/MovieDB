@@ -37,13 +37,10 @@ struct MovieRow: View {
                     VStack(alignment: .leading, spacing: 3) {
                         Text(movie.originalTitle)
                             .font(.headline.bold())
-    //                        .shadow(radius: 10)
                         
                         Text(movie.formattedReleaseDate)
                             .padding(.bottom)
                         
-    //                    Text(movie.formattedDate )
-    //                        .font(.footnote.weight(.light))
                         Text(movie.overview)
                             .font(.body)
 

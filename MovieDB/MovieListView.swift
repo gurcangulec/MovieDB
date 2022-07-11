@@ -15,10 +15,6 @@ struct MoviesView: View {
     @State private var cast = [CastMember]()
     private let url = "https://image.tmdb.org/t/p/original/"
     @State var searchQuery = ""
-
-    let columns = [
-        GridItem(.flexible())
-    ]
     
     var body: some View {
         NavigationView {
@@ -27,9 +23,6 @@ struct MoviesView: View {
                 .navigationTitle("Movies")
         }
         .task {
-            movies = await FetchData.downloadPopularMovies()
-        }
-        .refreshable {
             movies = await FetchData.downloadPopularMovies()
         }
         .searchable(text: $searchQuery, prompt: "Search for a movie")

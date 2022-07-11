@@ -29,7 +29,6 @@ struct CrewMember: Codable, Identifiable {
         case job = "job"
     }
     
-//    static let example = CrewMember(id: 100, originalName: "Matthew Mcconaughey", profilePath: "/2mcg07areWJ4EAtDvafRz7eDVvb", job: "Police")
 }
 
 

@@ -9,13 +9,6 @@ import SwiftUI
 import Kingfisher
 import ExpandableText
 
-extension View {
-    func Print(_ vars: Any...) -> some View {
-        for v in vars { print(v) }
-        return EmptyView()
-    }
-}
-
 struct MovieView: View {
     let movie: Movie
     @State private var cast = [CastMember]()
