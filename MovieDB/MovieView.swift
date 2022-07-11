@@ -57,14 +57,39 @@ struct MovieView: View {
                             Image(systemName: "star.fill")
                             Text("\(movie.convertToString)/10")
                                 .font(.body)
+                            
+                            Spacer()
+                            
+                            Image(systemName: "calendar")
+                            Text("\(movie.formattedReleaseDate)")
+                                .font(.body)
+                            
+                            Spacer()
+                            Spacer()
+                            Spacer()
+                        }
+                        
+                        Divider()
+                        
+                        Text("Director(s)")
+                            .font(.title2.bold())
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.bottom, geo.size.height * 0.001)
+                        
+                        ForEach(crew) { crewMember in
+                            if crewMember.job == "Director" {
+                                Text(crewMember.originalName)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.bottom, geo.size.height * 0.01)
+                            }
                         }
                         
                         Divider()
                         
                         Text("Cast")
-                            .font(.title.weight(.semibold))
+                            .font(.title2.weight(.semibold))
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.bottom, geo.size.height * 0.01)
+                            .padding(.bottom, geo.size.height * 0.001)
                         
                         ScrollView(.horizontal, showsIndicators: false) {
                             LazyHStack {
@@ -99,6 +124,8 @@ struct MovieView: View {
                                                     .font(.system(size: 20))
                                                     .frame(width: geo.size.width * 0.3, height: geo.size.width * 0.45)
                                                     .aspectRatio(3.8, contentMode: .fit)
+                                                    .foregroundColor(.white)
+                                                    .background(.gray)
                                                     .clipped()
                                                     .cornerRadius(10)
                                                     .overlay(
@@ -132,6 +159,7 @@ struct MovieView: View {
                     .padding(.horizontal)
                     .task {
                         cast = await FetchData.downloadCast(movieId: movie.id)
+                        crew = await FetchData.downloadCrew(movieId: movie.id)
                     }
                 }
             }

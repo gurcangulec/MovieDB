@@ -16,19 +16,20 @@ struct Crew: Codable {
 }
 
 struct CrewMember: Codable, Identifiable {
-    var id: Int
+    var id = UUID()
+    var crewMemberId: Int
     var originalName: String
     var profilePath: String?
     var job: String?
     
     enum CodingKeys: String, CodingKey {
-        case id = "id"
+        case crewMemberId = "id"
         case originalName = "original_name"
         case profilePath = "profile_path"
         case job = "job"
     }
     
-    static let example = CrewMember(id: 100, originalName: "Matthew Mcconaughey", profilePath: "/2mcg07areWJ4EAtDvafRz7eDVvb", job: "Police")
+//    static let example = CrewMember(id: 100, originalName: "Matthew Mcconaughey", profilePath: "/2mcg07areWJ4EAtDvafRz7eDVvb", job: "Police")
 }
 
 
@@ -55,5 +56,5 @@ struct CastMember: Codable, Identifiable {
         case job = "job"
     }
     
-    static let example = CastMember(id: 100, originalName: "Matthew Mcconaughey", character: "Cooper", profilePath: "/2mcg07areWJ4EAtDvafRz7eDVvb", job: "Police")
+    static let example = CastMember(id: 100, originalName: "Matthew Mcconaughey", character: "Cooper", profilePath: "2mcg07areWJ4EAtDvafRz7eDVvb.jpg", job: "Police")
 }

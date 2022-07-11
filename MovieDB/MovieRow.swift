@@ -31,6 +31,7 @@ struct MovieRow: View {
                 } else {
                     Image(systemName: "photo")
                         .posterStyle()
+                        .foregroundColor(.white)
                 }
                 GeometryReader { geo in
                     VStack(alignment: .leading, spacing: 3) {

@@ -13,6 +13,7 @@ struct PosterImage: ViewModifier {
         content
             .scaledToFill()
             .frame(width: 90, height: 135)
+            .background(.gray)
             .clipped()
             .cornerRadius(10)
             .shadow(radius: 5)

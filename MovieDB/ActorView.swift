@@ -11,7 +11,7 @@ import Kingfisher
 struct ActorView: View {
     let movie: Movie
     let cast: CastMember
-    @State private var actor = Actor.example
+    @State private var actor = Actor()
     @State private var relatedMovies = [Movie]()
     private let url = "https://image.tmdb.org/t/p/original/"
     
@@ -40,21 +40,23 @@ struct ActorView: View {
                                 )
                                 .frame(width: geo.size.width * 0.4)
                                 .frame(width: geo.size.width * 0.84)
-                                .padding([.top, .bottom])
-                                
-                                
+                                .padding(.bottom)
+                            
                         } else {
                             Image(systemName: "photo")
                                 .font(.system(size: 60))
-                                .frame(width: geo.size.width, height: geo.size.width * 0.55)
+                                .frame(height: geo.size.height * 0.32)
+                                .frame(width: geo.size.width * 0.84)
                         }
                         
                         
                         Divider()
                         
                         Text(actor.formattedBirthday)
-                        Text(actor.placeOfBirth)
-                            .font(.title2)
+                            .font(.body)
+                        
+                        Text(actor.placeOfBirth ?? "N/A")
+                            .font(.body)
                         
                         Divider()
                         
@@ -62,8 +64,10 @@ struct ActorView: View {
                             .font(.title.weight(.semibold))
                             .frame(maxWidth: geo.size.width, alignment: .leading)
                             .padding(.bottom, geo.size.height * 0.01)
-                        Text(actor.biography)
+                        
+                        Text(actor.formattedBiography)
                             .font(.body)
+                            .frame(maxWidth: geo.size.width, alignment: .leading)
                             .padding(.bottom, geo.size.height * 0.01)
                         
                         Divider()
@@ -103,8 +107,10 @@ struct ActorView: View {
                                             } else {
                                                 Image(systemName: "photo")
                                                     .font(.system(size: 20))
-                                                    .frame(width: geo.size.width * 0.28, height: geo.size.width * 0.45)
+                                                    .frame(width: geo.size.width * 0.3, height: geo.size.width * 0.45)
                                                     .aspectRatio(3.8, contentMode: .fit)
+                                                    .foregroundColor(.white)
+                                                    .background(.gray)
                                                     .clipped()
                                                     .cornerRadius(10)
                                                     .overlay(
@@ -121,10 +127,6 @@ struct ActorView: View {
                                                 Text(relatedMovie.originalTitle)
                                                     .font(.headline)
                                                     .frame(maxWidth: geo.size.width * 0.3, alignment: .leading)
-                                                
-//                                                Text(relatedMovie.character)
-//                                                    .font(.caption)
-//                                                    .frame(maxWidth: geo.size.width * 0.3, alignment: .leading)
                                             }
                                             .frame(alignment: .leading)
                                         }

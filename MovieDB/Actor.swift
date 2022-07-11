@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import CodableX
 
-struct Actor: Codable, Identifiable, Hashable {
-    var id: Int
-    var biography: String
-    var birthday: String?
-    var profilePath: String?
-    var placeOfBirth: String
+struct Actor: Codable, Identifiable {
+    @Nullable var id: Int?
+    @Nullable var biography: String?
+    @Nullable var birthday: String?
+    @Nullable var profilePath: String?
+    @Nullable var placeOfBirth: String?
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -36,6 +37,18 @@ struct Actor: Codable, Identifiable, Hashable {
         }
         // If date is nil
         return "N/A"
+    }
+    
+    var formattedBiography: String {
+        if biography == "" || biography == nil {
+            return "No biography found for this person."
+        }
+        else {
+            if let biography = biography {
+                return biography
+            }
+        }
+        return ""
     }
     
     static let example = Actor(id: 100, biography: "Elizabeth Chase Olsen (born February 16, 1989) is an American actress. Born in Sherman Oaks, California, Olsen began acting at age four. She starred in her debut film role in the thriller Martha Marcy May Marlene in 2011, for which she was acclaimed and nominated for a Critics\' Choice Movie Award among other accolades, followed by a role in the horror film Silent House. Olsen received a BAFTA Rising Star Award nomination and graduated from New York University two years later.\n\nOlsen gained worldwide recognition for her portrayal of Wanda Maximoff / Scarlet Witch in the Marvel Cinematic Universe media franchise, appearing in the superhero films Avengers: Age of Ultron (2015), Captain America: Civil War (2016), Avengers: Infinity War (2018), and Avengers: Endgame (2019), and Doctor Strange in the Multiverse of Madness (2022). She also starred as the character in the miniseries WandaVision (2021).", birthday: "2022", profilePath: "/2mcg07areWJ4EAtDvafRz7eDVvb", placeOfBirth: "Uvalde")
