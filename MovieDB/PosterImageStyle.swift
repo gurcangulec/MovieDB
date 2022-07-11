@@ -13,7 +13,7 @@ struct PosterImage: ViewModifier {
         content
             .scaledToFill()
             .frame(width: 90, height: 135)
-            .background(.gray)
+            .background(Color(.systemGray5))
             .clipped()
             .cornerRadius(10)
             .shadow(radius: 5)
@@ -21,7 +21,7 @@ struct PosterImage: ViewModifier {
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(
                         Color.gray
-                            .opacity(0.5)
+                            .opacity(0.1)
                     )
             )
             .padding([.top, .bottom, .trailing], 5)

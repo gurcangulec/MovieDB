@@ -1,5 +1,5 @@
 //
-//  MoviesView.swift
+//  MovieListView.swift
 //  MovieDB
 //
 //  Created by Gürcan Güleç on 29.06.2022.
