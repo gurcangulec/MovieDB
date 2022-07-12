@@ -20,7 +20,7 @@ struct MoviesView: View {
         NavigationView {
             List(movies, rowContent: MovieRow.init)
                 .listStyle(.plain)
-                .navigationTitle("Movies")
+                .navigationTitle("MovieDB")
         }
         .task {
             movies = await FetchData.downloadPopularMovies()
