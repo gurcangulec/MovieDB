@@ -1,5 +1,5 @@
 # MovieDB App
-#### Video Demo:  <URL HERE>
+#### Video Demo:  https://youtu.be/gkNNyVdexv0
 #### Description: 
 This application uses the [Movie Database](https://www.themoviedb.org/) API to fetch data related to movies, actors, release dates, movie ratings etc. and uses that information to display movie and actor information pages. When the application is first opened it displays popular movie titles. You can scroll down and tap on any movie that interests you and it will display information related to that movie or you can use the search field on the top to search for any movie that exists on the Movie Database and see related information about the movie you searched for.
 
