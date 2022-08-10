@@ -23,6 +23,7 @@
 		79C2DD0F285DD0FB00D6E6E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79C2DD0E285DD0FB00D6E6E4 /* Assets.xcassets */; };
 		79C2DD12285DD0FB00D6E6E4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79C2DD11285DD0FB00D6E6E4 /* Preview Assets.xcassets */; };
 		79C3F6C62876F1FC005CB367 /* Cast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C3F6C52876F1FC005CB367 /* Cast.swift */; };
+		79CC882B28A40C0C00E1E37E /* FullCrewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CC882A28A40C0B00E1E37E /* FullCrewView.swift */; };
 		79EA9F74287ADB5B0076D18A /* CodableX in Frameworks */ = {isa = PBXBuildFile; productRef = 79EA9F73287ADB5B0076D18A /* CodableX */; };
 		79EA9F79287C81A90076D18A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 79EA9F78287C81A90076D18A /* README.md */; };
 /* End PBXBuildFile section */
@@ -44,6 +45,7 @@
 		79C2DD0E285DD0FB00D6E6E4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		79C2DD11285DD0FB00D6E6E4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		79C3F6C52876F1FC005CB367 /* Cast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cast.swift; sourceTree = "<group>"; };
+		79CC882A28A40C0B00E1E37E /* FullCrewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullCrewView.swift; sourceTree = "<group>"; };
 		79EA9F78287C81A90076D18A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -86,6 +88,7 @@
 				799EC4742875A73000680D07 /* MovieView.swift */,
 				797863CE286F985E00A05498 /* MovieRow.swift */,
 				794A0FFF287831D3008BF0F5 /* ActorView.swift */,
+				79CC882A28A40C0B00E1E37E /* FullCrewView.swift */,
 				79EA9F75287C248F0076D18A /* DataModels */,
 				794A0FFB2876FDA4008BF0F5 /* FetchData.swift */,
 				797863DC2870B68300A05498 /* PosterImageStyle.swift */,
@@ -196,6 +199,7 @@
 			files = (
 				79C2DD0D285DD0F900D6E6E4 /* ContentView.swift in Sources */,
 				794A0FFC2876FDA4008BF0F5 /* FetchData.swift in Sources */,
+				79CC882B28A40C0C00E1E37E /* FullCrewView.swift in Sources */,
 				79C3F6C62876F1FC005CB367 /* Cast.swift in Sources */,
 				794A10022879E377008BF0F5 /* RelatedMovies.swift in Sources */,
 				794A0FFE28782C3B008BF0F5 /* Actor.swift in Sources */,

@@ -21,16 +21,14 @@ struct MovieView: View {
         var screenplayByArray = [String]()
         
         for member in crew {
-            print(member.originalName)
-            print(member.job)
             if member.job == "Writer" {
-                var addToArray = "\(member.originalName) (written by)"
+                let addToArray = "\(member.originalName) (written by)"
                 writtenByArray.append(addToArray)
             } else if member.job == "Story" {
-                var addToArray = "\(member.originalName) (story by)"
+                let addToArray = "\(member.originalName) (story by)"
                 storyByArray.append(addToArray)
             } else if member.job == "Screenplay" {
-                var addToArray = "\(member.originalName) (screenplay by)"
+                let addToArray = "\(member.originalName) (screenplay by)"
                 screenplayByArray.append(addToArray)
             }
         }
@@ -86,39 +84,6 @@ struct MovieView: View {
                                 Spacer()
                             }
                         }
-                        
-                        Divider()
-                        
-                        VStack {
-                            Text("Director(s)")
-                                .font(.title2.bold())
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.bottom, geo.size.height * 0.001)
-                            
-                            ForEach(crew) { crewMember in
-                                if crewMember.job == "Director" {
-                                    Text(crewMember.originalName)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .padding(.bottom, geo.size.height * 0.01)
-                                }
-                            }
-                        }
-                        
-                        Divider()
-                        
-                        VStack {
-                            Text("Writer(s)")
-                                .font(.title2.bold())
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.bottom, geo.size.height * 0.001)
-                            
-                            ForEach(writers, id:\.self) { writer in
-                                Text(writer)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.bottom, geo.size.height * 0.01)
-                            }
-                        }
-                        
                         
                         Divider()
                         
@@ -190,6 +155,49 @@ struct MovieView: View {
                                     .buttonStyle(PlainButtonStyle())
                                 }
                             }
+                        }
+                        
+                        Group {
+                            VStack {
+                                Text("Director(s)")
+                                    .font(.title2.bold())
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.bottom, geo.size.height * 0.001)
+                                
+                                ForEach(crew) { crewMember in
+                                    if crewMember.job == "Director" {
+                                        Text(crewMember.originalName)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .padding(.bottom, geo.size.height * 0.01)
+                                    }
+                                }
+                            }
+                            
+                            Divider()
+                            
+                            HStack {
+                                Text("Writer(s)")
+                                    .font(.title2.bold())
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.bottom, geo.size.height * 0.001)
+                            }
+                            
+                            ForEach(writers, id:\.self) { writer in
+                                    Text(writer)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(.bottom, geo.size.height * 0.01)
+                            }
+                            
+                            Divider()
+                            
+                            NavigationLink {
+                                FullCrewView(movie: movie, cast: cast, crew: crew)
+                            } label: {
+                                Text("Full Cast & Crew")
+                                
+                                Image(systemName: "chevron.right")
+                            }
+                            .padding(.bottom)
                         }
                     }
                     .padding(.horizontal)
