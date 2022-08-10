@@ -7,7 +7,18 @@
 
 import Foundation
 
-struct Config {
+struct Config: Codable {
+    var images: Images?
+    var changeKeys: [String]?
+    
+    enum CodingKeys: String, CodingKey {
+        case images = "images"
+        case changeKeys = "change_keys"
+    }
+    
+}
+
+struct Images: Codable {
     var baseURL: String?
     var secureBaseURL: String?
     var backdropSizes: [String]?

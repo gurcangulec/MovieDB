@@ -8,12 +8,14 @@
 import Foundation
 
 struct FetchData {
-    @available(*, unavailable) private init() {}
+    
+    static let baseURL = "https://api.themoviedb.org/3/"
+    static let APIKey = "c74260965badd03144f9a327f254f0a2"
 
     static func downloadMovies(searchQuery: String) async -> [Movie] {
             let replaced = searchQuery.replacingOccurrences(of: " ", with: "+").lowercased()
             // Check URL
-            guard let url = URL(string: "https://api.themoviedb.org/3/search/movie?api_key=c74260965badd03144f9a327f254f0a2&query=\(replaced)") else {
+            guard let url = URL(string: "\(baseURL)search/movie?api_key=\(APIKey)&query=\(replaced)") else {
                 print("Invalid URL")
                 return []
             }
@@ -35,7 +37,7 @@ struct FetchData {
     
     static func downloadPopularMovies() async-> [Movie] {
             // Check URL
-            guard let url = URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=c74260965badd03144f9a327f254f0a2&language=en-US&page=1") else {
+            guard let url = URL(string: "\(baseURL)movie/popular?api_key=\(APIKey)&language=en-US&page=1") else {
                 print("Invalid URL")
                 return []
             }
@@ -57,7 +59,7 @@ struct FetchData {
     
     static func downloadCast(movieId: Int) async -> [CastMember] {
             // Check URL
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/\(movieId)/credits?api_key=c74260965badd03144f9a327f254f0a2&language=en-US") else {
+        guard let url = URL(string: "\(baseURL)movie/\(movieId)/credits?api_key=\(APIKey)&language=en-US") else {
                 print("Invalid URL")
                 return []
             }
@@ -77,7 +79,7 @@ struct FetchData {
     
     static func downloadCrew(movieId: Int) async -> [CrewMember] {
             // Check URL
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/\(movieId)/credits?api_key=c74260965badd03144f9a327f254f0a2&language=en-US") else {
+        guard let url = URL(string: "\(baseURL)movie/\(movieId)/credits?api_key=\(APIKey)&language=en-US") else {
                 print("Invalid URL")
                 return []
             }
@@ -97,7 +99,7 @@ struct FetchData {
     
     static func downloadPerson(personId: Int) async -> Actor {
             // Check URL
-        guard let url = URL(string: "https://api.themoviedb.org/3/person/\(personId)?api_key=c74260965badd03144f9a327f254f0a2&language=en-US") else {
+        guard let url = URL(string: "\(baseURL)person/\(personId)?api_key=\(APIKey)&language=en-US") else {
                 print("Invalid URL")
                 return Actor.example
             }
@@ -117,7 +119,7 @@ struct FetchData {
     
     static func downloadRelatedMovies(personId: Int) async -> [Movie] {
             // Check URL
-        guard let url = URL(string: "https://api.themoviedb.org/3/person/\(personId)/movie_credits?api_key=c74260965badd03144f9a327f254f0a2&language=en-US") else {
+        guard let url = URL(string: "\(baseURL)person/\(personId)/movie_credits?api_key=\(APIKey)&language=en-US") else {
                 print("Invalid URL")
                 return []
             }

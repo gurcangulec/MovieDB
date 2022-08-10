@@ -28,7 +28,6 @@ struct CrewMember: Codable, Identifiable {
         case profilePath = "profile_path"
         case job = "job"
     }
-    
 }
 
 

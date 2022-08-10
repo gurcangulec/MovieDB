@@ -15,6 +15,29 @@ struct MovieView: View {
     @State private var crew = [CrewMember]()
     private let url = "https://image.tmdb.org/t/p/original/"
     
+    var writers: [String] {
+        var writtenByArray = [String]()
+        var storyByArray = [String]()
+        var screenplayByArray = [String]()
+        
+        for member in crew {
+            print(member.originalName)
+            print(member.job)
+            if member.job == "Writer" {
+                var addToArray = "\(member.originalName) (written by)"
+                writtenByArray.append(addToArray)
+            } else if member.job == "Story" {
+                var addToArray = "\(member.originalName) (story by)"
+                storyByArray.append(addToArray)
+            } else if member.job == "Screenplay" {
+                var addToArray = "\(member.originalName) (screenplay by)"
+                screenplayByArray.append(addToArray)
+            }
+        }
+        
+        return writtenByArray + storyByArray + screenplayByArray
+    }
+    
     var body: some View {
         GeometryReader { geo in
             ScrollView {
@@ -38,40 +61,59 @@ struct MovieView: View {
                     VStack(alignment: .leading) {
                         Divider()
                         
-                        Text(movie.originalTitle)
-                            .font(.title.weight(.semibold))
-                            .padding(.bottom, geo.size.height * 0.01)
-                        
-                        Text(movie.overview)
-                            .font(.body)
-                            .padding(.bottom, geo.size.height * 0.01)
-                        
-                        HStack {
-                            Image(systemName: "star.fill")
-                            Text("\(movie.convertToString)/10")
+                        Group {
+                            Text(movie.originalTitle)
+                                .font(.title.weight(.semibold))
+                                .padding(.bottom, geo.size.height * 0.01)
+                            
+                            Text(movie.overview)
                                 .font(.body)
+                                .padding(.bottom, geo.size.height * 0.01)
                             
-                            Spacer()
-                            
-                            Image(systemName: "calendar")
-                            Text("\(movie.formattedReleaseDate)")
-                                .font(.body)
-                            
-                            Spacer()
-                            Spacer()
-                            Spacer()
+                            HStack {
+                                Image(systemName: "star.fill")
+                                Text("\(movie.convertToString)/10")
+                                    .font(.body)
+                                
+                                Spacer()
+                                
+                                Image(systemName: "calendar")
+                                Text("\(movie.formattedReleaseDate)")
+                                    .font(.body)
+                                
+                                Spacer()
+                                Spacer()
+                                Spacer()
+                            }
                         }
                         
                         Divider()
                         
-                        Text("Director(s)")
-                            .font(.title2.bold())
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.bottom, geo.size.height * 0.001)
+                        VStack {
+                            Text("Director(s)")
+                                .font(.title2.bold())
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.bottom, geo.size.height * 0.001)
+                            
+                            ForEach(crew) { crewMember in
+                                if crewMember.job == "Director" {
+                                    Text(crewMember.originalName)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(.bottom, geo.size.height * 0.01)
+                                }
+                            }
+                        }
                         
-                        ForEach(crew) { crewMember in
-                            if crewMember.job == "Director" {
-                                Text(crewMember.originalName)
+                        Divider()
+                        
+                        VStack {
+                            Text("Writer(s)")
+                                .font(.title2.bold())
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.bottom, geo.size.height * 0.001)
+                            
+                            ForEach(writers, id:\.self) { writer in
+                                Text(writer)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding(.bottom, geo.size.height * 0.01)
                             }
