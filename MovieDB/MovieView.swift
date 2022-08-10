@@ -77,6 +77,7 @@ struct MovieView: View {
                             }
                         }
                         
+                        
                         Divider()
                         
                         Text("Cast")
