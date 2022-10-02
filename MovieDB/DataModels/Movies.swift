@@ -8,23 +8,19 @@
 import Foundation
 
 // Struct for results
-struct Movies: Codable {
-    var results: [Movie]
-
-    enum CodingKeys: String, CodingKey {
-        case results = "results"
-    }
+struct Movies: Decodable {
+    let results: [Movie]
 }
 
 // Struct for each movie
-struct Movie: Codable, Identifiable {
-    var id: Int
-    var originalTitle: String
-    var overview: String
-    var posterPath: String?
-    var releaseDate: String?
-    var backdropPath: String?
-    var voteAverage: Double
+struct Movie: Decodable, Identifiable {
+    let id: Int
+    let originalTitle: String
+    let overview: String
+    let posterPath: String?
+    let releaseDate: String?
+    let backdropPath: String?
+    let voteAverage: Double
 
     enum CodingKeys: String, CodingKey {
         case id = "id"
@@ -37,9 +33,7 @@ struct Movie: Codable, Identifiable {
     }
     
     var formattedReleaseDate: String {
-        // Unwrapping releaseDate
         if let releaseDate = releaseDate {
-            // Formatting as a date
             let formatter = DateFormatter()
             formatter.dateFormat = "y-MM-dd"
             
@@ -48,7 +42,6 @@ struct Movie: Codable, Identifiable {
                 return formatted
             }
         }
-        // If date is nil
         return "N/A"
     }
     

@@ -7,7 +7,6 @@
 
 import SwiftUI
 import Kingfisher
-import ExpandableText
 
 struct MoviesView: View {
     // The movies downloaded from server

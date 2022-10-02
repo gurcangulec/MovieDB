@@ -7,7 +7,6 @@
 
 import SwiftUI
 import Kingfisher
-import ExpandableText
 
 struct MovieView: View {
     let movie: Movie

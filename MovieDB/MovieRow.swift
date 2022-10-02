@@ -6,9 +6,7 @@
 //
 
 import SwiftUI
-import ExpandableText
 import Kingfisher
-import Accelerate
 
 struct MovieRow: View {
     let movie: Movie
