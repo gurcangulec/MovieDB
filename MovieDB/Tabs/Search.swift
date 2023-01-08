@@ -20,7 +20,7 @@ struct Search: View {
         NavigationView {
             List(movies, rowContent: MovieRow.init)
                 .listStyle(.plain)
-                .navigationTitle("MovieDB")
+                .navigationTitle("Search")
         }
         .searchable(text: $searchQuery, prompt: "Search for a movie")
         .onSubmit(of: .search) {

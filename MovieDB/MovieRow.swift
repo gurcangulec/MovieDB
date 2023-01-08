@@ -47,6 +47,20 @@ struct MovieRow: View {
                 }
             }
         }
+        .contextMenu {
+            
+            Button {
+                print("Add to Watchlist")
+            } label: {
+                Label("Add to Watchlist", systemImage: "play.circle.fill")
+            }
+            
+            Button {
+                print("Share")
+            } label: {
+                Label("Share", systemImage: "square.and.arrow.up")
+            }
+        }
     }
 }
 

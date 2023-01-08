@@ -14,6 +14,8 @@ struct MovieView: View {
     @State private var crew = [CrewMember]()
     private let url = "https://image.tmdb.org/t/p/original/"
     
+    @State private var showShareSheet = false
+    
     var writers: [String] {
         var writtenByArray = [String]()
         var storyByArray = [String]()
@@ -154,6 +156,27 @@ struct MovieView: View {
                                     .buttonStyle(PlainButtonStyle())
                                 }
                             }
+                            .toolbar {
+                                Menu {
+                                    Button {
+                                        print("Add to Watchlist")
+                                    } label: {
+                                        Label("Add to Watchlist", systemImage: "play.circle.fill")
+                                    }
+                                    
+                                    Button {
+                                        shareButton()
+                                        
+                                    } label: {
+                                        Label("Share", systemImage: "square.and.arrow.up")
+                                    }
+                                } label: {
+                                    Label("Options", systemImage: "ellipsis")
+                                }
+                            }
+//                            .sheet(isPresented: $showShareSheet) {
+//                                MenuFunctionality.shareButton()
+//                            }
                         }
                         
                         Group {
@@ -209,6 +232,14 @@ struct MovieView: View {
             .navigationTitle(movie.originalTitle)
         }
         .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    func addToWatchlist() { }
+    func shareButton() {
+        
+        let activityController = UIActivityViewController(activityItems: ["https://www.themoviedb.org/movie/\(movie.id)"], applicationActivities: nil)
+        
+        UIApplication.shared.windows.first?.rootViewController!.present(activityController, animated: true, completion: nil)
     }
 }
 

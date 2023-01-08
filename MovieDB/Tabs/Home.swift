@@ -20,5 +20,6 @@ struct Home: View {
         .task {
             popularMovies = await FetchData.downloadPopularMovies()
         }
+        
     }
 }
