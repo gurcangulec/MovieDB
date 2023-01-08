@@ -9,10 +9,8 @@ import SwiftUI
 
 struct FullCrewView: View {
     let movie: Movie
-    @State var cast: [CastMember]
-    @State var crew: [CrewMember]
-//    @State private var cast = [CastMember]()
-//    @State private var crew = [CrewMember]()
+    let cast: [CastMember]
+    let crew: [CrewMember]
     
     var body: some View {
 
@@ -48,10 +46,10 @@ struct FullCrewView: View {
             .padding(25)
             .frame(maxWidth: .infinity)
         }
-        .task {
-            cast = await FetchData.downloadCast(movieId: movie.id)
-            crew = await FetchData.downloadCrew(movieId: movie.id)
-        }
+//        .task {
+//            cast = await FetchData.downloadCast(movieId: movie.id)
+//            crew = await FetchData.downloadCrew(movieId: movie.id)
+//        }
         
     }
 }

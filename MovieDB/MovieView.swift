@@ -88,96 +88,25 @@ struct MovieView: View {
                         
                         Divider()
                         
-                        Text("Cast")
-                            .font(.title2.weight(.semibold))
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.bottom, geo.size.height * 0.001)
-                        
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            LazyHStack {
-                                ForEach(cast) {castMember in
-                                    NavigationLink {
-                                        ActorView(movie: movie, cast: castMember)
-                                    } label: {
-                                        VStack {
-                                            if let unwrappedPath = castMember.profilePath {
-                                                let unwrappedPath = URL(string: "\(url)\(unwrappedPath)")
-                                                KFImage(unwrappedPath)
-                                                    .placeholder {
-                                                        ProgressView()
-                                                            .frame(width: geo.size.width * 0.3)
-                                                    }
-                                                    .resizable()
-                                                    .scaledToFit()
-                                                    .frame(width: geo.size.width * 0.3, height: geo.size.width * 0.45)
-                                                    .clipped()
-                                                    .cornerRadius(10)
-                                                    .overlay(
-                                                        RoundedRectangle(cornerRadius: 10)
-                                                            .stroke(
-                                                                Color.gray
-                                                                    .opacity(0.5)
-                                                            )
-                                                    )
-                                                    .padding([.top, .bottom, .trailing], 5)
-
-                                            } else {
-                                                Image(systemName: "photo")
-                                                    .font(.system(size: 20))
-                                                    .frame(width: geo.size.width * 0.3, height: geo.size.width * 0.45)
-                                                    .aspectRatio(3.8, contentMode: .fit)
-                                                    .foregroundColor(.white)
-                                                    .background(.gray)
-                                                    .clipped()
-                                                    .cornerRadius(10)
-                                                    .overlay(
-                                                        RoundedRectangle(cornerRadius: 10)
-                                                            .stroke(
-                                                                Color.gray
-                                                                    .opacity(0.5)
-                                                            )
-                                                    )
-                                                    .padding([.top, .bottom, .trailing], 5)
-                                            }
-                                            
-                                            VStack(spacing: 10) {
-                                                Text(castMember.originalName)
-                                                    .font(.headline)
-                                                    .frame(maxWidth: geo.size.width * 0.3, alignment: .leading)
-                                                
-                                                Text(castMember.character)
-                                                    .font(.caption)
-                                                    .frame(maxWidth: geo.size.width * 0.3, alignment: .leading)
-                                            }
-                                            .frame(alignment: .leading)
-                                        }
-                                        .padding(.bottom)
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
-                                }
+                        HStack {
+                            Text("Cast")
+                                .font(.title2.weight(.semibold))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.bottom, geo.size.height * 0.001)
+                            
+                            NavigationLink {
+                                FullCrewView(movie: movie, cast: cast, crew: crew)
+                            } label: {
+                                Text("Full Cast & Crew")
+                                
+                                Image(systemName: "chevron.right")
                             }
-                            .toolbar {
-                                Menu {
-                                    Button {
-                                        print("Add to Watchlist")
-                                    } label: {
-                                        Label("Add to Watchlist", systemImage: "play.circle.fill")
-                                    }
-                                    
-                                    Button {
-                                        shareButton()
-                                        
-                                    } label: {
-                                        Label("Share", systemImage: "square.and.arrow.up")
-                                    }
-                                } label: {
-                                    Label("Options", systemImage: "ellipsis")
-                                }
-                            }
-//                            .sheet(isPresented: $showShareSheet) {
-//                                MenuFunctionality.shareButton()
-//                            }
+//                            .padding(.bottom)
                         }
+                        
+                        SideScrollerCast(movie: movie, cast: cast, crew: crew, url: url, geoWidth: geo.size.width)
+                        
+                        Divider()
                         
                         Group {
                             VStack {
@@ -210,16 +139,6 @@ struct MovieView: View {
                                         .padding(.bottom, geo.size.height * 0.01)
                             }
                             
-                            Divider()
-                            
-                            NavigationLink {
-                                FullCrewView(movie: movie, cast: cast, crew: crew)
-                            } label: {
-                                Text("Full Cast & Crew")
-                                
-                                Image(systemName: "chevron.right")
-                            }
-                            .padding(.bottom)
                         }
                     }
                     .padding(.horizontal)
@@ -232,8 +151,27 @@ struct MovieView: View {
             .navigationTitle(movie.originalTitle)
         }
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            Menu {
+                Button {
+                    print("Add to Watchlist")
+                } label: {
+                    Label("Add to Watchlist", systemImage: "play.circle.fill")
+                }
+                
+                Button {
+                    shareButton()
+                    
+                } label: {
+                    Label("Share", systemImage: "square.and.arrow.up")
+                }
+            } label: {
+                Label("Options", systemImage: "ellipsis")
+            }
+        }
     }
     
+    // To be moved from here
     func addToWatchlist() { }
     func shareButton() {
         
