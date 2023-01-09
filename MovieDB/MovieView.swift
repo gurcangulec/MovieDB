@@ -5,10 +5,15 @@
 //  Created by Gürcan Güleç on 06.07.2022.
 //
 
+import CoreHaptics
 import SwiftUI
 import Kingfisher
 
 struct MovieView: View {
+    
+//    @State private var engine: CHHapticEngine?
+    @StateObject var hapticEngine = Haptics()
+    
     let movie: Movie
     @State private var cast = [CastMember]()
     @State private var crew = [CrewMember]()
@@ -153,6 +158,19 @@ struct MovieView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             Menu {
+                
+                Button {
+                    copyToClipboard()
+                } label: {
+                    Label("Copy Link", systemImage: "link")
+                }
+                
+                Button {
+                    print("Copy IMDB Link")
+                } label: {
+                    Label("Copy IMDB Link", systemImage: "link")
+                }
+                
                 Button {
                     print("Add to Watchlist")
                 } label: {
@@ -168,7 +186,13 @@ struct MovieView: View {
             } label: {
                 Label("Options", systemImage: "ellipsis")
             }
+            .onAppear(perform: hapticEngine.prepareHaptics)
+            .onTapGesture(perform: hapticEngine.complexSuccess)
         }
+    }
+    
+    func copyToClipboard() {
+        UIPasteboard.general.string = "https://www.themoviedb.org/movie/\(movie.id)"
     }
     
     // To be moved from here
