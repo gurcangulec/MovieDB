@@ -10,9 +10,13 @@ import SwiftUI
 import Kingfisher
 
 struct MovieView: View {
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(sortDescriptors: []) var watchlistMovies: FetchedResults<WatchlistMovie>
     
 //    @State private var engine: CHHapticEngine?
     @StateObject var hapticEngine = Haptics()
+    
+    @State private var watchlistButtonText = "Add to Watchlist"
     
     let movie: Movie
     @State private var cast = [CastMember]()
@@ -74,6 +78,24 @@ struct MovieView: View {
                                 .font(.body)
                                 .padding(.bottom, geo.size.height * 0.01)
                             
+                            Button {
+                                
+                                let watchlistMovie = WatchlistMovie(context: moc)
+                                watchlistMovie.id = UUID()
+                                watchlistMovie.title = movie.originalTitle
+                                watchlistMovie.posterPath = movie.posterPath
+                                watchlistMovie.formattedReleaseDate = movie.formattedReleaseDate
+                                watchlistMovie.overview = movie.overview
+                                watchlistMovie.dateAdded = Date.now
+                                
+                                try? moc.save()
+                                hapticEngine.complexSuccess()   
+                            } label: {
+                                Label(self.watchlistButtonText, systemImage: "plus")
+                                    .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                            }
+                            .buttonStyle(.bordered)
+                            
                             HStack {
                                 Image(systemName: "star.fill")
                                 Text("\(movie.convertToString)/10")
@@ -90,6 +112,8 @@ struct MovieView: View {
                                 Spacer()
                             }
                         }
+                        .onAppear(perform: checkIfAdded)
+                        .onAppear(perform: hapticEngine.prepareHaptics)
                         
                         Divider()
                         
@@ -193,6 +217,16 @@ struct MovieView: View {
     
     func copyToClipboard() {
         UIPasteboard.general.string = "https://www.themoviedb.org/movie/\(movie.id)"
+    }
+    
+    func checkIfAdded() {
+        for watchlistMovie in watchlistMovies {
+            if watchlistMovie.title == movie.originalTitle {
+                watchlistButtonText = "Added to Watchlist"
+            } else {
+                watchlistButtonText = "Add to Watchlist"
+            }
+        }
     }
     
     // To be moved from here
