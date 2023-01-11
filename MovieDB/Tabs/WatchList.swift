@@ -20,7 +20,7 @@ enum SortedBy: String {
     case title = "Title"
     case dateAdded = "Date Added"
     case releaseDate = "Release Date"
-    case rating = "Rating"
+    case rating = "TMBD Rating"
 }
 
 struct WatchList: View {
@@ -58,25 +58,25 @@ struct WatchList: View {
                     Menu {
                         Button {
                             watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-                            sortedBy = SortedBy.title
+                            sortedBy = .title
                         } label: {
                             Text("Sort by Title (Alphabetical)")
                         }
                         Button {
                             watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
-                            sortedBy = SortedBy.dateAdded
+                            sortedBy = .dateAdded
                         } label: {
                             Text("Sort by Date Added")
                         }
                         Button {
                             watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "formattedReleaseDate", ascending: false)]
-                            sortedBy = SortedBy.releaseDate
+                            sortedBy = .releaseDate
                         } label: {
                             Text("Sort by Release Date")
                         }
                         Button {
                             watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "rating", ascending: false)]
-                            sortedBy = SortedBy.rating
+                            sortedBy = .rating
                         } label: {
                             Text("Sort by TMDB Rating")
                         }

@@ -11,8 +11,9 @@ import Kingfisher
 struct Search: View {
     // The movies downloaded from server
     @State private var movies = [Movie]()
+    @State private var popularMovies = [Movie]()
     @State private var cast = [CastMember]()
-    @State private var toggle = true
+//    @State private var toggle = true
     private let url = "https://image.tmdb.org/t/p/original/"
     @State var searchQuery = ""
     
@@ -22,7 +23,19 @@ struct Search: View {
                 .listStyle(.plain)
                 .navigationTitle("Search")
         }
-        .searchable(text: $searchQuery, prompt: "Search for a movie")
+        .searchable(text: $searchQuery,
+                    prompt: "Search for a movie",
+                    suggestions: {
+            ForEach(popularMovies.prefix(3)) { popularMovie in
+                Text(popularMovie.originalTitle).searchCompletion("\(popularMovie.originalTitle)")
+            }
+            
+        })
+        .onAppear {
+            Task {
+                popularMovies = await FetchData.downloadPopularMovies()
+            }
+        }
         .onSubmit(of: .search) {
             Task {
                 movies = await FetchData.downloadMovies(searchQuery: searchQuery)

@@ -85,6 +85,7 @@
 		792F742A296EBAF1007E686E /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				792F7406296DB582007E686E /* DataController.swift */,
 				792F7426296E2DF8007E686E /* WatchlistMovie+CoreDataClass.swift */,
 				792F7427296E2DF8007E686E /* WatchlistMovie+CoreDataProperties.swift */,
 			);
@@ -126,7 +127,6 @@
 				794A0FFB2876FDA4008BF0F5 /* FetchData.swift */,
 				792F73D7296B6943007E686E /* Haptics.swift */,
 				792F7403296DB4F4007E686E /* MovieDB.xcdatamodeld */,
-				792F7406296DB582007E686E /* DataController.swift */,
 				79C2DD0E285DD0FB00D6E6E4 /* Assets.xcassets */,
 				79C2DD10285DD0FB00D6E6E4 /* Preview Content */,
 			);
