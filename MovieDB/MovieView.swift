@@ -87,6 +87,7 @@ struct MovieView: View {
                                 watchlistMovie.formattedReleaseDate = movie.formattedReleaseDate
                                 watchlistMovie.overview = movie.overview
                                 watchlistMovie.dateAdded = Date.now
+                                watchlistMovie.rating = movie.voteAverage
                                 
                                 try? moc.save()
                                 hapticEngine.complexSuccess()   
@@ -182,17 +183,17 @@ struct MovieView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             Menu {
-                
-                Button {
-                    copyToClipboard()
-                } label: {
-                    Label("Copy Link", systemImage: "link")
-                }
-                
-                Button {
-                    print("Copy IMDB Link")
-                } label: {
-                    Label("Copy IMDB Link", systemImage: "link")
+                Menu("Copy Link") {
+                    Button {
+                        print("Copy IMDB Link")
+                    } label: {
+                        Label("Copy IMDB Link", systemImage: "link")
+                    }
+                    Button {
+                        copyToClipboard()
+                    } label: {
+                        Label("Copy Link", systemImage: "link")
+                    }
                 }
                 
                 Button {

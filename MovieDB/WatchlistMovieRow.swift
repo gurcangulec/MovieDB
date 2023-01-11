@@ -32,6 +32,7 @@ struct WatchlistMovieRow: View {
     
     var body: some View {
         NavigationLink {
+            // Needs to be fixed
             Text("Details")
         } label: {
             HStack {
@@ -51,20 +52,25 @@ struct WatchlistMovieRow: View {
                 }
                 GeometryReader { geo in
                     VStack(alignment: .leading, spacing: 3) {
-                        Text(watchlistMovie.title ?? "Unknown Title")
+                        Text(watchlistMovie.unwrappedTitle)
                             .font(.headline.bold())
                         
                         Text(watchlistMovie.formattedReleaseDate ?? "Unknown Date")
                             .padding(.bottom)
                         
-                        VStack {
+                        VStack(alignment: .leading) {
                             Text("Date Added")
                                 .font(.headline)
                             
-                            Print(watchlistMovie.dateAdded ?? "Unknown")
-                            Print("Date now", dateNow)
-//                            Text(watchlistMovie.dateAdded)
-//                                .font(.body)
+                            Text("\(watchlistMovie.unwrappedDate)")
+                                .font(.body)
+                        }
+                        .padding(.bottom)
+                        
+                        HStack {
+                            Image(systemName: "star.fill")
+                            Text("\(watchlistMovie.unwrappedRating)")
+                                .font(.body)
                         }
 
                     }
