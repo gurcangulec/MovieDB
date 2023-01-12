@@ -8,77 +8,135 @@
 import SwiftUI
 import Kingfisher
 
-struct SideScrollerCast: View {
-    let movie: Movie
-    let cast: [CastMember]
-    let crew: [CrewMember]
-    let url: String
+struct SideScroller: View {
+    let tvShows: [TVShow]?
+    let movies: [Movie]?
+    let cast: [CastMember]?
+    let crew: [CrewMember]?
+    let url: String?
     let geoWidth: Double
 
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            LazyHStack {
-                ForEach(cast) {castMember in
-                    NavigationLink {
-                        ActorView(movie: movie, cast: castMember)
-                    } label: {
-                        VStack {
-                            if let unwrappedPath = castMember.profilePath {
-                                let unwrappedPath = URL(string: "\(url)\(unwrappedPath)")
-                                KFImage(unwrappedPath)
-                                    .placeholder {
-                                        ProgressView()
-                                            .frame(width: geoWidth * 0.3)
+        if cast != nil {
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack {
+                    if let cast = cast {
+                        ForEach(cast) {castMember in
+                            NavigationLink {
+                                ActorView(cast: castMember)
+                            } label: {
+                                VStack {
+                                    if castMember.unwrappedProfilePath != "Unknown" {
+                                        if let url {
+                                            ImageView(urlString: "\(url)\(castMember.unwrappedProfilePath)",
+                                                      width: geoWidth * 0.27,
+                                                      height: geoWidth * 0.405 )
+                                        }
+                                        
+                                    } else {
+                                        ImageView(urlString: nil,
+                                                  width: geoWidth * 0.27,
+                                                  height: geoWidth * 0.405)
+                                        
                                     }
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: geoWidth * 0.3, height: geoWidth * 0.45)
-                                    .clipped()
-                                    .cornerRadius(10)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .stroke(
-                                                Color.gray
-                                                    .opacity(0.5)
-                                            )
-                                    )
-                                    .padding([.top, .bottom, .trailing], 5)
-
-                            } else {
-                                Image(systemName: "photo")
-                                    .font(.system(size: 20))
-                                    .frame(width: geoWidth * 0.3, height: geoWidth * 0.45)
-                                    .aspectRatio(3.8, contentMode: .fit)
-                                    .foregroundColor(.white)
-                                    .background(.gray)
-                                    .clipped()
-                                    .cornerRadius(10)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .stroke(
-                                                Color.gray
-                                                    .opacity(0.5)
-                                            )
-                                    )
-                                    .padding([.top, .bottom, .trailing], 5)
+                                    
+                                    VStack(spacing: 10) {
+                                        Text(castMember.originalName)
+                                            .font(.headline)
+                                            .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
+                                        
+                                        Text(castMember.character)
+                                            .font(.caption)
+                                            .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
+                                    }
+                                    .frame(alignment: .leading)
+                                }
+                                .padding(.bottom)
                             }
-
-                            VStack(spacing: 10) {
-                                Text(castMember.originalName)
-                                    .font(.headline)
-                                    .frame(maxWidth: geoWidth * 0.3, alignment: .leading)
-
-                                Text(castMember.character)
-                                    .font(.caption)
-                                    .frame(maxWidth: geoWidth * 0.3, alignment: .leading)
-                            }
-                            .frame(alignment: .leading)
+                            .buttonStyle(PlainButtonStyle())
                         }
-                        .padding(.bottom)
                     }
-                    .buttonStyle(PlainButtonStyle())
                 }
             }
+        } else if movies != nil {
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack {
+                    if let movies = movies {
+                        ForEach(movies) {movie in
+                            NavigationLink {
+                                MovieView(movie: movie)
+                            } label: {
+                                VStack {
+                                    if movie.unwrappedPosterPath != "Unknown" {
+                                        ImageView(urlString: "\(url ?? "")\(movie.unwrappedPosterPath)",
+                                                  width: geoWidth * 0.27,
+                                                  height: geoWidth * 0.405 )
+                                        
+                                    } else {
+                                        ImageView(urlString: nil,
+                                                  width: geoWidth * 0.27,
+                                                  height: geoWidth * 0.405)
+                                        
+                                    }
+                                    
+                                    VStack(spacing: 10) {
+                                        Text(movie.originalTitle)
+                                            .font(.headline)
+                                            .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
+                                        
+                                        Text(movie.formattedReleaseDate)
+                                            .font(.caption)
+                                            .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
+                                    }
+                                    .frame(alignment: .leading)
+                                }
+                                .padding(.bottom)
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        }
+                    }
+                }
+                .padding(.leading, 10)
+            }
+        } else {
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHStack {
+                    if let tvShows = tvShows {
+                        ForEach(tvShows) {tvShow in
+                            NavigationLink {
+                                Text("Details")
+                            } label: {
+                                VStack {
+                                    if tvShow.unwrappedPosterPath != "Unknown" {
+                                        ImageView(urlString: "\(url ?? "")\(tvShow.unwrappedPosterPath)",
+                                                  width: geoWidth * 0.27,
+                                                  height: geoWidth * 0.405 )
+                                        
+                                    } else {
+                                        ImageView(urlString: nil,
+                                                  width: geoWidth * 0.27,
+                                                  height: geoWidth * 0.405)
+                                        
+                                    }
+                                    
+                                    VStack(spacing: 10) {
+                                        Text(tvShow.originalTitle)
+                                            .font(.headline)
+                                            .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
+                                        
+                                        Text(tvShow.formattedReleaseDate)
+                                            .font(.caption)
+                                            .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
+                                    }
+                                    .frame(alignment: .leading)
+                                }
+                                .padding(.bottom)
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        }
+                    }
+                }
+            }.padding(.leading, 10)
         }
     }
 }

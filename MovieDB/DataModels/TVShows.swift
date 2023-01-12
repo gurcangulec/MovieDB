@@ -1,19 +1,17 @@
 //
-//  Movies.swift
+//  TVShows.swift
 //  MovieDB
 //
-//  Created by Gürcan Güleç on 18.06.2022.
+//  Created by Gürcan Güleç on 12.01.2023.
 //
 
 import Foundation
 
-// Struct for results
-struct Movies: Decodable {
-    let results: [Movie]
+struct TVShows: Decodable {
+    let results: [TVShow]
 }
 
-// Struct for each movie
-struct Movie: Decodable, Identifiable {
+struct TVShow: Decodable, Identifiable {
     let id: Int
     let originalTitle: String
     let overview: String
@@ -24,10 +22,10 @@ struct Movie: Decodable, Identifiable {
 
     enum CodingKeys: String, CodingKey {
         case id = "id"
-        case originalTitle = "original_title"
+        case originalTitle = "original_name"
         case overview = "overview"
         case posterPath = "poster_path"
-        case releaseDate = "release_date"
+        case releaseDate = "first_air_date"
         case backdropPath = "backdrop_path"
         case voteAverage = "vote_average"
     }
@@ -52,6 +50,4 @@ struct Movie: Decodable, Identifiable {
     var convertToString: String {
            return String(format: "%.1f", voteAverage)
     }
-    
-    static let example = Movie(id: 12, originalTitle: "Some Movie", overview: "An amazing title to be watched and remembered for the rest of our lives.", posterPath: "/huD4cMhHtLkxcdM6PbKBcivBZuE.jpg", releaseDate: "11-11-2022", backdropPath: "/huD4cMhHtLkxcdM6PbKBcivBZuE.jpg", voteAverage: 1.0)
 }

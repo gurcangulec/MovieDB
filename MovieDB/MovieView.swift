@@ -134,7 +134,7 @@ struct MovieView: View {
 //                            .padding(.bottom)
                         }
                         
-                        SideScrollerCast(movie: movie, cast: cast, crew: crew, url: url, geoWidth: geo.size.width)
+                        SideScroller(tvShows: nil, movies: nil, cast: cast, crew: nil, url: url, geoWidth: geo.size.width)
                         
                         Divider()
                         

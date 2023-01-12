@@ -9,7 +9,6 @@ import SwiftUI
 import Kingfisher
 
 struct ActorView: View {
-    let movie: Movie
     let cast: CastMember
     @State private var actor = Actor()
     @State private var relatedMovies = [Movie]()
@@ -155,6 +154,6 @@ struct ActorView: View {
 
 struct ActorView_Previews: PreviewProvider {
     static var previews: some View {
-        ActorView(movie: .example, cast: .example)
+        ActorView(cast: .example)
     }
 }

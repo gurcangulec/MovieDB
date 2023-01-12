@@ -54,5 +54,9 @@ struct CastMember: Codable, Identifiable {
         case job = "job"
     }
     
+    var unwrappedProfilePath: String {
+        profilePath ?? "Unknown"
+    }
+    
     static let example = CastMember(id: 100, originalName: "Matthew Mcconaughey", character: "Cooper", profilePath: "2mcg07areWJ4EAtDvafRz7eDVvb.jpg", job: "Police")
 }
