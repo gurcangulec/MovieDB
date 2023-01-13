@@ -89,8 +89,14 @@ struct MovieView: View {
                                 watchlistMovie.dateAdded = Date.now
                                 watchlistMovie.rating = movie.voteAverage
                                 
-                                try? moc.save()
-                                hapticEngine.complexSuccess()   
+                                do {
+                                    try moc.save()
+                                } catch {
+                                    print("Something went wrong while saving: \(error.localizedDescription)")
+                                }
+                                
+                                hapticEngine.complexSuccess()
+                                
                             } label: {
                                 Label(self.watchlistButtonText, systemImage: "plus")
                                     .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
@@ -113,7 +119,7 @@ struct MovieView: View {
                                 Spacer()
                             }
                         }
-                        .onAppear(perform: checkIfAdded)
+//                        .onAppear(perform: checkIfAdded)
                         .onAppear(perform: hapticEngine.prepareHaptics)
                         
                         Divider()
@@ -220,15 +226,15 @@ struct MovieView: View {
         UIPasteboard.general.string = "https://www.themoviedb.org/movie/\(movie.id)"
     }
     
-    func checkIfAdded() {
-        for watchlistMovie in watchlistMovies {
-            if watchlistMovie.title == movie.originalTitle {
-                watchlistButtonText = "Added to Watchlist"
-            } else {
-                watchlistButtonText = "Add to Watchlist"
-            }
-        }
-    }
+//    func checkIfAdded() {
+//        for watchlistMovie in watchlistMovies {
+//            if watchlistMovie.title == movie.originalTitle {
+//                watchlistButtonText = "Added to Watchlist"
+//            } else {
+//                watchlistButtonText = "Add to Watchlist"
+//            }
+//        }
+//    }
     
     // To be moved from here
     func addToWatchlist() { }

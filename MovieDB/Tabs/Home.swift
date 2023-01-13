@@ -13,62 +13,35 @@ struct Home: View {
     @State private var popularTVShows = [TVShow]()
     @State private var topRatedMovies = [Movie]()
     @State private var topRatedTVShows = [TVShow]()
+    @State private var onTheAirTVShows = [TVShow]()
+    
+    private let popularMoviesString = "Popular Movies"
+    private let upcomingMoviesString = "Upcoming Movies"
+    private let popularTVShowsString = "Popular TV Shows"
+    private let topRatedMoviesString = "Top Rated Movies"
+    private let topRatedTVShowsString = "Top Rated TV Shows"
+    private let onTheAirTVShowsString = "On The Air"
     
     private let url = "https://image.tmdb.org/t/p/original/"
     
     var body: some View {
         GeometryReader { geo in
+            
+            let width = geo.size.width
+            let height = geo.size.height * 0.001
+            
             NavigationView {
                 VStack {
                     ScrollView(showsIndicators: false) {
-                        VStack(alignment: .leading) {
-                            Text("Popular Movies")
-                                .font(.title2.weight(.semibold))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.bottom, geo.size.height * 0.001)
-                                .padding(.leading, 15)
-                            SideScroller(tvShows: nil, movies: popularMovies, cast: nil, crew: nil, url: url, geoWidth: geo.size.width)
-                        }
-                        
-                        VStack(alignment: .leading) {
-                            Text("Upcoming Movies")
-                                .font(.title2.weight(.semibold))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.bottom, geo.size.height * 0.001)
-                                .padding(.leading, 15)
-                            SideScroller(tvShows: nil, movies: upcomingMovies, cast: nil, crew: nil, url: url, geoWidth: geo.size.width)
-                        }
-                        
-                        VStack(alignment: .leading) {
-                            Text("Popular TV Shows")
-                                .font(.title2.weight(.semibold))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.bottom, geo.size.height * 0.001)
-                                .padding(.leading, 15)
-                            SideScroller(tvShows: popularTVShows, movies: nil, cast: nil, crew: nil, url: url, geoWidth: geo.size.width)
-                        }
-
-                        VStack(alignment: .leading) {
-                            Text("Top Rated Movies")
-                                .font(.title2.weight(.semibold))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.bottom, geo.size.height * 0.001)
-                                .padding(.leading, 15)
-                            SideScroller(tvShows: nil, movies: topRatedMovies, cast: nil, crew: nil, url: url, geoWidth: geo.size.width)
-                        }
-
-                        VStack(alignment: .leading) {
-                            Text("Top Rated TV Shows")
-                                .font(.title2.weight(.semibold))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.bottom, geo.size.height * 0.001)
-                                .padding(.leading, 15)
-                            SideScroller(tvShows: topRatedTVShows, movies: nil, cast: nil, crew: nil, url: url, geoWidth: geo.size.width)
-                        }
+                        HomeSectionsView(title: popularMoviesString, width: width, height: height, movies: popularMovies, tvShows: nil)
+                        HomeSectionsView(title: popularTVShowsString, width: width, height: height, movies: nil, tvShows: popularTVShows)
+                        HomeSectionsView(title: upcomingMoviesString, width: width, height: height, movies: upcomingMovies, tvShows: nil)
+                        HomeSectionsView(title: topRatedMoviesString, width: width, height: height, movies: topRatedMovies, tvShows: nil)
+                        HomeSectionsView(title: onTheAirTVShowsString, width: width, height: height, movies: nil, tvShows: onTheAirTVShows)
+                        HomeSectionsView(title: topRatedTVShowsString, width: width, height: height, movies: nil, tvShows: topRatedTVShows)
                     }
                 }
-//                .padding(.leading, 10)
-                .navigationTitle("MovieDB")
+                .navigationTitle("Home")
             }
             .onAppear {
                 Task {
@@ -77,6 +50,7 @@ struct Home: View {
                     popularTVShows = await FetchData.downloadPopularTVShows()
                     topRatedMovies = await FetchData.downloadTopRatedMovies()
                     topRatedTVShows = await FetchData.downloadTopRatedTVShows()
+                    onTheAirTVShows = await FetchData.downloadOnTheAirTVShows()
                 }
             }
         }

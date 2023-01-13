@@ -7,7 +7,7 @@
 
 /*
  
- Try to combine this view as a generic MovieRow View later.
+ Try to combine this view as a generic MovieAndTVShowRow View later.
  
  */
 

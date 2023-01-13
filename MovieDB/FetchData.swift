@@ -35,6 +35,30 @@ struct FetchData {
         return []
     }
     
+    static func downloadTVShows(searchQuery: String) async -> [TVShow] {
+            let replaced = searchQuery.replacingOccurrences(of: " ", with: "+").lowercased()
+            // Check URL
+            guard let url = URL(string: "\(baseURL)search/tv?api_key=\(APIKey)&query=\(replaced)") else {
+                print("Invalid URL")
+                return []
+            }
+            
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                
+                let decoder = JSONDecoder()
+                
+                // Decode from data
+                if let decoded = try? decoder.decode(TVShows.self, from: data) {
+                    return decoded.results
+                }
+            } catch {
+                print("Invalid Something")
+            }
+        return []
+    }
+    
+    
     static func downloadPopularMovies() async-> [Movie] {
             // Check URL
             guard let url = URL(string: "\(baseURL)movie/popular?api_key=\(APIKey)&language=en-US&page=1") else {
@@ -206,6 +230,28 @@ struct FetchData {
     static func downloadTopRatedTVShows() async-> [TVShow] {
             // Check URL
             guard let url = URL(string: "\(baseURL)tv/top_rated?api_key=\(APIKey)&language=en-US&page=1") else {
+                print("Invalid URL")
+                return []
+            }
+            
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                
+                let decoder = JSONDecoder()
+                
+                // Decode from data
+                if let decoded = try? decoder.decode(TVShows.self, from: data) {
+                    return decoded.results
+                }
+            } catch {
+                print("Invalid Something")
+            }
+        return []
+    }
+    
+    static func downloadOnTheAirTVShows() async-> [TVShow] {
+            // Check URL
+            guard let url = URL(string: "\(baseURL)tv/on_the_air?api_key=\(APIKey)&language=en-US&page=1") else {
                 print("Invalid URL")
                 return []
             }
