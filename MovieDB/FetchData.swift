@@ -271,4 +271,26 @@ struct FetchData {
         return []
     }
     
+    static func downloadSpecificMovie(movieId: Int) async -> MovieDetails {
+            // Check URL
+            guard let url = URL(string: "\(baseURL)movie/\(movieId)?api_key=\(APIKey)") else {
+                print("Invalid URL")
+                return MovieDetails(imdbId: "")
+            }
+            
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                
+                let decoder = JSONDecoder()
+                
+                // Decode from data
+                if let decoded = try? decoder.decode(MovieDetails.self, from: data) {
+                    return decoded
+                }
+            } catch {
+                print("Invalid Something")
+            }
+        return MovieDetails(imdbId: "")
+    }
+    
 }

@@ -16,14 +16,14 @@ struct MovieView: View {
 //    @State private var engine: CHHapticEngine?
     @StateObject var hapticEngine = Haptics()
     
+    @State private var showingSheet = false
     @State private var watchlistButtonText = "Add to Watchlist"
     
     let movie: Movie
+    @State private var movieDetails = MovieDetails()
     @State private var cast = [CastMember]()
     @State private var crew = [CrewMember]()
     private let url = "https://image.tmdb.org/t/p/original/"
-    
-    @State private var showShareSheet = false
     
     var writers: [String] {
         var writtenByArray = [String]()
@@ -65,6 +65,7 @@ struct MovieView: View {
                             .font(.system(size: 60))
                             .frame(width: geo.size.width, height: geo.size.width * 0.55)
                     }
+                        
                     
                     VStack(alignment: .leading) {
                         Divider()
@@ -79,15 +80,15 @@ struct MovieView: View {
                                 .padding(.bottom, geo.size.height * 0.01)
                             
                             Button {
-                                
-                                let watchlistMovie = WatchlistMovie(context: moc)
-                                watchlistMovie.id = UUID()
-                                watchlistMovie.title = movie.originalTitle
-                                watchlistMovie.posterPath = movie.posterPath
-                                watchlistMovie.formattedReleaseDate = movie.formattedReleaseDate
-                                watchlistMovie.overview = movie.overview
-                                watchlistMovie.dateAdded = Date.now
-                                watchlistMovie.rating = movie.voteAverage
+                                showingSheet.toggle()
+//                                let watchlistMovie = WatchlistMovie(context: moc)
+//                                watchlistMovie.id = UUID()
+//                                watchlistMovie.title = movie.originalTitle
+//                                watchlistMovie.posterPath = movie.posterPath
+//                                watchlistMovie.formattedReleaseDate = movie.formattedReleaseDate
+//                                watchlistMovie.overview = movie.overview
+//                                watchlistMovie.dateAdded = Date.now
+//                                watchlistMovie.rating = movie.voteAverage
                                 
                                 do {
                                     try moc.save()
@@ -118,6 +119,9 @@ struct MovieView: View {
                                 Spacer()
                                 Spacer()
                             }
+                        }
+                        .sheet(isPresented: $showingSheet) {
+                            AddToWatchlistView(movie: movie, width: geo.size.width * 0.54, height: geo.size.width * 0.81)
                         }
 //                        .onAppear(perform: checkIfAdded)
                         .onAppear(perform: hapticEngine.prepareHaptics)
@@ -181,6 +185,7 @@ struct MovieView: View {
                     .task {
                         cast = await FetchData.downloadCast(movieId: movie.id)
                         crew = await FetchData.downloadCrew(movieId: movie.id)
+                        movieDetails = await FetchData.downloadSpecificMovie(movieId: movie.id)
                     }
                 }
             }
@@ -191,14 +196,29 @@ struct MovieView: View {
             Menu {
                 Menu("Copy Link") {
                     Button {
-                        print("Copy IMDB Link")
+                        copyToClipboard()
+                    } label: {
+                        Label("Copy TMDB Link", systemImage: "link")
+                    }
+                    
+                    Button {
+                        copyToClipboardIMDB()
                     } label: {
                         Label("Copy IMDB Link", systemImage: "link")
                     }
+                }
+                
+                Menu("Share") {
                     Button {
-                        copyToClipboard()
+                        shareButton()
                     } label: {
-                        Label("Copy Link", systemImage: "link")
+                        Label("Share TMBD Link", systemImage: "square.and.arrow.up")
+                    }
+                    
+                    Button {
+                        shareImdbButton()
+                    } label: {
+                        Label("Share IMDB Link", systemImage: "square.and.arrow.up")
                     }
                 }
                 
@@ -208,12 +228,6 @@ struct MovieView: View {
                     Label("Add to Watchlist", systemImage: "play.circle.fill")
                 }
                 
-                Button {
-                    shareButton()
-                    
-                } label: {
-                    Label("Share", systemImage: "square.and.arrow.up")
-                }
             } label: {
                 Label("Options", systemImage: "ellipsis")
             }
@@ -224,6 +238,10 @@ struct MovieView: View {
     
     func copyToClipboard() {
         UIPasteboard.general.string = "https://www.themoviedb.org/movie/\(movie.id)"
+    }
+    
+    func copyToClipboardIMDB() {
+        UIPasteboard.general.string = "https://www.imdb.com/title/\(movieDetails.unwrappedImdbId)"
     }
     
 //    func checkIfAdded() {
@@ -241,6 +259,16 @@ struct MovieView: View {
     func shareButton() {
         
         let activityController = UIActivityViewController(activityItems: ["https://www.themoviedb.org/movie/\(movie.id)"], applicationActivities: nil)
+        
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        let window = windowScene?.windows.first
+        
+        window?.rootViewController!.present(activityController, animated: true, completion: nil)
+    }
+    func shareImdbButton() {
+        
+        let activityController = UIActivityViewController(activityItems: ["https://www.imdb.com/title/\(movieDetails.unwrappedImdbId)"], applicationActivities: nil)
         
         let scenes = UIApplication.shared.connectedScenes
         let windowScene = scenes.first as? UIWindowScene

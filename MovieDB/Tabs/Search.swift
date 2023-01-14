@@ -66,7 +66,7 @@ struct Search: View {
             //                }
             //            })
         }
-        
+        .disableAutocorrection(true)
         .onAppear {
             Task {
                 popularMovies = await FetchData.downloadPopularMovies()
