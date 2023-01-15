@@ -25,7 +25,7 @@ struct ImageView: View {
                         .frame(width: width)
                 }
                 .resizable()
-                .scaledToFit()
+                .scaledToFill()
                 .frame(width: width, height: height)
                 .clipped()
                 .cornerRadius(10)

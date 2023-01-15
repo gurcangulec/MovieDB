@@ -36,6 +36,10 @@ struct Movie: Decodable, Identifiable {
         posterPath ?? "Unknown"
     }
     
+    var unwrappedBackdropPath: String {
+        backdropPath ?? "Unknown"
+    }
+    
     var formattedReleaseDate: String {
         if let releaseDate = releaseDate {
             let formatter = DateFormatter()

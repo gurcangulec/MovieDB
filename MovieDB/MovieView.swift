@@ -75,35 +75,6 @@ struct MovieView: View {
                                 .font(.title.weight(.semibold))
                                 .padding(.bottom, geo.size.height * 0.01)
                             
-                            Text(movie.overview)
-                                .font(.body)
-                                .padding(.bottom, geo.size.height * 0.01)
-                            
-                            Button {
-                                showingSheet.toggle()
-//                                let watchlistMovie = WatchlistMovie(context: moc)
-//                                watchlistMovie.id = UUID()
-//                                watchlistMovie.title = movie.originalTitle
-//                                watchlistMovie.posterPath = movie.posterPath
-//                                watchlistMovie.formattedReleaseDate = movie.formattedReleaseDate
-//                                watchlistMovie.overview = movie.overview
-//                                watchlistMovie.dateAdded = Date.now
-//                                watchlistMovie.rating = movie.voteAverage
-                                
-                                do {
-                                    try moc.save()
-                                } catch {
-                                    print("Something went wrong while saving: \(error.localizedDescription)")
-                                }
-                                
-                                hapticEngine.complexSuccess()
-                                
-                            } label: {
-                                Label(self.watchlistButtonText, systemImage: "plus")
-                                    .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
-                            }
-                            .buttonStyle(.bordered)
-                            
                             HStack {
                                 Image(systemName: "star.fill")
                                 Text("\(movie.convertToString)/10")
@@ -118,6 +89,63 @@ struct MovieView: View {
                                 Spacer()
                                 Spacer()
                                 Spacer()
+                            }
+                            .padding(.bottom, geo.size.height * 0.01)
+                            
+                            Text(movie.overview)
+                                .font(.body)
+                                .padding(.bottom, geo.size.height * 0.01)
+                            
+                            HStack {
+                                Button {
+                                    showingSheet.toggle()
+                                    //                                let watchlistMovie = WatchlistMovie(context: moc)
+                                    //                                watchlistMovie.id = UUID()
+                                    //                                watchlistMovie.title = movie.originalTitle
+                                    //                                watchlistMovie.posterPath = movie.posterPath
+                                    //                                watchlistMovie.formattedReleaseDate = movie.formattedReleaseDate
+                                    //                                watchlistMovie.overview = movie.overview
+                                    //                                watchlistMovie.dateAdded = Date.now
+                                    //                                watchlistMovie.rating = movie.voteAverage
+                                    
+                                    do {
+                                        try moc.save()
+                                    } catch {
+                                        print("Something went wrong while saving: \(error.localizedDescription)")
+                                    }
+                                    
+                                    hapticEngine.complexSuccess()
+                                    
+                                } label: {
+                                    Label("Watchlist", systemImage: "plus")
+                                        .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                }
+                                .buttonStyle(.bordered)
+                                
+                                Button {
+                                    showingSheet.toggle()
+                                    //                                let watchlistMovie = WatchlistMovie(context: moc)
+                                    //                                watchlistMovie.id = UUID()
+                                    //                                watchlistMovie.title = movie.originalTitle
+                                    //                                watchlistMovie.posterPath = movie.posterPath
+                                    //                                watchlistMovie.formattedReleaseDate = movie.formattedReleaseDate
+                                    //                                watchlistMovie.overview = movie.overview
+                                    //                                watchlistMovie.dateAdded = Date.now
+                                    //                                watchlistMovie.rating = movie.voteAverage
+                                    
+                                    do {
+                                        try moc.save()
+                                    } catch {
+                                        print("Something went wrong while saving: \(error.localizedDescription)")
+                                    }
+                                    
+                                    hapticEngine.complexSuccess()
+                                    
+                                } label: {
+                                    Label("Rate", systemImage: "star.fill")
+                                        .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                }
+                                .buttonStyle(.bordered)
                             }
                         }
                         .sheet(isPresented: $showingSheet) {
