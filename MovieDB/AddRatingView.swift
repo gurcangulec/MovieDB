@@ -81,8 +81,14 @@ struct AddRatingView: View {
                     Spacer()
                     
                     Button {
-                        let rateMovie = WatchlistMovie(context: moc)
+                        let rateMovie = RatedMovie(context: moc)
+                        rateMovie.id = Int16(movie.id)
                         rateMovie.userRating = Int16(rating)
+                        rateMovie.title = movie.originalTitle
+                        rateMovie.formattedReleaseDate = movie.formattedReleaseDate
+                        rateMovie.dateAdded = Date.now
+                        rateMovie.posterPath = movie.unwrappedPosterPath
+                        rateMovie.rating = movie.voteAverage
                         
                         try? moc.save()
                         dismiss()

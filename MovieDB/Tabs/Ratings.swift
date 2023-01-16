@@ -6,13 +6,23 @@
 //
 
 import SwiftUI
+import CoreData
+
+extension RatedMovie {
+  static var defaultFetchRequest: NSFetchRequest<RatedMovie> {
+    let request: NSFetchRequest<RatedMovie> = RatedMovie.fetchRequest()
+    request.sortDescriptors = [NSSortDescriptor(key: "userRating", ascending: true)]
+    return request
+  }
+}
 
 struct Ratings: View {
     
+    @Environment(\.managedObjectContext) var moc
     @State var sortedBy = SortedBy.title
     
-    @FetchRequest(fetchRequest: WatchlistMovie.defaultFetchRequest)
-    var ratedMovies: FetchedResults<WatchlistMovie>
+    @FetchRequest(fetchRequest: RatedMovie.defaultFetchRequest)
+    var ratedMovies: FetchedResults<RatedMovie>
     
     var body: some View {
         NavigationView {
@@ -35,9 +45,9 @@ struct Ratings: View {
                     }
                     
                     ForEach(ratedMovies) { ratedMovie in
-                        //                    ratedMovie(watchlistMovie: ratedMovie)
+                        RatingMovieRow(ratedMovie: ratedMovie)
                     }
-                    //                .onDelete(perform: deleteWatchlistMovies)
+                                    .onDelete(perform: deleteRatedMovies)
                     
                 }
                 .listStyle(.plain)
@@ -82,6 +92,15 @@ struct Ratings: View {
                 }
             }
         }
+    }
+    func deleteRatedMovies(at offsets: IndexSet) {
+        for offset in offsets {
+            let ratedMovie = ratedMovies[offset]
+            
+            moc.delete(ratedMovie)
+        }
+        
+        try? moc.save()
     }
 }
 

@@ -25,15 +25,15 @@ extension View {
 
 struct WatchlistMovieRow: View {
     @ObservedObject var watchlistMovie: WatchlistMovie
-    let url = "https://image.tmdb.org/t/p/original/"
+    private let url = "https://image.tmdb.org/t/p/original/"
     
     let dateFormatter = DateFormatter()
     let dateNow = Date.now
     
     var body: some View {
         NavigationLink {
-            // Needs to be fixed
-            Text("Details")
+            
+//            MovieView(movie: movie)
         } label: {
             HStack {
                 if let unwrappedPath = watchlistMovie.posterPath {

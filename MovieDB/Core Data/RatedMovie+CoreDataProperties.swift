@@ -1,8 +1,8 @@
 //
-//  WatchlistMovie+CoreDataProperties.swift
+//  RatedMovie+CoreDataProperties.swift
 //  MovieDB
 //
-//  Created by Gürcan Güleç on 11.01.2023.
+//  Created by Gürcan Güleç on 16.01.2023.
 //
 //
 
@@ -10,20 +10,19 @@ import Foundation
 import CoreData
 
 
-extension WatchlistMovie {
+extension RatedMovie {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<WatchlistMovie> {
-        return NSFetchRequest<WatchlistMovie>(entityName: "WatchlistMovie")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<RatedMovie> {
+        return NSFetchRequest<RatedMovie>(entityName: "RatedMovie")
     }
 
+    @NSManaged public var id: Int16
+    @NSManaged public var userRating: Int16
     @NSManaged public var dateAdded: Date?
     @NSManaged public var formattedReleaseDate: String?
-    @NSManaged public var id: Int16
-    @NSManaged public var overview: String?
     @NSManaged public var posterPath: String?
     @NSManaged public var title: String?
     @NSManaged public var rating: Double
-    @NSManaged public var userRating: Int16
     
     public var unwrappedTitle: String {
         title ?? "Unknown Title"
@@ -39,9 +38,8 @@ extension WatchlistMovie {
     public var unwrappedRating: String {
         String(format: "%.1f", rating)
     }
-
 }
 
-extension WatchlistMovie : Identifiable {
+extension RatedMovie : Identifiable {
 
 }

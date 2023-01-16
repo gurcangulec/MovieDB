@@ -67,7 +67,7 @@ struct AddToWatchlistView: View {
                     
                     Button {
                         let watchlistMovie = WatchlistMovie(context: moc)
-                        watchlistMovie.id = UUID()
+                        watchlistMovie.id = Int16(movie.id)
                         watchlistMovie.title = movie.originalTitle
                         watchlistMovie.posterPath = movie.posterPath
                         watchlistMovie.formattedReleaseDate = movie.formattedReleaseDate

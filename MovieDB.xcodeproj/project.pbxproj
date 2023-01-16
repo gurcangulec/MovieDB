@@ -34,6 +34,8 @@
 		798BFA5429755AF70017BAC4 /* AddRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798BFA5329755AF70017BAC4 /* AddRatingView.swift */; };
 		798BFA74297562270017BAC4 /* Ratings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798BFA73297562270017BAC4 /* Ratings.swift */; };
 		798BFA76297564F10017BAC4 /* RatingMovieRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798BFA75297564F10017BAC4 /* RatingMovieRow.swift */; };
+		798BFA7B2975856D0017BAC4 /* RatedMovie+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798BFA792975856D0017BAC4 /* RatedMovie+CoreDataClass.swift */; };
+		798BFA7C2975856D0017BAC4 /* RatedMovie+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798BFA7A2975856D0017BAC4 /* RatedMovie+CoreDataProperties.swift */; };
 		799EC4752875A73000680D07 /* MovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799EC4742875A73000680D07 /* MovieView.swift */; };
 		79A50EE4286C5BB6002D2B1F /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 79A50EE3286C5BB6002D2B1F /* Kingfisher */; };
 		79C2DD0B285DD0F900D6E6E4 /* MovieDBApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C2DD0A285DD0F900D6E6E4 /* MovieDBApp.swift */; };
@@ -75,6 +77,8 @@
 		798BFA5329755AF70017BAC4 /* AddRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRatingView.swift; sourceTree = "<group>"; };
 		798BFA73297562270017BAC4 /* Ratings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ratings.swift; sourceTree = "<group>"; };
 		798BFA75297564F10017BAC4 /* RatingMovieRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingMovieRow.swift; sourceTree = "<group>"; };
+		798BFA792975856D0017BAC4 /* RatedMovie+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RatedMovie+CoreDataClass.swift"; sourceTree = "<group>"; };
+		798BFA7A2975856D0017BAC4 /* RatedMovie+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RatedMovie+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		799EC4742875A73000680D07 /* MovieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieView.swift; sourceTree = "<group>"; };
 		79C2DD07285DD0F900D6E6E4 /* MovieDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79C2DD0A285DD0F900D6E6E4 /* MovieDBApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDBApp.swift; sourceTree = "<group>"; };
@@ -108,6 +112,8 @@
 				792F7406296DB582007E686E /* DataController.swift */,
 				792F7426296E2DF8007E686E /* WatchlistMovie+CoreDataClass.swift */,
 				792F7427296E2DF8007E686E /* WatchlistMovie+CoreDataProperties.swift */,
+				798BFA792975856D0017BAC4 /* RatedMovie+CoreDataClass.swift */,
+				798BFA7A2975856D0017BAC4 /* RatedMovie+CoreDataProperties.swift */,
 			);
 			path = "Core Data";
 			sourceTree = "<group>";
@@ -292,6 +298,7 @@
 				792F7428296E2DF8007E686E /* WatchlistMovie+CoreDataClass.swift in Sources */,
 				79CC882B28A40C0C00E1E37E /* FullCrewView.swift in Sources */,
 				79C3F6C62876F1FC005CB367 /* Cast.swift in Sources */,
+				798BFA7C2975856D0017BAC4 /* RatedMovie+CoreDataProperties.swift in Sources */,
 				794A10022879E377008BF0F5 /* RelatedMovies.swift in Sources */,
 				792F7409296DC633007E686E /* WatchlistMovieRow.swift in Sources */,
 				798BFA5429755AF70017BAC4 /* AddRatingView.swift in Sources */,
@@ -301,6 +308,7 @@
 				797863CD286F983A00A05498 /* Search.swift in Sources */,
 				7968890428958B16001BF304 /* Config.swift in Sources */,
 				79C2DD0B285DD0F900D6E6E4 /* MovieDBApp.swift in Sources */,
+				798BFA7B2975856D0017BAC4 /* RatedMovie+CoreDataClass.swift in Sources */,
 				792F743B297070DB007E686E /* TVShows.swift in Sources */,
 				799EC4752875A73000680D07 /* MovieView.swift in Sources */,
 				79806DD02970DF97006B6C0A /* TVShowView.swift in Sources */,
