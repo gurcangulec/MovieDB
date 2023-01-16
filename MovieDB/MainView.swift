@@ -8,21 +8,29 @@
 import SwiftUI
 
 struct MainView: View {
+    
     var body: some View {
         TabView {
             Home()
                 .tabItem {
                     Label("Home", systemImage: "house.circle")
                 }
-            
+                .tag(0)
             Search()
                 .tabItem {
                     Label("Search", systemImage: "magnifyingglass.circle")
                 }
+                .tag(1)
             WatchList()
                 .tabItem {
                     Label("Watchlist", systemImage: "play.circle")
                 }
+                .tag(2)
+            Ratings()
+                .tabItem {
+                    Label("Ratings", systemImage: "star.circle")
+                }
+                .tag(3)
         }
         // Fixes the inconsistency regarding the TabView background
         .onAppear {

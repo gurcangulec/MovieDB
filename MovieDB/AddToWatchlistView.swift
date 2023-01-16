@@ -16,6 +16,7 @@ struct AddToWatchlistView: View {
     @State private var showImage = true
     @FocusState private var textEditorFocused: Bool
     @Environment(\.dismiss) var dismiss
+    @Environment(\.managedObjectContext) var moc
     
     private let url = "https://image.tmdb.org/t/p/original/"
     
@@ -26,9 +27,10 @@ struct AddToWatchlistView: View {
                     if showImage {
                         VStack {
                             ImageView(urlString: "\(url)\(movie.unwrappedPosterPath)", width: width, height: height)
-                                .padding()
+                                .padding(.bottom, 10)
                             Text("Would you like to add a note?")
                                 .multilineTextAlignment(.center)
+                                .font(.body.bold())
 //                                .padding()
                         }
                         .transition(.move(edge: .top))
@@ -64,6 +66,21 @@ struct AddToWatchlistView: View {
                     Spacer()
                     
                     Button {
+                        let watchlistMovie = WatchlistMovie(context: moc)
+                        watchlistMovie.id = UUID()
+                        watchlistMovie.title = movie.originalTitle
+                        watchlistMovie.posterPath = movie.posterPath
+                        watchlistMovie.formattedReleaseDate = movie.formattedReleaseDate
+                        watchlistMovie.overview = movie.overview
+                        watchlistMovie.dateAdded = Date.now
+                        watchlistMovie.rating = movie.voteAverage
+                        
+                        do {
+                            try moc.save()
+                        } catch {
+                            print("Something went wrong while saving: \(error.localizedDescription)")
+                        }
+                        
                         dismiss()
                     } label: {
                         Label("Add to Watchlist", systemImage: "plus")
@@ -73,7 +90,7 @@ struct AddToWatchlistView: View {
                     .padding(.bottom, 10)
                     
                 }
-                .frame(maxWidth: geo.size.width * 0.8)
+                .frame(maxWidth: geo.size.width * 0.9)
                 .navigationTitle("Add to Watchlist")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {

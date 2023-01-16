@@ -20,6 +20,7 @@ struct Home: View {
     @State private var topRatedMovies = [Movie]()
     @State private var topRatedTVShows = [TVShow]()
     @State private var onTheAirTVShows = [TVShow]()
+    @State private var sliderMovies = [Movie]()
     
     private let popularMoviesString = "Popular Movies"
     private let upcomingMoviesString = "Upcoming Movies"
@@ -42,8 +43,9 @@ struct Home: View {
                     ScrollView(showsIndicators: false) {
                         // Foreground
                         TabView{
-                            ForEach(popularMovies.indices, id: \.self) { index in
+                            ForEach(sliderMovies.indices, id: \.self) { index in
                                 fetchView(count: count, width: width * 0.97, height: geo.size.height * 0.3)
+                                    .tag(count)
 //                                ZStack(alignment: .center) {
 //                                    NavigationLink {
 //                                        MovieView(movie: popularMovies[index])
@@ -117,6 +119,7 @@ struct Home: View {
                     topRatedMovies = await FetchData.downloadTopRatedMovies()
                     topRatedTVShows = await FetchData.downloadTopRatedTVShows()
                     onTheAirTVShows = await FetchData.downloadOnTheAirTVShows()
+                    sliderMovies = await FetchData.downloadPopularMovies()
                 }
             }
         }
@@ -138,6 +141,7 @@ struct Home: View {
                 .clipShape(Capsule())
                 .offset(y: 85)
         }
-        .tag(count)
+//        Print(popularMovies[count].originalTitle)
+//        Print(sliderMovies[count].originalTitle)
     }
 }

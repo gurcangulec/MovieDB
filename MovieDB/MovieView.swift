@@ -16,7 +16,8 @@ struct MovieView: View {
 //    @State private var engine: CHHapticEngine?
     @StateObject var hapticEngine = Haptics()
     
-    @State private var showingSheet = false
+    @State private var showingSheetWatchlist = false
+    @State private var showingSheetRating = false
     @State private var watchlistButtonText = "Add to Watchlist"
     
     let movie: Movie
@@ -98,15 +99,7 @@ struct MovieView: View {
                             
                             HStack {
                                 Button {
-                                    showingSheet.toggle()
-                                    //                                let watchlistMovie = WatchlistMovie(context: moc)
-                                    //                                watchlistMovie.id = UUID()
-                                    //                                watchlistMovie.title = movie.originalTitle
-                                    //                                watchlistMovie.posterPath = movie.posterPath
-                                    //                                watchlistMovie.formattedReleaseDate = movie.formattedReleaseDate
-                                    //                                watchlistMovie.overview = movie.overview
-                                    //                                watchlistMovie.dateAdded = Date.now
-                                    //                                watchlistMovie.rating = movie.voteAverage
+                                    showingSheetWatchlist.toggle()
                                     
                                     do {
                                         try moc.save()
@@ -123,7 +116,7 @@ struct MovieView: View {
                                 .buttonStyle(.bordered)
                                 
                                 Button {
-                                    showingSheet.toggle()
+                                    showingSheetRating.toggle()
                                     //                                let watchlistMovie = WatchlistMovie(context: moc)
                                     //                                watchlistMovie.id = UUID()
                                     //                                watchlistMovie.title = movie.originalTitle
@@ -133,11 +126,7 @@ struct MovieView: View {
                                     //                                watchlistMovie.dateAdded = Date.now
                                     //                                watchlistMovie.rating = movie.voteAverage
                                     
-                                    do {
-                                        try moc.save()
-                                    } catch {
-                                        print("Something went wrong while saving: \(error.localizedDescription)")
-                                    }
+                                    
                                     
                                     hapticEngine.complexSuccess()
                                     
@@ -148,9 +137,12 @@ struct MovieView: View {
                                 .buttonStyle(.bordered)
                             }
                         }
-                        .sheet(isPresented: $showingSheet) {
+                        .sheet(isPresented: $showingSheetWatchlist) {
                             AddToWatchlistView(movie: movie, width: geo.size.width * 0.54, height: geo.size.width * 0.81)
                         }
+                        .sheet(isPresented: $showingSheetRating, content: {
+                            AddRatingView(movie: movie, width: geo.size.width * 0.54, height: geo.size.width * 0.81)
+                        })
 //                        .onAppear(perform: checkIfAdded)
                         .onAppear(perform: hapticEngine.prepareHaptics)
                         
@@ -211,6 +203,11 @@ struct MovieView: View {
                     }
                     .padding(.horizontal)
                     .task {
+                        cast = await FetchData.downloadCast(movieId: movie.id)
+                        crew = await FetchData.downloadCrew(movieId: movie.id)
+                        movieDetails = await FetchData.downloadSpecificMovie(movieId: movie.id)
+                    }
+                    .refreshable {
                         cast = await FetchData.downloadCast(movieId: movie.id)
                         crew = await FetchData.downloadCrew(movieId: movie.id)
                         movieDetails = await FetchData.downloadSpecificMovie(movieId: movie.id)

@@ -25,7 +25,7 @@ extension View {
 
 struct WatchlistMovieRow: View {
     @ObservedObject var watchlistMovie: WatchlistMovie
-    private let url = "https://image.tmdb.org/t/p/original/"
+    let url = "https://image.tmdb.org/t/p/original/"
     
     let dateFormatter = DateFormatter()
     let dateNow = Date.now

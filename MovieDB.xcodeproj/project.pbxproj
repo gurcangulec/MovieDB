@@ -31,6 +31,9 @@
 		79806DD22971A11D006B6C0A /* HomeSectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79806DD12971A11D006B6C0A /* HomeSectionsView.swift */; };
 		798BF9F5297200810017BAC4 /* AddToWatchlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798BF9F4297200810017BAC4 /* AddToWatchlistView.swift */; };
 		798BF9F7297208ED0017BAC4 /* MovieDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798BF9F6297208ED0017BAC4 /* MovieDetails.swift */; };
+		798BFA5429755AF70017BAC4 /* AddRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798BFA5329755AF70017BAC4 /* AddRatingView.swift */; };
+		798BFA74297562270017BAC4 /* Ratings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798BFA73297562270017BAC4 /* Ratings.swift */; };
+		798BFA76297564F10017BAC4 /* RatingMovieRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798BFA75297564F10017BAC4 /* RatingMovieRow.swift */; };
 		799EC4752875A73000680D07 /* MovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799EC4742875A73000680D07 /* MovieView.swift */; };
 		79A50EE4286C5BB6002D2B1F /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 79A50EE3286C5BB6002D2B1F /* Kingfisher */; };
 		79C2DD0B285DD0F900D6E6E4 /* MovieDBApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C2DD0A285DD0F900D6E6E4 /* MovieDBApp.swift */; };
@@ -69,6 +72,9 @@
 		79806DD12971A11D006B6C0A /* HomeSectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSectionsView.swift; sourceTree = "<group>"; };
 		798BF9F4297200810017BAC4 /* AddToWatchlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToWatchlistView.swift; sourceTree = "<group>"; };
 		798BF9F6297208ED0017BAC4 /* MovieDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetails.swift; sourceTree = "<group>"; };
+		798BFA5329755AF70017BAC4 /* AddRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRatingView.swift; sourceTree = "<group>"; };
+		798BFA73297562270017BAC4 /* Ratings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ratings.swift; sourceTree = "<group>"; };
+		798BFA75297564F10017BAC4 /* RatingMovieRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingMovieRow.swift; sourceTree = "<group>"; };
 		799EC4742875A73000680D07 /* MovieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieView.swift; sourceTree = "<group>"; };
 		79C2DD07285DD0F900D6E6E4 /* MovieDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79C2DD0A285DD0F900D6E6E4 /* MovieDBApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDBApp.swift; sourceTree = "<group>"; };
@@ -144,8 +150,10 @@
 				792F7437297065CC007E686E /* HelperViews */,
 				797863CE286F985E00A05498 /* MovieAndTVShowRow.swift */,
 				79806DCF2970DF97006B6C0A /* TVShowView.swift */,
+				798BFA5329755AF70017BAC4 /* AddRatingView.swift */,
 				798BF9F4297200810017BAC4 /* AddToWatchlistView.swift */,
 				792F7408296DC633007E686E /* WatchlistMovieRow.swift */,
+				798BFA75297564F10017BAC4 /* RatingMovieRow.swift */,
 				794A0FFF287831D3008BF0F5 /* ActorView.swift */,
 				79CC882A28A40C0B00E1E37E /* FullCrewView.swift */,
 				797863DC2870B68300A05498 /* PosterImageStyle.swift */,
@@ -174,6 +182,7 @@
 				79DB77602968DA690084E08F /* Home.swift */,
 				797863CC286F983A00A05498 /* Search.swift */,
 				79DB776A2968F72F0084E08F /* WatchList.swift */,
+				798BFA73297562270017BAC4 /* Ratings.swift */,
 			);
 			path = Tabs;
 			sourceTree = "<group>";
@@ -273,6 +282,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				798BFA74297562270017BAC4 /* Ratings.swift in Sources */,
+				798BFA76297564F10017BAC4 /* RatingMovieRow.swift in Sources */,
 				792F74362970625B007E686E /* ImageView.swift in Sources */,
 				792F73D8296B6943007E686E /* Haptics.swift in Sources */,
 				794A0FFC2876FDA4008BF0F5 /* FetchData.swift in Sources */,
@@ -283,6 +294,7 @@
 				79C3F6C62876F1FC005CB367 /* Cast.swift in Sources */,
 				794A10022879E377008BF0F5 /* RelatedMovies.swift in Sources */,
 				792F7409296DC633007E686E /* WatchlistMovieRow.swift in Sources */,
+				798BFA5429755AF70017BAC4 /* AddRatingView.swift in Sources */,
 				792F7407296DB582007E686E /* DataController.swift in Sources */,
 				794A0FFE28782C3B008BF0F5 /* Actor.swift in Sources */,
 				797863CF286F985E00A05498 /* MovieAndTVShowRow.swift in Sources */,

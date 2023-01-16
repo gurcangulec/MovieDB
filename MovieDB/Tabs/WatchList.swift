@@ -34,56 +34,76 @@ struct WatchList: View {
     
     var body: some View {
         NavigationView {
-            List {
-                VStack(alignment: .leading) {
-                    Text("\(watchlistMovies.count) Titles")
-                        .foregroundColor(.primary)
-                    Text("Sorted by \(sortedBy.rawValue)")
-                        .foregroundColor(.secondary)
+            if watchlistMovies.isEmpty {
+                VStack {
+                    Image(systemName: "popcorn")
+                        .font(.title)
+                        .padding(.bottom)
+                    Text("You haven't watchlisted anything yet.")
+                        .navigationTitle("Watchlist")
+                        .font(.footnote)
+                }
+            } else {
+                List {
+                    VStack(alignment: .leading) {
+                        Text("\(watchlistMovies.count) Titles")
+                            .foregroundColor(.primary)
+                        Text("Sorted by \(sortedBy.rawValue)")
+                            .foregroundColor(.secondary)
                     }
-                                   
-                ForEach(watchlistMovies) { watchlistMovie in
-                    WatchlistMovieRow(watchlistMovie: watchlistMovie)
+                    
+                    ForEach(watchlistMovies) { watchlistMovie in
+                        WatchlistMovieRow(watchlistMovie: watchlistMovie)
+                    }
+                    .onDelete(perform: deleteWatchlistMovies)
+                    
                 }
-                .onDelete(perform: deleteWatchlistMovies)
-                
-            }
-            .listStyle(.plain)
-            .navigationTitle("Watchlist")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Menu {
-                        Button {
-                            watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-                            sortedBy = .title
+                .listStyle(.plain)
+                .navigationTitle("Watchlist")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        EditButton()
+                    }
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Menu {
+                            Button {
+                                watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+                                withAnimation {
+                                    sortedBy = .title
+                                }
+                                
+                            } label: {
+                                Text("Sort by Title (Alphabetical)")
+                            }
+                            Button {
+                                watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
+                                withAnimation {
+                                    sortedBy = .dateAdded
+                                }
+                            } label: {
+                                Text("Sort by Date Added")
+                            }
+                            Button {
+                                watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "formattedReleaseDate", ascending: false)]
+                                withAnimation {
+                                    sortedBy = .releaseDate
+                                }
+                            } label: {
+                                Text("Sort by Release Date")
+                            }
+                            Button {
+                                watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "rating", ascending: false)]
+                                withAnimation {
+                                    sortedBy = .rating
+                                }
+                            } label: {
+                                Text("Sort by TMDB Rating")
+                            }
                         } label: {
-                            Text("Sort by Title (Alphabetical)")
-                        }
-                        Button {
-                            watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
-                            sortedBy = .dateAdded
-                        } label: {
-                            Text("Sort by Date Added")
-                        }
-                        Button {
-                            watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "formattedReleaseDate", ascending: false)]
-                            sortedBy = .releaseDate
-                        } label: {
-                            Text("Sort by Release Date")
-                        }
-                        Button {
-                            watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "rating", ascending: false)]
-                            sortedBy = .rating
-                        } label: {
-                            Text("Sort by TMDB Rating")
-                        }
-                    } label: {
-                        HStack {
-                            Label("Sort", systemImage: "line.3.horizontal.decrease.circle")
-                            Text("Sort")
+                            HStack {
+                                Label("Sort", systemImage: "line.3.horizontal.decrease.circle")
+                                Text("Sort")
+                            }
                         }
                     }
                 }

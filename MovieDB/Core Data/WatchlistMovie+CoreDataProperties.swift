@@ -23,6 +23,7 @@ extension WatchlistMovie {
     @NSManaged public var posterPath: String?
     @NSManaged public var title: String?
     @NSManaged public var rating: Double
+    @NSManaged public var userRating: Int16
     
     public var unwrappedTitle: String {
         title ?? "Unknown Title"
