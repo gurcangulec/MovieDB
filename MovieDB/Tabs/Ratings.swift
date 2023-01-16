@@ -47,7 +47,7 @@ struct Ratings: View {
                     ForEach(ratedMovies) { ratedMovie in
                         RatingMovieRow(ratedMovie: ratedMovie)
                     }
-                                    .onDelete(perform: deleteRatedMovies)
+                    .onDelete(perform: deleteRatedMovies)
                     
                 }
                 .listStyle(.plain)
@@ -58,29 +58,61 @@ struct Ratings: View {
                     }
                     ToolbarItem(placement: .navigationBarLeading) {
                         Menu {
-                            Button {
-                                ratedMovies.nsSortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-                                sortedBy = .title
-                            } label: {
-                                Text("Sort by Title (Alphabetical)")
+                            Menu("Sort by Title") {
+                                Button {
+                                    ratedMovies.nsSortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+                                    sortedBy = .title
+                                } label: {
+                                    Text("Ascending (Alphabetical)")
+                                }
+                                Button {
+                                    ratedMovies.nsSortDescriptors = [NSSortDescriptor(key: "title", ascending: false)]
+                                    sortedBy = .title
+                                } label: {
+                                    Text("Descending (Alphabetical)")
+                                }
                             }
-                            Button {
-                                ratedMovies.nsSortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
-                                sortedBy = .dateAdded
-                            } label: {
-                                Text("Sort by Date Added")
+                            Menu("Sort by Date Added") {
+                                Button {
+                                    ratedMovies.nsSortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: true)]
+                                    sortedBy = .dateAdded
+                                } label: {
+                                    Text("Ascending Order")
+                                }
+                                Button {
+                                    ratedMovies.nsSortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
+                                    sortedBy = .releaseDate
+                                } label: {
+                                    Text("Descending Order")
+                                }
                             }
-                            Button {
-                                ratedMovies.nsSortDescriptors = [NSSortDescriptor(key: "formattedReleaseDate", ascending: false)]
-                                sortedBy = .releaseDate
-                            } label: {
-                                Text("Sort by Release Date")
+                            Menu("Sort by Release Date") {
+                                Button {
+                                    ratedMovies.nsSortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: true)]
+                                    sortedBy = .dateAdded
+                                } label: {
+                                    Text("Ascending Order")
+                                }
+                                Button {
+                                    ratedMovies.nsSortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
+                                    sortedBy = .releaseDate
+                                } label: {
+                                    Text("Descending Order")
+                                }
                             }
-                            Button {
-                                ratedMovies.nsSortDescriptors = [NSSortDescriptor(key: "rating", ascending: false)]
-                                sortedBy = .rating
-                            } label: {
-                                Text("Sort by TMDB Rating")
+                            Menu("Sort by TMDB Rating") {
+                                Button {
+                                    ratedMovies.nsSortDescriptors = [NSSortDescriptor(key: "rating", ascending: true)]
+                                    sortedBy = .rating
+                                } label: {
+                                    Text("Ascending Order")
+                                }
+                                Button {
+                                    ratedMovies.nsSortDescriptors = [NSSortDescriptor(key: "rating", ascending: false)]
+                                    sortedBy = .rating
+                                } label: {
+                                    Text("Descending Order")
+                                }
                             }
                         } label: {
                             HStack {

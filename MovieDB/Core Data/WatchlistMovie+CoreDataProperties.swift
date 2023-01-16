@@ -17,16 +17,21 @@ extension WatchlistMovie {
     }
 
     @NSManaged public var dateAdded: Date?
-    @NSManaged public var formattedReleaseDate: String?
-    @NSManaged public var id: Int16
+    @NSManaged public var releaseDate: Date?
+    @NSManaged public var id: Int32
     @NSManaged public var overview: String?
     @NSManaged public var posterPath: String?
     @NSManaged public var title: String?
     @NSManaged public var rating: Double
     @NSManaged public var userRating: Int16
+    @NSManaged public var backdropPath: String?
     
     public var unwrappedTitle: String {
         title ?? "Unknown Title"
+    }
+    
+    public var unwrappedBackdropPath: String {
+        backdropPath ?? "Unknown"
     }
     
     public var unwrappedDate: String {
@@ -34,6 +39,13 @@ extension WatchlistMovie {
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         return dateFormatter.string(from: dateAdded ?? Date.now)
+    }
+    
+    public var unwrappedReleaseDate: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        return dateFormatter.string(from: releaseDate ?? Date.now)
     }
     
     public var unwrappedRating: String {

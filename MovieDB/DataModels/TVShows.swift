@@ -34,17 +34,13 @@ struct TVShow: Decodable, Identifiable {
         posterPath ?? "Unknown"
     }
     
-    var formattedReleaseDate: String {
-        if let releaseDate = releaseDate {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "y-MM-dd"
-            
-            if let date = formatter.date(from: releaseDate) {
-                let formatted = date.formatted(date: .abbreviated, time: .omitted)
-                return formatted
-            }
+    var formattedReleaseDate: Date {
+        if let releaseDate {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            return dateFormatter.date(from: releaseDate) ?? Date.now
         }
-        return "N/A"
+        return Date.now
     }
     
     var convertToString: String {

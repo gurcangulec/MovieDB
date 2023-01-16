@@ -44,7 +44,7 @@ struct Home: View {
                         // Foreground
                         TabView{
                             ForEach(sliderMovies.indices, id: \.self) { index in
-                                fetchView(count: count, width: width * 0.97, height: geo.size.height * 0.3)
+                                fetchView(movie: popularMovies, count: count, width: width * 0.97, height: geo.size.height * 0.3)
                                     .tag(count)
 //                                ZStack(alignment: .center) {
 //                                    NavigationLink {
@@ -125,21 +125,21 @@ struct Home: View {
         }
     }
     @ViewBuilder
-    func fetchView(count: Int, width: Double, height: Double) -> some View {
+    func fetchView(movie: [Movie], count: Int, width: Double, height: Double) -> some View {
         ZStack(alignment: .center) {
             NavigationLink {
-                MovieView(movie: popularMovies[count])
+                MovieView(movie: movie[count])
             } label: {
-                ImageView(urlString: "\(url)\(popularMovies[count].unwrappedBackdropPath)", width: width, height: height)
+                ImageView(urlString: "\(url)\(movie[count].unwrappedBackdropPath)", width: width, height: height)
             }
-            Text(popularMovies[count].originalTitle)
+            Text(movie[count].originalTitle)
                 .font(.caption)
                 .fontWeight(.black)
                 .padding(8)
                 .foregroundColor(.white)
                 .background(.black.opacity(0.75))
                 .clipShape(Capsule())
-                .offset(y: 85)
+                .offset(y: height * 0.4)
         }
 //        Print(popularMovies[count].originalTitle)
 //        Print(sliderMovies[count].originalTitle)

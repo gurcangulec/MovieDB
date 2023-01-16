@@ -46,7 +46,7 @@ struct MovieView: View {
         
         return writtenByArray + storyByArray + screenplayByArray
     }
-    
+
     var body: some View {
         GeometryReader { geo in
             ScrollView {
@@ -84,7 +84,7 @@ struct MovieView: View {
                                 Spacer()
                                 
                                 Image(systemName: "calendar")
-                                Text("\(movie.formattedReleaseDate)")
+                                Text("\(movie.releaseDate ?? "Unknown")")
                                     .font(.body)
                                 
                                 Spacer()

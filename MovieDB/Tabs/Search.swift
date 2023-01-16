@@ -25,36 +25,50 @@ struct Search: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                if pickerVisible == true {
-                    Picker("Select category", selection: $chosenCategory) {
-                        ForEach(categories, id:\.self) {
-                            Text($0)
+            if movies.isEmpty || tvShows.isEmpty {
+                VStack {
+                    Image(systemName: "magnifyingglass.circle")
+                        .font(.title)
+                        .padding(.bottom)
+                    Text("You haven't searched for anything yet.")
+                        .navigationTitle("Watchlist")
+                        .font(.footnote)
+                }
+                .padding(.top, -44)
+                .searchable(text: $searchQuery,
+                            prompt: "Search for a movie")
+            } else {
+                VStack {
+                    if pickerVisible == true {
+                        Picker("Select category", selection: $chosenCategory) {
+                            ForEach(categories, id:\.self) {
+                                Text($0)
+                            }
                         }
+                        .padding([.leading, .trailing])
+                        .padding(.top, 5)
+                        .pickerStyle(.segmented)
                     }
-                    .padding([.leading, .trailing])
-                    .padding(.top, 5)
-                    .pickerStyle(.segmented)
+                    
+                    if chosenCategory == "Movie" {
+                        List(movies) { movie in
+                            MovieAndTVShowRow(movie: movie, tvShow: nil)
+                        }
+                        .listStyle(.plain)
+                        .navigationTitle("Search")
+                        
+                    } else {
+                        List(tvShows) { tvShow in
+                            MovieAndTVShowRow(movie: nil, tvShow: tvShow)
+                        }
+                        .listStyle(.plain)
+                        .navigationTitle("Search")
+                        
+                    }
                 }
-                
-                if chosenCategory == "Movie" {
-                    List(movies) { movie in
-                        MovieAndTVShowRow(movie: movie, tvShow: nil)
-                    }
-                    .listStyle(.plain)
-                    .navigationTitle("Search")
-
-                } else {
-                    List(tvShows) { tvShow in
-                        MovieAndTVShowRow(movie: nil, tvShow: tvShow)
-                    }
-                    .listStyle(.plain)
-                    .navigationTitle("Search")
-
-                }
+                .searchable(text: $searchQuery)
             }
-            .searchable(text: $searchQuery,
-                        prompt: "Search for a movie")
+            
             //                        suggestions: {
             //                Text("Some suggestions")
             //                    .font(.title2)

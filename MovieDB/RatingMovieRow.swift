@@ -17,8 +17,8 @@ struct RatingMovieRow: View {
     
     var body: some View {
         NavigationLink {
-            // Needs to be fixed
-            Text("Details")
+            let movie = Movie(id: Int(ratedMovie.id), originalTitle: ratedMovie.unwrappedTitle, overview: ratedMovie.overview ?? "Unkown", posterPath: ratedMovie.posterPath, releaseDate: String(ratedMovie.unwrappedReleaseDate), backdropPath: ratedMovie.unwrappedBackdropPath, voteAverage: Double(ratedMovie.unwrappedRating)!)
+            MovieView(movie: movie)
         } label: {
             HStack {
                 if let unwrappedPath = ratedMovie.posterPath {
@@ -40,7 +40,7 @@ struct RatingMovieRow: View {
                         Text(ratedMovie.unwrappedTitle)
                             .font(.headline.bold())
                         
-                        Text(ratedMovie.formattedReleaseDate ?? "Unknown Date")
+                        Text(ratedMovie.unwrappedReleaseDate)
                             .font(.subheadline)
                             .padding(.bottom)
                         

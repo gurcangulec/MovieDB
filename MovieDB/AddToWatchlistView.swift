@@ -67,13 +67,14 @@ struct AddToWatchlistView: View {
                     
                     Button {
                         let watchlistMovie = WatchlistMovie(context: moc)
-                        watchlistMovie.id = Int16(movie.id)
+                        watchlistMovie.id = Int32(movie.id)
                         watchlistMovie.title = movie.originalTitle
                         watchlistMovie.posterPath = movie.posterPath
-                        watchlistMovie.formattedReleaseDate = movie.formattedReleaseDate
+                        watchlistMovie.releaseDate = movie.formattedReleaseDate
                         watchlistMovie.overview = movie.overview
                         watchlistMovie.dateAdded = Date.now
                         watchlistMovie.rating = movie.voteAverage
+                        watchlistMovie.backdropPath = movie.backdropPath
                         
                         do {
                             try moc.save()

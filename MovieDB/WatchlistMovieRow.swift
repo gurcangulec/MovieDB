@@ -32,8 +32,8 @@ struct WatchlistMovieRow: View {
     
     var body: some View {
         NavigationLink {
-            
-//            MovieView(movie: movie)
+            let movie = Movie(id: Int(watchlistMovie.id), originalTitle: watchlistMovie.unwrappedTitle, overview: watchlistMovie.overview ?? "Unkown", posterPath: watchlistMovie.posterPath, releaseDate: String(watchlistMovie.unwrappedReleaseDate), backdropPath: watchlistMovie.unwrappedBackdropPath, voteAverage: Double(watchlistMovie.unwrappedRating)!)
+            MovieView(movie: movie)
         } label: {
             HStack {
                 if let unwrappedPath = watchlistMovie.posterPath {
@@ -55,7 +55,8 @@ struct WatchlistMovieRow: View {
                         Text(watchlistMovie.unwrappedTitle)
                             .font(.headline.bold())
                         
-                        Text(watchlistMovie.formattedReleaseDate ?? "Unknown Date")
+                        Text(watchlistMovie.unwrappedReleaseDate)
+                            .font(.subheadline)
                             .padding(.bottom)
                         
                         VStack(alignment: .leading) {
@@ -63,14 +64,16 @@ struct WatchlistMovieRow: View {
                                 .font(.headline)
                             
                             Text("\(watchlistMovie.unwrappedDate)")
-                                .font(.body)
+                                .font(.subheadline)
                         }
                         .padding(.bottom)
                         
                         HStack {
                             Image(systemName: "star.fill")
+                                .font(.custom("StarSize", size: 14, relativeTo: .subheadline))
                             Text("\(watchlistMovie.unwrappedRating)")
-                                .font(.body)
+                                .font(.custom("StarSize", size: 16, relativeTo: .subheadline))
+                                .padding(.trailing, 10)
                         }
 
                     }

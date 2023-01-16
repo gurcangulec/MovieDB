@@ -45,8 +45,8 @@ struct MovieAndTVShowRow: View {
                             Text(movie.originalTitle)
                                 .font(.headline.bold())
                             
-                            Text(movie.formattedReleaseDate)
-                                .padding(.bottom)
+//                            Text(movie.formattedReleaseDate)
+//                                .padding(.bottom)
                             
                             Text(movie.overview)
                                 .font(.body)
@@ -75,8 +75,8 @@ struct MovieAndTVShowRow: View {
                                 Text(tvShow.originalTitle)
                                     .font(.headline.bold())
                                 
-                                Text(tvShow.formattedReleaseDate)
-                                    .padding(.bottom)
+//                                Text(tvShow.formattedReleaseDate)
+//                                    .padding(.bottom)
                                 
                                 Text(tvShow.overview)
                                     .font(.body)

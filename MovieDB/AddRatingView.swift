@@ -28,6 +28,7 @@ struct StarView: View {
 
             ForEach(1..<maximumRating + 1, id: \.self) { number in
                 image(for: number)
+                    .font(.title3)
                     .foregroundColor(number > rating ? offColor : onColor)
                     .onTapGesture {
                         rating = number
@@ -46,9 +47,11 @@ struct StarView: View {
 }
 
 struct AddRatingView: View {
+    
     let movie: Movie
     let width: Double
     let height: Double
+    @State private var removeFromWatchlist = true
     @State private var rating: Int = 0
     @State private var notes = ""
     @State private var showImage = true
@@ -77,20 +80,29 @@ struct AddRatingView: View {
 
                     
                     StarView(rating: $rating)
+                        .padding(.bottom)
+                    
+                    Divider()
+                        .padding(.bottom)
+                    
+                    Toggle("Remove from Watchlist?", isOn: $removeFromWatchlist)
                     
                     Spacer()
                     
                     Button {
                         let rateMovie = RatedMovie(context: moc)
-                        rateMovie.id = Int16(movie.id)
+                        rateMovie.id = Int32(movie.id)
                         rateMovie.userRating = Int16(rating)
                         rateMovie.title = movie.originalTitle
-                        rateMovie.formattedReleaseDate = movie.formattedReleaseDate
+                        rateMovie.releaseDate = movie.formattedReleaseDate
                         rateMovie.dateAdded = Date.now
                         rateMovie.posterPath = movie.unwrappedPosterPath
                         rateMovie.rating = movie.voteAverage
+                        rateMovie.backdropPath = movie.backdropPath
+                        rateMovie.overview = movie.overview
                         
                         try? moc.save()
+                        
                         dismiss()
                     } label: {
                         Label("Rate", systemImage: "star.fill")

@@ -84,9 +84,9 @@ struct SideScroller: View {
                                             .font(.headline)
                                             .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
                                         
-                                        Text(movie.formattedReleaseDate)
-                                            .font(.caption)
-                                            .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
+//                                        Text(movie.formattedReleaseDate)
+//                                            .font(.caption)
+//                                            .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
                                     }
                                     .frame(alignment: .leading)
                                 }
@@ -124,9 +124,9 @@ struct SideScroller: View {
                                             .font(.headline)
                                             .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
                                         
-                                        Text(tvShow.formattedReleaseDate)
-                                            .font(.caption)
-                                            .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
+//                                        Text(tvShow.formattedReleaseDate)
+//                                            .font(.caption)
+//                                            .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
                                     }
                                     .frame(alignment: .leading)
                                 }

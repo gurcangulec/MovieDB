@@ -66,38 +66,61 @@ struct WatchList: View {
                     }
                     ToolbarItem(placement: .navigationBarLeading) {
                         Menu {
-                            Button {
-                                watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-                                withAnimation {
+                            Menu("Sort by Title") {
+                                Button {
+                                    watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
                                     sortedBy = .title
+                                } label: {
+                                    Text("Ascending (Alphabetical)")
                                 }
-                                
-                            } label: {
-                                Text("Sort by Title (Alphabetical)")
+                                Button {
+                                    watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "title", ascending: false)]
+                                    sortedBy = .title
+                                } label: {
+                                    Text("Descending (Alphabetical)")
+                                }
                             }
-                            Button {
-                                watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
-                                withAnimation {
+                            Menu("Sort by Date Added") {
+                                Button {
+                                    watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: true)]
                                     sortedBy = .dateAdded
+                                } label: {
+                                    Text("Ascending Order")
                                 }
-                            } label: {
-                                Text("Sort by Date Added")
-                            }
-                            Button {
-                                watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "formattedReleaseDate", ascending: false)]
-                                withAnimation {
+                                Button {
+                                    watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
                                     sortedBy = .releaseDate
+                                } label: {
+                                    Text("Descending Order")
                                 }
-                            } label: {
-                                Text("Sort by Release Date")
                             }
-                            Button {
-                                watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "rating", ascending: false)]
-                                withAnimation {
-                                    sortedBy = .rating
+                            Menu("Sort by Release Date") {
+                                Button {
+                                    watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: true)]
+                                    sortedBy = .dateAdded
+                                } label: {
+                                    Text("Ascending Order")
                                 }
-                            } label: {
-                                Text("Sort by TMDB Rating")
+                                Button {
+                                    watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
+                                    sortedBy = .releaseDate
+                                } label: {
+                                    Text("Descending Order")
+                                }
+                            }
+                            Menu("Sort by TMDB Rating") {
+                                Button {
+                                    watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "rating", ascending: true)]
+                                    sortedBy = .rating
+                                } label: {
+                                    Text("Ascending Order")
+                                }
+                                Button {
+                                    watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "rating", ascending: false)]
+                                    sortedBy = .rating
+                                } label: {
+                                    Text("Descending Order")
+                                }
                             }
                         } label: {
                             HStack {
