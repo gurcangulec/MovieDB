@@ -90,7 +90,7 @@ struct AddRatingView: View {
                     Spacer()
                     
                     Button {
-                        let rateMovie = RatedMovie(context: moc)
+                        let rateMovie = StoredMovie(context: moc)
                         rateMovie.id = Int32(movie.id)
                         rateMovie.userRating = Int16(rating)
                         rateMovie.title = movie.originalTitle
@@ -100,6 +100,7 @@ struct AddRatingView: View {
                         rateMovie.rating = movie.voteAverage
                         rateMovie.backdropPath = movie.backdropPath
                         rateMovie.overview = movie.overview
+                        rateMovie.rated = true
                         
                         try? moc.save()
                         

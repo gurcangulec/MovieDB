@@ -7,12 +7,19 @@
 import CoreData
 import SwiftUI
 
-extension WatchlistMovie {
-  static var defaultFetchRequest: NSFetchRequest<WatchlistMovie> {
-    let request: NSFetchRequest<WatchlistMovie> = WatchlistMovie.fetchRequest()
-    request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-    return request
-  }
+extension StoredMovie {
+    static var defaultFetchRequest: NSFetchRequest<StoredMovie> {
+        let request: NSFetchRequest<StoredMovie> = StoredMovie.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        request.predicate = NSPredicate(format: "watchlisted == true")
+        return request
+    }
+    static var ratedFetchRequest: NSFetchRequest<StoredMovie> {
+        let request: NSFetchRequest<StoredMovie> = StoredMovie.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        request.predicate = NSPredicate(format: "rated == true")
+        return request
+    }
 }
 
 // Might not be the best way to implement it
@@ -27,14 +34,14 @@ struct WatchList: View {
     
     @State var sortedBy = SortedBy.title
     
-    @FetchRequest(fetchRequest: WatchlistMovie.defaultFetchRequest)
-    var watchlistMovies: FetchedResults<WatchlistMovie>
+    @FetchRequest(fetchRequest: StoredMovie.defaultFetchRequest)
+    var storedMovies: FetchedResults<StoredMovie>
     
     @Environment(\.managedObjectContext) var moc
     
     var body: some View {
         NavigationView {
-            if watchlistMovies.isEmpty {
+            if storedMovies.isEmpty {
                 VStack {
                     Image(systemName: "play.circle")
                         .font(.title)
@@ -46,14 +53,14 @@ struct WatchList: View {
             } else {
                 List {
                     VStack(alignment: .leading) {
-                        Text("\(watchlistMovies.count) Titles")
+                        Text("\(storedMovies.count) Titles")
                             .foregroundColor(.primary)
                         Text("Sorted by \(sortedBy.rawValue)")
                             .foregroundColor(.secondary)
                     }
                     
-                    ForEach(watchlistMovies) { watchlistMovie in
-                        WatchlistMovieRow(watchlistMovie: watchlistMovie)
+                    ForEach(storedMovies) { storedMovie in
+                        WatchlistMovieRow(storedMovie: storedMovie)
                     }
                     .onDelete(perform: deleteWatchlistMovies)
                     
@@ -68,13 +75,13 @@ struct WatchList: View {
                         Menu {
                             Menu("Sort by Title") {
                                 Button {
-                                    watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
                                     sortedBy = .title
                                 } label: {
                                     Text("A to Z")
                                 }
                                 Button {
-                                    watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "title", ascending: false)]
+                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "title", ascending: false)]
                                     sortedBy = .title
                                 } label: {
                                     Text("Z to A")
@@ -82,13 +89,13 @@ struct WatchList: View {
                             }
                             Menu("Sort by Date Added") {
                                 Button {
-                                    watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: true)]
+                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: true)]
                                     sortedBy = .dateAdded
                                 } label: {
                                     Text("Ascending Order")
                                 }
                                 Button {
-                                    watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
+                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
                                     sortedBy = .releaseDate
                                 } label: {
                                     Text("Descending Order")
@@ -96,13 +103,13 @@ struct WatchList: View {
                             }
                             Menu("Sort by Release Date") {
                                 Button {
-                                    watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: true)]
+                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: true)]
                                     sortedBy = .dateAdded
                                 } label: {
                                     Text("Ascending Order")
                                 }
                                 Button {
-                                    watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
+                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
                                     sortedBy = .releaseDate
                                 } label: {
                                     Text("Descending Order")
@@ -110,13 +117,13 @@ struct WatchList: View {
                             }
                             Menu("Sort by TMDB Rating") {
                                 Button {
-                                    watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "rating", ascending: true)]
+                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "rating", ascending: true)]
                                     sortedBy = .rating
                                 } label: {
                                     Text("Ascending Order")
                                 }
                                 Button {
-                                    watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "rating", ascending: false)]
+                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "rating", ascending: false)]
                                     sortedBy = .rating
                                 } label: {
                                     Text("Descending Order")
@@ -136,9 +143,9 @@ struct WatchList: View {
     
     func deleteWatchlistMovies(at offsets: IndexSet) {
         for offset in offsets {
-            let watchlistMovie = watchlistMovies[offset]
+            let storedMovie = storedMovies[offset]
             
-            moc.delete(watchlistMovie)
+            moc.delete(storedMovie)
         }
         
         try? moc.save()

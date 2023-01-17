@@ -8,25 +8,17 @@
 import SwiftUI
 import CoreData
 
-extension RatedMovie {
-  static var defaultFetchRequest: NSFetchRequest<RatedMovie> {
-    let request: NSFetchRequest<RatedMovie> = RatedMovie.fetchRequest()
-    request.sortDescriptors = [NSSortDescriptor(key: "userRating", ascending: true)]
-    return request
-  }
-}
-
 struct Ratings: View {
     
     @Environment(\.managedObjectContext) var moc
     @State var sortedBy = SortedBy.title
     
-    @FetchRequest(fetchRequest: RatedMovie.defaultFetchRequest)
-    var ratedMovies: FetchedResults<RatedMovie>
+    @FetchRequest(fetchRequest: StoredMovie.ratedFetchRequest)
+    var storedMovies: FetchedResults<StoredMovie>
     
     var body: some View {
         NavigationView {
-            if ratedMovies.isEmpty {
+            if storedMovies.isEmpty {
                 VStack {
                     Image(systemName: "star.circle")
                         .font(.title)
@@ -38,14 +30,14 @@ struct Ratings: View {
             } else {
                 List {
                     VStack(alignment: .leading) {
-                        Text("\(ratedMovies.count) Titles")
+                        Text("\(storedMovies.count) Titles")
                             .foregroundColor(.primary)
                         Text("Sorted by \(sortedBy.rawValue)")
                             .foregroundColor(.secondary)
                     }
                     
-                    ForEach(ratedMovies) { ratedMovie in
-                        RatingMovieRow(ratedMovie: ratedMovie)
+                    ForEach(storedMovies) { storedMovie in
+                        RatingMovieRow(storedMovie: storedMovie)
                     }
                     .onDelete(perform: deleteRatedMovies)
                     
@@ -60,13 +52,13 @@ struct Ratings: View {
                         Menu {
                             Menu("Sort by Title") {
                                 Button {
-                                    ratedMovies.nsSortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
                                     sortedBy = .title
                                 } label: {
                                     Text("Ascending (Alphabetical)")
                                 }
                                 Button {
-                                    ratedMovies.nsSortDescriptors = [NSSortDescriptor(key: "title", ascending: false)]
+                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "title", ascending: false)]
                                     sortedBy = .title
                                 } label: {
                                     Text("Descending (Alphabetical)")
@@ -74,13 +66,13 @@ struct Ratings: View {
                             }
                             Menu("Sort by Date Added") {
                                 Button {
-                                    ratedMovies.nsSortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: true)]
+                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: true)]
                                     sortedBy = .dateAdded
                                 } label: {
                                     Text("Ascending Order")
                                 }
                                 Button {
-                                    ratedMovies.nsSortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
+                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
                                     sortedBy = .releaseDate
                                 } label: {
                                     Text("Descending Order")
@@ -88,13 +80,13 @@ struct Ratings: View {
                             }
                             Menu("Sort by Release Date") {
                                 Button {
-                                    ratedMovies.nsSortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: true)]
+                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: true)]
                                     sortedBy = .dateAdded
                                 } label: {
                                     Text("Ascending Order")
                                 }
                                 Button {
-                                    ratedMovies.nsSortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
+                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
                                     sortedBy = .releaseDate
                                 } label: {
                                     Text("Descending Order")
@@ -102,13 +94,13 @@ struct Ratings: View {
                             }
                             Menu("Sort by TMDB Rating") {
                                 Button {
-                                    ratedMovies.nsSortDescriptors = [NSSortDescriptor(key: "rating", ascending: true)]
+                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "rating", ascending: true)]
                                     sortedBy = .rating
                                 } label: {
                                     Text("Ascending Order")
                                 }
                                 Button {
-                                    ratedMovies.nsSortDescriptors = [NSSortDescriptor(key: "rating", ascending: false)]
+                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "rating", ascending: false)]
                                     sortedBy = .rating
                                 } label: {
                                     Text("Descending Order")
@@ -127,9 +119,9 @@ struct Ratings: View {
     }
     func deleteRatedMovies(at offsets: IndexSet) {
         for offset in offsets {
-            let ratedMovie = ratedMovies[offset]
+            let storedMovie = storedMovies[offset]
             
-            moc.delete(ratedMovie)
+            moc.delete(storedMovie)
         }
         
         try? moc.save()

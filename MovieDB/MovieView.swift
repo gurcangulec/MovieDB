@@ -11,7 +11,6 @@ import Kingfisher
 
 struct MovieView: View {
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: []) var watchlistMovies: FetchedResults<WatchlistMovie>
     
 //    @State private var engine: CHHapticEngine?
     @StateObject var hapticEngine = Haptics()
@@ -117,17 +116,6 @@ struct MovieView: View {
                                 
                                 Button {
                                     showingSheetRating.toggle()
-                                    //                                let watchlistMovie = WatchlistMovie(context: moc)
-                                    //                                watchlistMovie.id = UUID()
-                                    //                                watchlistMovie.title = movie.originalTitle
-                                    //                                watchlistMovie.posterPath = movie.posterPath
-                                    //                                watchlistMovie.formattedReleaseDate = movie.formattedReleaseDate
-                                    //                                watchlistMovie.overview = movie.overview
-                                    //                                watchlistMovie.dateAdded = Date.now
-                                    //                                watchlistMovie.rating = movie.voteAverage
-                                    
-                                    
-                                    
                                     hapticEngine.complexSuccess()
                                     
                                 } label: {
@@ -268,16 +256,6 @@ struct MovieView: View {
     func copyToClipboardIMDB() {
         UIPasteboard.general.string = "https://www.imdb.com/title/\(movieDetails.unwrappedImdbId)"
     }
-    
-//    func checkIfAdded() {
-//        for watchlistMovie in watchlistMovies {
-//            if watchlistMovie.title == movie.originalTitle {
-//                watchlistButtonText = "Added to Watchlist"
-//            } else {
-//                watchlistButtonText = "Add to Watchlist"
-//            }
-//        }
-//    }
     
     // To be moved from here
     func addToWatchlist() { }

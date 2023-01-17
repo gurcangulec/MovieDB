@@ -21,10 +21,8 @@ extension View {
     }
 }
 
-
-
 struct WatchlistMovieRow: View {
-    @ObservedObject var watchlistMovie: WatchlistMovie
+    @ObservedObject var storedMovie: StoredMovie
     private let url = "https://image.tmdb.org/t/p/original/"
     
     let dateFormatter = DateFormatter()
@@ -32,11 +30,11 @@ struct WatchlistMovieRow: View {
     
     var body: some View {
         NavigationLink {
-            let movie = Movie(id: Int(watchlistMovie.id), originalTitle: watchlistMovie.unwrappedTitle, overview: watchlistMovie.overview ?? "Unkown", posterPath: watchlistMovie.posterPath, releaseDate: String(watchlistMovie.unwrappedReleaseDate), backdropPath: watchlistMovie.unwrappedBackdropPath, voteAverage: Double(watchlistMovie.unwrappedRating)!)
+            let movie = Movie(id: Int(storedMovie.id), originalTitle: storedMovie.unwrappedTitle, overview: storedMovie.overview ?? "Unkown", posterPath: storedMovie.posterPath, releaseDate: String(storedMovie.unwrappedReleaseDate), backdropPath: storedMovie.unwrappedBackdropPath, voteAverage: Double(storedMovie.unwrappedRating)!)
             MovieView(movie: movie)
         } label: {
             HStack {
-                if let unwrappedPath = watchlistMovie.posterPath {
+                if let unwrappedPath = storedMovie.posterPath {
                     let unwrappedPath = URL(string: "\(url)\(unwrappedPath)")
                     KFImage(unwrappedPath)
                         .placeholder {
@@ -52,10 +50,10 @@ struct WatchlistMovieRow: View {
                 }
                 GeometryReader { geo in
                     VStack(alignment: .leading, spacing: 3) {
-                        Text(watchlistMovie.unwrappedTitle)
+                        Text(storedMovie.unwrappedTitle)
                             .font(.headline.bold())
                         
-                        Text(watchlistMovie.unwrappedReleaseDate)
+                        Text(storedMovie.unwrappedReleaseDate)
                             .font(.subheadline)
                             .padding(.bottom)
                         
@@ -63,7 +61,7 @@ struct WatchlistMovieRow: View {
                             Text("Date Added")
                                 .font(.headline)
                             
-                            Text("\(watchlistMovie.unwrappedDate)")
+                            Text("\(storedMovie.unwrappedDateAdded)")
                                 .font(.subheadline)
                         }
                         .padding(.bottom)
@@ -71,7 +69,7 @@ struct WatchlistMovieRow: View {
                         HStack {
                             Image(systemName: "star.fill")
                                 .font(.custom("StarSize", size: 14, relativeTo: .subheadline))
-                            Text("\(watchlistMovie.unwrappedRating)")
+                            Text("\(storedMovie.unwrappedRating)")
                                 .font(.custom("StarSize", size: 16, relativeTo: .subheadline))
                                 .padding(.trailing, 10)
                         }
