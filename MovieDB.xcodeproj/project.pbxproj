@@ -118,6 +118,7 @@
 				79806DD12971A11D006B6C0A /* HomeSectionsView.swift */,
 				792F73D5296B4355007E686E /* SideScroller.swift */,
 				792F74352970625B007E686E /* ImageView.swift */,
+				797863DC2870B68300A05498 /* PosterImageStyle.swift */,
 			);
 			path = HelperViews;
 			sourceTree = "<group>";
@@ -156,7 +157,6 @@
 				798BFA75297564F10017BAC4 /* RatingMovieRow.swift */,
 				794A0FFF287831D3008BF0F5 /* ActorView.swift */,
 				79CC882A28A40C0B00E1E37E /* FullCrewView.swift */,
-				797863DC2870B68300A05498 /* PosterImageStyle.swift */,
 				792F742A296EBAF1007E686E /* Core Data */,
 				79EA9F75287C248F0076D18A /* DataModels */,
 				794A0FFB2876FDA4008BF0F5 /* FetchData.swift */,
