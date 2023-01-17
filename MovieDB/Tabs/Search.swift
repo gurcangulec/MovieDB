@@ -31,7 +31,7 @@ struct Search: View {
                         .font(.title)
                         .padding(.bottom)
                     Text("You haven't searched for anything yet.")
-                        .navigationTitle("Watchlist")
+                        .navigationTitle("Search")
                         .font(.footnote)
                 }
                 .padding(.top, -44)

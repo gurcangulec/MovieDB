@@ -44,6 +44,7 @@ struct Movie: Decodable, Identifiable {
         if let releaseDate {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
+            dateFormatter.dateStyle = .medium
             print(dateFormatter.date(from: releaseDate) ?? Date.now)
             return dateFormatter.date(from: releaseDate) ?? Date.now
         }

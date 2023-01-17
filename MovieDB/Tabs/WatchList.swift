@@ -36,7 +36,7 @@ struct WatchList: View {
         NavigationView {
             if watchlistMovies.isEmpty {
                 VStack {
-                    Image(systemName: "popcorn")
+                    Image(systemName: "play.circle")
                         .font(.title)
                         .padding(.bottom)
                     Text("You haven't watchlisted anything yet.")
@@ -71,13 +71,13 @@ struct WatchList: View {
                                     watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
                                     sortedBy = .title
                                 } label: {
-                                    Text("Ascending (Alphabetical)")
+                                    Text("A to Z")
                                 }
                                 Button {
                                     watchlistMovies.nsSortDescriptors = [NSSortDescriptor(key: "title", ascending: false)]
                                     sortedBy = .title
                                 } label: {
-                                    Text("Descending (Alphabetical)")
+                                    Text("Z to A")
                                 }
                             }
                             Menu("Sort by Date Added") {
