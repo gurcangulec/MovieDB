@@ -84,7 +84,7 @@ struct SideScroller: View {
                                             .font(.headline)
                                             .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
                                         
-                                        Text("\(movie.releaseDate ?? "Unknown")")
+                                        Text("\(movie.formattedReleaseDateForViews)")
                                             .font(.caption)
                                             .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
                                     }
@@ -124,7 +124,7 @@ struct SideScroller: View {
                                             .font(.headline)
                                             .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
                                         
-                                        Text("\(tvShow.releaseDate ?? "Unknown")")
+                                        Text("\(tvShow.formattedReleaseDateForViews)")
                                             .font(.caption)
                                             .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
                                     }

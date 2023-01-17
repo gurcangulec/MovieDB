@@ -70,7 +70,7 @@ struct AddToWatchlistView: View {
                         watchlistMovie.id = Int32(movie.id)
                         watchlistMovie.title = movie.originalTitle
                         watchlistMovie.posterPath = movie.posterPath
-                        watchlistMovie.releaseDate = movie.formattedReleaseDate
+                        watchlistMovie.releaseDate = movie.formattedReleaseDateForStorage
                         watchlistMovie.overview = movie.overview
                         watchlistMovie.dateAdded = Date.now
                         watchlistMovie.rating = movie.voteAverage

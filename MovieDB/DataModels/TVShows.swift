@@ -34,7 +34,7 @@ struct TVShow: Decodable, Identifiable {
         posterPath ?? "Unknown"
     }
     
-    var formattedReleaseDate: Date {
+    var formattedReleaseDateForStorage: Date {
         if let releaseDate {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -42,6 +42,13 @@ struct TVShow: Decodable, Identifiable {
             return dateFormatter.date(from: releaseDate) ?? Date.now
         }
         return Date.now
+    }
+    
+    var formattedReleaseDateForViews: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        return formattedReleaseDateForStorage.formatted(date: .abbreviated, time: .omitted)
     }
     
     var convertToString: String {

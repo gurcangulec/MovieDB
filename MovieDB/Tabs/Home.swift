@@ -39,7 +39,6 @@ struct Home: View {
             
             NavigationView {
                 VStack {
-                    
                     ScrollView(showsIndicators: false) {
                         // Foreground
                         TabView{

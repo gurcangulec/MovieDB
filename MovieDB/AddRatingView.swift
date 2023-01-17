@@ -94,7 +94,7 @@ struct AddRatingView: View {
                         rateMovie.id = Int32(movie.id)
                         rateMovie.userRating = Int16(rating)
                         rateMovie.title = movie.originalTitle
-                        rateMovie.releaseDate = movie.formattedReleaseDate
+                        rateMovie.releaseDate = movie.formattedReleaseDateForStorage
                         rateMovie.dateAdded = Date.now
                         rateMovie.posterPath = movie.unwrappedPosterPath
                         rateMovie.rating = movie.voteAverage

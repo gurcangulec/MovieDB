@@ -40,15 +40,21 @@ struct Movie: Decodable, Identifiable {
         backdropPath ?? "Unknown"
     }
     
-    var formattedReleaseDate: Date {
+    var formattedReleaseDateForStorage: Date {
         if let releaseDate {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
             dateFormatter.dateStyle = .medium
-            print(dateFormatter.date(from: releaseDate) ?? Date.now)
             return dateFormatter.date(from: releaseDate) ?? Date.now
         }
         return Date.now
+    }
+    
+    var formattedReleaseDateForViews: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        return formattedReleaseDateForStorage.formatted(date: .abbreviated, time: .omitted)
     }
     
     var convertToString: String {
