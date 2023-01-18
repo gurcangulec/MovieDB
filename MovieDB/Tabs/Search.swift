@@ -9,23 +9,15 @@ import SwiftUI
 import Kingfisher
 
 struct Search: View {
-    // The movies downloaded from server
-    @State private var movies = [Movie]()
-    @State private var tvShows = [TVShow]()
-    @State private var popularMovies = [Movie]()
-    @State private var cast = [CastMember]()
-    
-    @State private var categories = ["Movie", "TV Show"]
-    @State private var chosenCategory = "Movie"
-    @State private var pickerVisible = false
+    @StateObject private var viewModel = ViewModel()
     
 //    @State private var toggle = true
     private let url = "https://image.tmdb.org/t/p/original/"
-    @State var searchQuery = ""
+    
     
     var body: some View {
         NavigationView {
-            if movies.isEmpty || tvShows.isEmpty {
+            if viewModel.movies.isEmpty || viewModel.tvShows.isEmpty {
                 VStack {
                     Image(systemName: "magnifyingglass.circle")
                         .font(.title)
@@ -35,13 +27,13 @@ struct Search: View {
                         .font(.footnote)
                 }
                 .padding(.top, -44)
-                .searchable(text: $searchQuery,
+                .searchable(text: $viewModel.searchQuery,
                             prompt: "Search for a movie")
             } else {
                 VStack {
-                    if pickerVisible == true {
-                        Picker("Select category", selection: $chosenCategory) {
-                            ForEach(categories, id:\.self) {
+                    if viewModel.pickerVisible == true {
+                        Picker("Select category", selection: $viewModel.chosenCategory) {
+                            ForEach(viewModel.categories, id:\.self) {
                                 Text($0)
                             }
                         }
@@ -50,15 +42,15 @@ struct Search: View {
                         .pickerStyle(.segmented)
                     }
                     
-                    if chosenCategory == "Movie" {
-                        List(movies) { movie in
+                    if viewModel.chosenCategory == "Movie" {
+                        List(viewModel.movies) { movie in
                             MovieAndTVShowRow(movie: movie, tvShow: nil)
                         }
                         .listStyle(.plain)
                         .navigationTitle("Search")
                         
                     } else {
-                        List(tvShows) { tvShow in
+                        List(viewModel.tvShows) { tvShow in
                             MovieAndTVShowRow(movie: nil, tvShow: tvShow)
                         }
                         .listStyle(.plain)
@@ -66,31 +58,18 @@ struct Search: View {
                         
                     }
                 }
-                .searchable(text: $searchQuery)
+                .searchable(text: $viewModel.searchQuery)
             }
-            
-            //                        suggestions: {
-            //                Text("Some suggestions")
-            //                    .font(.title2)
-            //                    .foregroundColor(.primary)
-            //
-            //                ForEach(popularMovies.prefix(3)) { popularMovie in
-            //                    Text(popularMovie.originalTitle).searchCompletion("\(popularMovie.originalTitle)")
-            //                        .font(.body)
-            //                }
-            //            })
         }
         .disableAutocorrection(true)
-        .onAppear {
-            Task {
-                popularMovies = await FetchData.downloadPopularMovies()
-            }
-        }
+//        .onAppear {
+//            Task {
+//                popularMovies = await FetchData.downloadPopularMovies()
+//            }
+//        }
         .onSubmit(of: .search) {
             Task {
-                movies = await FetchData.downloadMovies(searchQuery: searchQuery)
-                tvShows = await FetchData.downloadTVShows(searchQuery: searchQuery)
-                pickerVisible = true
+                await viewModel.onSubmitFunc()
             }
         }
         .navigationViewStyle(.stack)

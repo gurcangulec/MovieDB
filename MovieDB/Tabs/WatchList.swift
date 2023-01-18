@@ -7,21 +7,6 @@
 import CoreData
 import SwiftUI
 
-extension StoredMovie {
-    static var defaultFetchRequest: NSFetchRequest<StoredMovie> {
-        let request: NSFetchRequest<StoredMovie> = StoredMovie.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-        request.predicate = NSPredicate(format: "watchlisted == true")
-        return request
-    }
-    static var ratedFetchRequest: NSFetchRequest<StoredMovie> {
-        let request: NSFetchRequest<StoredMovie> = StoredMovie.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-        request.predicate = NSPredicate(format: "rated == true")
-        return request
-    }
-}
-
 // Might not be the best way to implement it
 enum SortedBy: String {
     case title = "Title"

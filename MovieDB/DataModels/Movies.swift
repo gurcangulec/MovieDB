@@ -56,7 +56,7 @@ struct Movie: Decodable, Identifiable {
         return formattedReleaseDateForStorage.formatted(date: .abbreviated, time: .omitted)
     }
     
-    var convertToString: String {
+    var convertRatingToString: String {
            return String(format: "%.1f", voteAverage)
     }
     

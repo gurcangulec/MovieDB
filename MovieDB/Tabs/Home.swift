@@ -13,23 +13,7 @@ struct Home: View {
     // Animation counter
     @State var count: Int = 1
 
-    
-    @State private var popularMovies = [Movie]()
-    @State private var upcomingMovies = [Movie]()
-    @State private var popularTVShows = [TVShow]()
-    @State private var topRatedMovies = [Movie]()
-    @State private var topRatedTVShows = [TVShow]()
-    @State private var onTheAirTVShows = [TVShow]()
-    @State private var sliderMovies = [Movie]()
-    
-    private let popularMoviesString = "Popular Movies"
-    private let upcomingMoviesString = "Upcoming Movies"
-    private let popularTVShowsString = "Popular TV Shows"
-    private let topRatedMoviesString = "Top Rated Movies"
-    private let topRatedTVShowsString = "Top Rated TV Shows"
-    private let onTheAirTVShowsString = "On The Air"
-    
-    private let url = "https://image.tmdb.org/t/p/original/"
+    @StateObject private var viewModel = ViewModel()
     
     var body: some View {
         GeometryReader { geo in
@@ -40,69 +24,35 @@ struct Home: View {
             NavigationView {
                 VStack {
                     ScrollView(showsIndicators: false) {
-                        // Foreground
                         TabView{
-                            ForEach(sliderMovies.indices, id: \.self) { index in
-                                fetchView(movie: popularMovies, count: count, width: width * 0.97, height: geo.size.height * 0.3)
+                            ForEach(viewModel.sliderMovies.indices, id: \.self) { index in
+                                viewModel.fetchView(movie: viewModel.popularMovies, count: count, width: width * 0.97, height: geo.size.height * 0.3)
                                     .tag(count)
-//                                ZStack(alignment: .center) {
-//                                    NavigationLink {
-//                                        MovieView(movie: popularMovies[index])
-//                                    } label: {
-//                                        ImageView(urlString: "\(url)\(popularMovies[index].unwrappedBackdropPath)", width: width * 0.97, height: geo.size.height * 0.3)
-//                                    }
-//                                    Text(popularMovies[index].originalTitle)
-//                                        .font(.caption)
-//                                        .fontWeight(.black)
-//                                        .padding(8)
-//                                        .foregroundColor(.white)
-//                                        .background(.black.opacity(0.75))
-//                                        .clipShape(Capsule())
-//                                        .offset(y: 85)
-//                                }
-//                                .tag(index)
-                                
                             }
-                            
-//                          Rectangle()
-//                            .foregroundColor(.red)
-//                            .tag(1)
-//                          Rectangle()
-//                            .foregroundColor(.blue)
-//                            .tag(2)
-//                          Rectangle()
-//                            .foregroundColor(.green)
-//                            .tag(3)
-//                          Rectangle()
-//                            .foregroundColor(.orange)
-//                            .tag(4)
-//                          Rectangle()
-//                            .foregroundColor(.pink)
-//                            .tag(5)
-                        } //: TAB
+                        }
                         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                         .frame(height: geo.size.height * 0.3)
                         
                         Divider()
                         
-                        HomeSectionsView(title: popularMoviesString, width: width, height: height, movies: popularMovies, tvShows: nil)
-                        HomeSectionsView(title: popularTVShowsString, width: width, height: height, movies: nil, tvShows: popularTVShows)
-                        HomeSectionsView(title: upcomingMoviesString, width: width, height: height, movies: upcomingMovies, tvShows: nil)
-                        HomeSectionsView(title: topRatedMoviesString, width: width, height: height, movies: topRatedMovies, tvShows: nil)
-                        HomeSectionsView(title: onTheAirTVShowsString, width: width, height: height, movies: nil, tvShows: onTheAirTVShows)
-                        HomeSectionsView(title: topRatedTVShowsString, width: width, height: height, movies: nil, tvShows: topRatedTVShows)
+                        HomeSectionsView(title: viewModel.popularMoviesString, width: width, height: height, movies: viewModel.popularMovies, tvShows: nil)
+                        HomeSectionsView(title: viewModel.popularTVShowsString, width: width, height: height, movies: nil, tvShows: viewModel.popularTVShows)
+                        HomeSectionsView(title: viewModel.upcomingMoviesString, width: width, height: height, movies: viewModel.upcomingMovies, tvShows: nil)
+                        HomeSectionsView(title: viewModel.topRatedMoviesString, width: width, height: height, movies: viewModel.topRatedMovies, tvShows: nil)
+                        HomeSectionsView(title: viewModel.onTheAirTVShowsString, width: width, height: height, movies: nil, tvShows: viewModel.onTheAirTVShows)
+                        HomeSectionsView(title: viewModel.topRatedTVShowsString, width: width, height: height, movies: nil, tvShows: viewModel.topRatedTVShows)
                     }
                 }
                 .navigationTitle("Home")
                 .refreshable {
                     Task {
-                        popularMovies = await FetchData.downloadPopularMovies()
-                        upcomingMovies = await FetchData.downloadUpcomingMovies()
-                        popularTVShows = await FetchData.downloadPopularTVShows()
-                        topRatedMovies = await FetchData.downloadTopRatedMovies()
-                        topRatedTVShows = await FetchData.downloadTopRatedTVShows()
-                        onTheAirTVShows = await FetchData.downloadOnTheAirTVShows()
+                        await viewModel.fetchTVShowsAndMovies()
                     }
+                }
+            }
+            .onAppear {
+                Task {
+                    await viewModel.fetchTVShowsAndMovies()
                 }
             }
             .onReceive(timer) { _ in
@@ -110,37 +60,6 @@ struct Home: View {
                     count = count == 5 ? 1 : count + 1
                 }
             }
-            .onAppear {
-                Task {
-                    popularMovies = await FetchData.downloadPopularMovies()
-                    upcomingMovies = await FetchData.downloadUpcomingMovies()
-                    popularTVShows = await FetchData.downloadPopularTVShows()
-                    topRatedMovies = await FetchData.downloadTopRatedMovies()
-                    topRatedTVShows = await FetchData.downloadTopRatedTVShows()
-                    onTheAirTVShows = await FetchData.downloadOnTheAirTVShows()
-                    sliderMovies = await FetchData.downloadPopularMovies()
-                }
-            }
         }
-    }
-    @ViewBuilder
-    func fetchView(movie: [Movie], count: Int, width: Double, height: Double) -> some View {
-        ZStack(alignment: .center) {
-            NavigationLink {
-                MovieView(movie: movie[count])
-            } label: {
-                ImageView(urlString: "\(url)\(movie[count].unwrappedBackdropPath)", width: width, height: height)
-            }
-            Text(movie[count].originalTitle)
-                .font(.caption)
-                .fontWeight(.black)
-                .padding(8)
-                .foregroundColor(.white)
-                .background(.black.opacity(0.75))
-                .clipShape(Capsule())
-                .offset(y: height * 0.4)
-        }
-//        Print(popularMovies[count].originalTitle)
-//        Print(sliderMovies[count].originalTitle)
     }
 }

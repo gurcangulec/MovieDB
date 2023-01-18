@@ -77,8 +77,19 @@ struct MovieView: View {
                             
                             HStack {
                                 Image(systemName: "star.fill")
-                                Text("\(movie.convertToString)/10")
-                                    .font(.body)
+                                HStack(alignment: .firstTextBaseline) {
+                                    Text("\(movie.convertRatingToString)")
+                                        .font(.body)
+                                    HStack(spacing: 2) {
+                                        Text("/")
+                                            .font(.caption)
+                                        Text("10")
+                                            .font(.caption)
+                                    }
+                                    .foregroundColor(.secondary)
+                                }
+                                
+                                    
                                 
                                 Spacer()
                                 
