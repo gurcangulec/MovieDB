@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AddToWatchlistView: View {
+    @ObservedObject var viewModel: TheViewModel
     
     let movie: Movie
     let width: Double
@@ -66,22 +67,13 @@ struct AddToWatchlistView: View {
                     Spacer()
                     
                     Button {
-                        let watchlistMovie = StoredMovie(context: moc)
-                        watchlistMovie.id = Int32(movie.id)
-                        watchlistMovie.title = movie.originalTitle
-                        watchlistMovie.posterPath = movie.posterPath
-                        watchlistMovie.releaseDate = movie.formattedReleaseDateForStorage
-                        watchlistMovie.overview = movie.overview
-                        watchlistMovie.dateAdded = Date.now
-                        watchlistMovie.rating = movie.voteAverage
-                        watchlistMovie.backdropPath = movie.backdropPath
-                        watchlistMovie.watchlisted = true
+                        viewModel.addToWatchlist(movie: movie)
                         
-                        do {
-                            try moc.save()
-                        } catch {
-                            print("Something went wrong while saving: \(error.localizedDescription)")
-                        }
+//                        do {
+//                            try moc.save()
+//                        } catch {
+//                            print("Something went wrong while saving: \(error.localizedDescription)")
+//                        }
                         
                         dismiss()
                     } label: {

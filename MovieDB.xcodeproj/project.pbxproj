@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		790E06A8297EA8DC0031997B /* TheViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790E06A7297EA8DC0031997B /* TheViewModel.swift */; };
 		7924BE962976DF4F003C691C /* Home-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7924BE952976DF4F003C691C /* Home-ViewModel.swift */; };
 		7924BE982976E72D003C691C /* Search-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7924BE972976E72D003C691C /* Search-ViewModel.swift */; };
 		7924BE9A2976EAC4003C691C /* Watchlist-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7924BE992976EAC4003C691C /* Watchlist-ViewModel.swift */; };
@@ -52,6 +53,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		790E06A7297EA8DC0031997B /* TheViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheViewModel.swift; sourceTree = "<group>"; };
 		7924BE952976DF4F003C691C /* Home-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Home-ViewModel.swift"; sourceTree = "<group>"; };
 		7924BE972976E72D003C691C /* Search-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Search-ViewModel.swift"; sourceTree = "<group>"; };
 		7924BE992976EAC4003C691C /* Watchlist-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Watchlist-ViewModel.swift"; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				7924BE952976DF4F003C691C /* Home-ViewModel.swift */,
 				7924BE972976E72D003C691C /* Search-ViewModel.swift */,
 				7924BE992976EAC4003C691C /* Watchlist-ViewModel.swift */,
+				790E06A7297EA8DC0031997B /* TheViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				7924BE982976E72D003C691C /* Search-ViewModel.swift in Sources */,
 				792F7407296DB582007E686E /* DataController.swift in Sources */,
 				794A0FFE28782C3B008BF0F5 /* Actor.swift in Sources */,
+				790E06A8297EA8DC0031997B /* TheViewModel.swift in Sources */,
 				797863CF286F985E00A05498 /* MovieAndTVShowRow.swift in Sources */,
 				7924BE9A2976EAC4003C691C /* Watchlist-ViewModel.swift in Sources */,
 				797863CD286F983A00A05498 /* Search.swift in Sources */,

@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeSectionsView: View {
+    @ObservedObject var viewModel: TheViewModel
+    
     let title: String
     let url: String = "https://image.tmdb.org/t/p/original/"
     let width: Double
@@ -25,7 +27,7 @@ struct HomeSectionsView: View {
                     .padding(.leading, 15)
                 
                 NavigationLink {
-                    AllPopular(movies: movies, tvShows: tvShows, navTitle: title)
+                    AllPopular(viewModel: viewModel, movies: movies, tvShows: tvShows, navTitle: title)
                 } label: {
                     Text("See All")
                     
@@ -33,7 +35,7 @@ struct HomeSectionsView: View {
                 }
                 .padding(.trailing, 15)
             }
-            SideScroller(tvShows: tvShows, movies: movies, cast: nil, crew: nil, url: url, geoWidth: width)
+            SideScroller(viewModel: viewModel, tvShows: tvShows, movies: movies, cast: nil, crew: nil, url: url, geoWidth: width)
         }
     }
 }

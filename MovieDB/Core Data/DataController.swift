@@ -9,16 +9,18 @@ import CoreData
 import Foundation
 
 class DataController: ObservableObject {
-    let container = NSPersistentContainer(name: "MovieDB")
+    let persistentStoreContainer: NSPersistentContainer
+    static let shared = DataController()
     
     init() {
-        container.loadPersistentStores { description, error in
+        persistentStoreContainer = NSPersistentContainer(name: "MovieDB")
+        persistentStoreContainer.loadPersistentStores { description, error in
             if let error = error {
                 print("Core Data failed to load: \(error.localizedDescription)")
                 return
             }
             
-            self.container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+            self.persistentStoreContainer.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
         }
     }
 }

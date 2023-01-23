@@ -5,44 +5,29 @@
 //  Created by Gürcan Güleç on 07.01.2023.
 //
 
-import CoreData
 import SwiftUI
 
-extension StoredMovie {
-    static var defaultFetchRequest: NSFetchRequest<StoredMovie> {
-        let request: NSFetchRequest<StoredMovie> = StoredMovie.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-        request.predicate = NSPredicate(format: "watchlisted == true")
-        return request
-    }
-    static var ratedFetchRequest: NSFetchRequest<StoredMovie> {
-        let request: NSFetchRequest<StoredMovie> = StoredMovie.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-        request.predicate = NSPredicate(format: "rated == true")
-        return request
-    }
-}
-
 struct MainView: View {
+    @ObservedObject var viewModel: TheViewModel
     
     var body: some View {
         TabView {
-            Home()
+            Home(viewModel: viewModel)
                 .tabItem {
                     Label("Home", systemImage: "house.circle")
                 }
                 .tag(0)
-            Search()
+            Search(viewModel: viewModel)
                 .tabItem {
                     Label("Search", systemImage: "magnifyingglass.circle")
                 }
                 .tag(1)
-            WatchList()
+            WatchList(viewModel: viewModel)
                 .tabItem {
                     Label("Watchlist", systemImage: "play.circle")
                 }
                 .tag(2)
-            Ratings()
+            Ratings(viewModel: viewModel)
                 .tabItem {
                     Label("Ratings", systemImage: "star.circle")
                 }
@@ -57,8 +42,8 @@ struct MainView: View {
     }
 }
 
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainView()
-    }
-}
+//struct MainView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MainView()
+//    }
+//}

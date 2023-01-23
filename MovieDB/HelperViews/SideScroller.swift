@@ -9,6 +9,8 @@ import SwiftUI
 import Kingfisher
 
 struct SideScroller: View {
+    @ObservedObject var viewModel: TheViewModel
+    
     let tvShows: [TVShow]?
     let movies: [Movie]?
     let cast: [CastMember]?
@@ -23,7 +25,7 @@ struct SideScroller: View {
                     if let cast = cast {
                         ForEach(cast) {castMember in
                             NavigationLink {
-                                ActorView(cast: castMember)
+                                ActorView(viewModel: viewModel, cast: castMember)
                             } label: {
                                 VStack {
                                     if castMember.unwrappedProfilePath != "Unknown" {
@@ -64,7 +66,7 @@ struct SideScroller: View {
                     if let movies = movies {
                         ForEach(movies) {movie in
                             NavigationLink {
-                                MovieView(movie: movie)
+                                MovieView(viewModel: viewModel, movie: movie)
                             } label: {
                                 VStack {
                                     if movie.unwrappedPosterPath != "Unknown" {

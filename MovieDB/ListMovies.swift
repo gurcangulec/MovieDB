@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AllPopular: View {
+    @ObservedObject var viewModel: TheViewModel
     let movies: [Movie]?
     let tvShows: [TVShow]?
     let navTitle: String
@@ -15,14 +16,14 @@ struct AllPopular: View {
     var body: some View {
         if let movies = movies {
             List(movies) { movie in
-                MovieAndTVShowRow(movie: movie, tvShow: nil)
+                MovieAndTVShowRow(viewModel: viewModel, movie: movie, tvShow: nil)
             }
             .listStyle(.plain)
             .navigationTitle("\(navTitle)")
         } else {
             if let tvShows = tvShows {
                 List(tvShows) { tvShow in
-                    MovieAndTVShowRow(movie: nil, tvShow: tvShow)
+                    MovieAndTVShowRow(viewModel: viewModel, movie: nil, tvShow: tvShow)
                 }
                 .listStyle(.plain)
                 .navigationTitle("\(navTitle)")

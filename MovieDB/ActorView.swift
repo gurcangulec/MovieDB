@@ -9,6 +9,7 @@ import SwiftUI
 import Kingfisher
 
 struct ActorView: View {
+    @ObservedObject var viewModel: TheViewModel
     let cast: CastMember
     @State private var actor = Actor()
     @State private var relatedMovies = [Movie]()
@@ -79,7 +80,7 @@ struct ActorView: View {
                             LazyHStack {
                                 ForEach(relatedMovies) { relatedMovie in
                                     NavigationLink {
-                                        MovieView(movie: relatedMovie)
+                                        MovieView(viewModel: viewModel, movie: relatedMovie)
                                     } label: {
                                         VStack {
                                             if let unwrappedPath = relatedMovie.posterPath {
@@ -152,8 +153,8 @@ struct ActorView: View {
     }
 }
 
-struct ActorView_Previews: PreviewProvider {
-    static var previews: some View {
-        ActorView(cast: .example)
-    }
-}
+//struct ActorView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ActorView(cast: .example)
+//    }
+//}

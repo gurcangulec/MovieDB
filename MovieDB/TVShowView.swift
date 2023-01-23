@@ -49,7 +49,7 @@ struct TVShowView: View {
                                 Spacer()
                                 
                                 Image(systemName: "calendar")
-                                Text("\(tvShow.formattedReleaseDateForViews)")
+                                Text("\(tvShow.releaseDate ?? "Unknown")")
                                     .font(.body)
                                 
                                 Spacer()

@@ -9,6 +9,8 @@ import SwiftUI
 import Kingfisher
 
 struct MovieAndTVShowRow: View {
+    @ObservedObject var viewModel: TheViewModel
+    
     let movie: Movie?
     let tvShow: TVShow?
     private let url = "https://image.tmdb.org/t/p/original/"
@@ -17,7 +19,7 @@ struct MovieAndTVShowRow: View {
         // Fix this abomination
         NavigationLink {
             if let movie = movie {
-                MovieView(movie: movie)
+                MovieView(viewModel: viewModel, movie: movie)
             } else {
                 if let tvShow = tvShow {
                     TVShowView(tvShow: tvShow)

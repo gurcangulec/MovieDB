@@ -10,19 +10,22 @@ import SwiftUI
 import Kingfisher
 
 struct MovieView: View {
+    
+    @ObservedObject var viewModel: TheViewModel
+    
     @Environment(\.managedObjectContext) var moc
     
 //    @State private var engine: CHHapticEngine?
     @StateObject var hapticEngine = Haptics()
     
-    @State private var showingSheetWatchlist = false
-    @State private var showingSheetRating = false
-    @State private var watchlistButtonText = "Add to Watchlist"
+//    @State private var showingSheetWatchlist = false
+//    @State private var showingSheetRating = false
+//    @State private var watchlistButtonText = "Add to Watchlist"
     
     let movie: Movie
-    @State private var movieDetails = MovieDetails()
-    @State private var cast = [CastMember]()
-    @State private var crew = [CrewMember]()
+//    @State private var movieDetails = MovieDetails()
+//    @State private var cast = [CastMember]()
+//    @State private var crew = [CrewMember]()
     private let url = "https://image.tmdb.org/t/p/original/"
     
     var writers: [String] {
@@ -30,7 +33,7 @@ struct MovieView: View {
         var storyByArray = [String]()
         var screenplayByArray = [String]()
         
-        for member in crew {
+        for member in viewModel.crew {
             if member.job == "Writer" {
                 let addToArray = "\(member.originalName) (written by)"
                 writtenByArray.append(addToArray)
@@ -77,19 +80,8 @@ struct MovieView: View {
                             
                             HStack {
                                 Image(systemName: "star.fill")
-                                HStack(alignment: .firstTextBaseline) {
-                                    Text("\(movie.convertRatingToString)")
-                                        .font(.body)
-                                    HStack(spacing: 2) {
-                                        Text("/")
-                                            .font(.caption)
-                                        Text("10")
-                                            .font(.caption)
-                                    }
-                                    .foregroundColor(.secondary)
-                                }
-                                
-                                    
+                                Text("\(movie.convertRatingToString)/10")
+                                    .font(.body)
                                 
                                 Spacer()
                                 
@@ -109,7 +101,7 @@ struct MovieView: View {
                             
                             HStack {
                                 Button {
-                                    showingSheetWatchlist.toggle()
+                                    viewModel.showingSheetWatchlist.toggle()
                                     
                                     do {
                                         try moc.save()
@@ -126,7 +118,7 @@ struct MovieView: View {
                                 .buttonStyle(.bordered)
                                 
                                 Button {
-                                    showingSheetRating.toggle()
+                                    viewModel.showingSheetRating.toggle()
                                     hapticEngine.complexSuccess()
                                     
                                 } label: {
@@ -136,10 +128,10 @@ struct MovieView: View {
                                 .buttonStyle(.bordered)
                             }
                         }
-                        .sheet(isPresented: $showingSheetWatchlist) {
-                            AddToWatchlistView(movie: movie, width: geo.size.width * 0.54, height: geo.size.width * 0.81)
+                        .sheet(isPresented: $viewModel.showingSheetWatchlist) {
+                            AddToWatchlistView(viewModel: viewModel, movie: movie, width: geo.size.width * 0.54, height: geo.size.width * 0.81)
                         }
-                        .sheet(isPresented: $showingSheetRating, content: {
+                        .sheet(isPresented: $viewModel.showingSheetRating, content: {
                             AddRatingView(movie: movie, width: geo.size.width * 0.54, height: geo.size.width * 0.81)
                         })
 //                        .onAppear(perform: checkIfAdded)
@@ -154,7 +146,7 @@ struct MovieView: View {
                                 .padding(.bottom, geo.size.height * 0.001)
                             
                             NavigationLink {
-                                FullCrewView(movie: movie, cast: cast, crew: crew)
+                                FullCrewView(movie: movie, cast: viewModel.cast, crew: viewModel.crew)
                             } label: {
                                 Text("Full Cast & Crew")
                                 
@@ -163,7 +155,7 @@ struct MovieView: View {
 //                            .padding(.bottom)
                         }
                         
-                        SideScroller(tvShows: nil, movies: nil, cast: cast, crew: nil, url: url, geoWidth: geo.size.width)
+                        SideScroller(viewModel: viewModel, tvShows: nil, movies: nil, cast: viewModel.cast, crew: nil, url: url, geoWidth: geo.size.width)
                         
                         Divider()
                         
@@ -174,7 +166,7 @@ struct MovieView: View {
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding(.bottom, geo.size.height * 0.001)
                                 
-                                ForEach(crew) { crewMember in
+                                ForEach(viewModel.crew) { crewMember in
                                     if crewMember.job == "Director" {
                                         Text(crewMember.originalName)
                                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -202,14 +194,16 @@ struct MovieView: View {
                     }
                     .padding(.horizontal)
                     .task {
-                        cast = await FetchData.downloadCast(movieId: movie.id)
-                        crew = await FetchData.downloadCrew(movieId: movie.id)
-                        movieDetails = await FetchData.downloadSpecificMovie(movieId: movie.id)
+//                        cast = await FetchData.downloadCast(movieId: movie.id)
+//                        crew = await FetchData.downloadCrew(movieId: movie.id)
+//                        movieDetails = await FetchData.downloadSpecificMovie(movieId: movie.id)
+                        await viewModel.fetchCastAndCrew(movieId: movie.id)
                     }
                     .refreshable {
-                        cast = await FetchData.downloadCast(movieId: movie.id)
-                        crew = await FetchData.downloadCrew(movieId: movie.id)
-                        movieDetails = await FetchData.downloadSpecificMovie(movieId: movie.id)
+//                        cast = await FetchData.downloadCast(movieId: movie.id)
+//                        crew = await FetchData.downloadCrew(movieId: movie.id)
+//                        movieDetails = await FetchData.downloadSpecificMovie(movieId: movie.id)
+                        await viewModel.fetchCastAndCrew(movieId: movie.id)
                     }
                 }
             }
@@ -265,7 +259,7 @@ struct MovieView: View {
     }
     
     func copyToClipboardIMDB() {
-        UIPasteboard.general.string = "https://www.imdb.com/title/\(movieDetails.unwrappedImdbId)"
+        UIPasteboard.general.string = "https://www.imdb.com/title/\(viewModel.movieDetails.unwrappedImdbId)"
     }
     
     // To be moved from here
@@ -282,7 +276,7 @@ struct MovieView: View {
     }
     func shareImdbButton() {
         
-        let activityController = UIActivityViewController(activityItems: ["https://www.imdb.com/title/\(movieDetails.unwrappedImdbId)"], applicationActivities: nil)
+        let activityController = UIActivityViewController(activityItems: ["https://www.imdb.com/title/\(viewModel.movieDetails.unwrappedImdbId)"], applicationActivities: nil)
         
         let scenes = UIApplication.shared.connectedScenes
         let windowScene = scenes.first as? UIWindowScene
@@ -292,8 +286,8 @@ struct MovieView: View {
     }
 }
 
-struct MovieView_Previews: PreviewProvider {
-    static var previews: some View {
-        MovieView(movie: .example)
-    }
-}
+//struct MovieView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MovieView(movie: .example)
+//    }
+//}

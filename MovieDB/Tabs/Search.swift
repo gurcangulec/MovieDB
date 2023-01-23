@@ -9,15 +9,11 @@ import SwiftUI
 import Kingfisher
 
 struct Search: View {
-    @StateObject private var viewModel = ViewModel()
-    
-//    @State private var toggle = true
-    private let url = "https://image.tmdb.org/t/p/original/"
-    
+    @ObservedObject var viewModel: TheViewModel
     
     var body: some View {
         NavigationView {
-            if viewModel.movies.isEmpty || viewModel.tvShows.isEmpty {
+            if viewModel.searchedMovies.isEmpty || viewModel.searchedTvShows.isEmpty {
                 VStack {
                     Image(systemName: "magnifyingglass.circle")
                         .font(.title)
@@ -43,15 +39,15 @@ struct Search: View {
                     }
                     
                     if viewModel.chosenCategory == "Movie" {
-                        List(viewModel.movies) { movie in
-                            MovieAndTVShowRow(movie: movie, tvShow: nil)
+                        List(viewModel.searchedMovies) { movie in
+                            MovieAndTVShowRow(viewModel: viewModel, movie: movie, tvShow: nil)
                         }
                         .listStyle(.plain)
                         .navigationTitle("Search")
                         
                     } else {
-                        List(viewModel.tvShows) { tvShow in
-                            MovieAndTVShowRow(movie: nil, tvShow: tvShow)
+                        List(viewModel.searchedTvShows) { tvShow in
+                            MovieAndTVShowRow(viewModel: viewModel, movie: nil, tvShow: tvShow)
                         }
                         .listStyle(.plain)
                         .navigationTitle("Search")
@@ -60,24 +56,31 @@ struct Search: View {
                 }
                 .searchable(text: $viewModel.searchQuery)
             }
+            
+            //                        suggestions: {
+            //                Text("Some suggestions")
+            //                    .font(.title2)
+            //                    .foregroundColor(.primary)
+            //
+            //                ForEach(popularMovies.prefix(3)) { popularMovie in
+            //                    Text(popularMovie.originalTitle).searchCompletion("\(popularMovie.originalTitle)")
+            //                        .font(.body)
+            //                }
+            //            })
         }
         .disableAutocorrection(true)
-//        .onAppear {
-//            Task {
-//                popularMovies = await FetchData.downloadPopularMovies()
-//            }
-//        }
         .onSubmit(of: .search) {
             Task {
-                await viewModel.onSubmitFunc()
+                await viewModel.searchMoviesAndTVShows()
+                viewModel.pickerVisible = true
             }
         }
         .navigationViewStyle(.stack)
     }
 }
 
-struct Search_Previews: PreviewProvider {
-    static var previews: some View {
-        Search()
-    }
-}
+//struct Search_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Search()
+//    }
+//}

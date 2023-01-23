@@ -5,9 +5,9 @@
 //  Created by Gürcan Güleç on 17.01.2023.
 //
 
-import Foundation
-import CoreData
-import SwiftUI
+//import Foundation
+//import CoreData
+//import SwiftUI
 
 //// Enum for both Watchlist and Ratings View
 //enum SortedBy: String {

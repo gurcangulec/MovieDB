@@ -9,6 +9,7 @@ import SwiftUI
 import Kingfisher
 
 struct RatingMovieRow: View {
+    @ObservedObject var viewModel: TheViewModel
     @ObservedObject var storedMovie: StoredMovie
     private let url = "https://image.tmdb.org/t/p/original/"
     
@@ -18,7 +19,7 @@ struct RatingMovieRow: View {
     var body: some View {
         NavigationLink {
             let movie = Movie(id: Int(storedMovie.id), originalTitle: storedMovie.unwrappedTitle, overview: storedMovie.overview ?? "Unkown", posterPath: storedMovie.posterPath, releaseDate: String(storedMovie.unwrappedReleaseDate), backdropPath: storedMovie.unwrappedBackdropPath, voteAverage: Double(storedMovie.unwrappedRating)!)
-            MovieView(movie: movie)
+            MovieView(viewModel: viewModel, movie: movie)
         } label: {
             HStack {
                 if let unwrappedPath = storedMovie.posterPath {

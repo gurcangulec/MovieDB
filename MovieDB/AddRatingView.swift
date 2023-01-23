@@ -51,14 +51,12 @@ struct AddRatingView: View {
     let movie: Movie
     let width: Double
     let height: Double
-    @State private var removeFromWatchlist = false
+    @State private var removeFromWatchlist = true
     @State private var rating: Int = 0
     @State private var notes = ""
     @State private var showImage = true
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var moc
-    
-//    @ObservedObject var storedMovie: StoredMovie
     
     private let url = "https://image.tmdb.org/t/p/original/"
     
@@ -88,7 +86,6 @@ struct AddRatingView: View {
                         .padding(.bottom)
                     
                     Toggle("Remove from Watchlist?", isOn: $removeFromWatchlist)
-                        
                     
                     Spacer()
                     
@@ -104,7 +101,6 @@ struct AddRatingView: View {
                         rateMovie.backdropPath = movie.backdropPath
                         rateMovie.overview = movie.overview
                         rateMovie.rated = true
-                        rateMovie.watchlisted = !removeFromWatchlist
                         
                         try? moc.save()
                         

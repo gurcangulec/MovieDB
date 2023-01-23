@@ -9,12 +9,17 @@ import SwiftUI
 
 @main
 struct MovieDBApp: App {
-    @State private var dataController = DataController()
+    
+    @StateObject private var theViewModel = TheViewModel(context: DataController.shared.persistentStoreContainer.viewContext)
     
     var body: some Scene {
         WindowGroup {
-            MainView()
-                .environment(\.managedObjectContext, dataController.container.viewContext)
+            
+            let viewContext = DataController.shared.persistentStoreContainer.viewContext
+            
+            MainView(viewModel: TheViewModel(context: viewContext))
+                .environment(\.managedObjectContext, viewContext)
+                .environmentObject(theViewModel)
         }
     }
 }
