@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct FullCrewView: View {
-    let movie: Movie
+    let movie: Movie?
+    let tvShow: TVShow?
     let cast: [CastMember]
     let crew: [CrewMember]
     

@@ -7,6 +7,7 @@
 
 import CoreData
 import Foundation
+import UIKit
 
 @MainActor
 class TheViewModel: ObservableObject {
@@ -121,10 +122,80 @@ class TheViewModel: ObservableObject {
 //    @Published var cast = [CastMember]()
     @Published var crew = [CrewMember]()
     
+    var writers: [String] {
+        var writtenByArray = [String]()
+        var storyByArray = [String]()
+        var screenplayByArray = [String]()
+        
+        for member in crew {
+            if member.job == "Writer" {
+                let addToArray = "\(member.originalName) (written by)"
+                writtenByArray.append(addToArray)
+            } else if member.job == "Story" {
+                let addToArray = "\(member.originalName) (story by)"
+                storyByArray.append(addToArray)
+            } else if member.job == "Screenplay" {
+                let addToArray = "\(member.originalName) (screenplay by)"
+                screenplayByArray.append(addToArray)
+            }
+        }
+        
+        return writtenByArray + storyByArray + screenplayByArray
+    }
+    
     func fetchCastAndCrew(movieId: Int) async {
         cast = await FetchData.downloadCast(movieId: movieId)
         crew = await FetchData.downloadCrew(movieId: movieId)
         movieDetails = await FetchData.downloadSpecificMovie(movieId: movieId)
     }
     
+    func fetchCastAndCrewTVShow(tvShowId: Int) async {
+        cast = await FetchData.downloadCastTVShow(tvShowId: tvShowId)
+        crew = await FetchData.downloadCrewTVShow(tvShowId: tvShowId)
+    }
+    
+    func copyToClipboard(movie: Movie?, tvShow: TVShow?) {
+        if let movie {
+            UIPasteboard.general.string = "https://www.themoviedb.org/movie/\(movie.id)"
+        }
+        if let tvShow {
+            UIPasteboard.general.string = "https://www.themoviedb.org/tv/\(tvShow.id)"
+        }
+    }
+    
+    func copyToClipboardIMDB() {
+        UIPasteboard.general.string = "https://www.imdb.com/title/\(movieDetails.unwrappedImdbId)"
+    }
+    
+    func shareButton(movie: Movie?, tvShow: TVShow?) {
+        if let movie {
+            let activityController = UIActivityViewController(activityItems: ["https://www.themoviedb.org/movie/\(movie.id)"], applicationActivities: nil)
+            
+            let scenes = UIApplication.shared.connectedScenes
+            let windowScene = scenes.first as? UIWindowScene
+            let window = windowScene?.windows.first
+            
+            window?.rootViewController!.present(activityController, animated: true, completion: nil)
+        }
+        
+        if let tvShow {
+            let activityController = UIActivityViewController(activityItems: ["https://www.themoviedb.org/tv/\(tvShow.id)"], applicationActivities: nil)
+            
+            let scenes = UIApplication.shared.connectedScenes
+            let windowScene = scenes.first as? UIWindowScene
+            let window = windowScene?.windows.first
+            
+            window?.rootViewController!.present(activityController, animated: true, completion: nil)
+        }
+    }
+    func shareImdbButton() {
+
+        let activityController = UIActivityViewController(activityItems: ["https://www.imdb.com/title/\(movieDetails.unwrappedImdbId)"], applicationActivities: nil)
+
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        let window = windowScene?.windows.first
+
+        window?.rootViewController!.present(activityController, animated: true, completion: nil)
+    }
 }

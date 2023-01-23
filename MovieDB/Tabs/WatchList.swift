@@ -22,15 +22,8 @@ extension StoredMovie {
     }
 }
 
-
-
 struct WatchList: View {
     @ObservedObject var viewModel: TheViewModel
-    
-//    @FetchRequest(fetchRequest: StoredMovie.defaultFetchRequest)
-//    var storedMovies: FetchedResults<StoredMovie>
-    
-//    @Environment(\.managedObjectContext) var moc
     
     var body: some View {
         NavigationView {

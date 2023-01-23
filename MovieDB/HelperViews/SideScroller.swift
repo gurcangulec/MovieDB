@@ -106,7 +106,7 @@ struct SideScroller: View {
                     if let tvShows = tvShows {
                         ForEach(tvShows) {tvShow in
                             NavigationLink {
-                                TVShowView(tvShow: tvShow)
+                                TVShowView(viewModel: viewModel, tvShow: tvShow)
                             } label: {
                                 VStack {
                                     if tvShow.unwrappedPosterPath != "Unknown" {

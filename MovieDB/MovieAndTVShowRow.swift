@@ -22,7 +22,7 @@ struct MovieAndTVShowRow: View {
                 MovieView(viewModel: viewModel, movie: movie)
             } else {
                 if let tvShow = tvShow {
-                    TVShowView(tvShow: tvShow)
+                    TVShowView(viewModel: viewModel, tvShow: tvShow)
                 }
             }
         } label: {

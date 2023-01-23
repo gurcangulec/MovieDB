@@ -21,4 +21,5 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
+    <entity name="StoredTVShow" representedClassName="StoredTVShow" syncable="YES" codeGenerationType="class"/>
 </model>

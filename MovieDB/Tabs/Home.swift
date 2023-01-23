@@ -18,7 +18,6 @@ struct Home: View {
             NavigationView {
                 VStack {
                     ScrollView(showsIndicators: false) {
-                        // Foreground
                         TabView{
                             ForEach(viewModel.sliderMovies.indices, id: \.self) { index in
                                 ZStack(alignment: .center) {

@@ -101,6 +101,46 @@ struct FetchData {
         return []
     }
     
+    static func downloadCastTVShow(tvShowId: Int) async -> [CastMember] {
+            // Check URL
+        guard let url = URL(string: "\(baseURL)tv/\(tvShowId)/credits?api_key=\(APIKey)&language=en-US") else {
+                print("Invalid URL")
+                return []
+            }
+            
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                let decoder = JSONDecoder()
+                // Decode from data
+                if let decoded = try? decoder.decode(Cast.self, from: data) {
+                    return decoded.results
+                }
+            } catch {
+                print("Invalid Something")
+            }
+        return []
+    }
+    
+    static func downloadCrewTVShow(tvShowId: Int) async -> [CrewMember] {
+            // Check URL
+        guard let url = URL(string: "\(baseURL)tv/\(tvShowId)/credits?api_key=\(APIKey)&language=en-US") else {
+                print("Invalid URL")
+                return []
+            }
+            
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                let decoder = JSONDecoder()
+                // Decode from data
+                if let decoded = try? decoder.decode(Crew.self, from: data) {
+                    return decoded.results
+                }
+            } catch {
+                print("Invalid Something")
+            }
+        return []
+    }
+    
     static func downloadCrew(movieId: Int) async -> [CrewMember] {
             // Check URL
         guard let url = URL(string: "\(baseURL)movie/\(movieId)/credits?api_key=\(APIKey)&language=en-US") else {

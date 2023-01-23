@@ -18,36 +18,8 @@ struct MovieView: View {
 //    @State private var engine: CHHapticEngine?
     @StateObject var hapticEngine = Haptics()
     
-//    @State private var showingSheetWatchlist = false
-//    @State private var showingSheetRating = false
-//    @State private var watchlistButtonText = "Add to Watchlist"
-    
     let movie: Movie
-//    @State private var movieDetails = MovieDetails()
-//    @State private var cast = [CastMember]()
-//    @State private var crew = [CrewMember]()
     private let url = "https://image.tmdb.org/t/p/original/"
-    
-    var writers: [String] {
-        var writtenByArray = [String]()
-        var storyByArray = [String]()
-        var screenplayByArray = [String]()
-        
-        for member in viewModel.crew {
-            if member.job == "Writer" {
-                let addToArray = "\(member.originalName) (written by)"
-                writtenByArray.append(addToArray)
-            } else if member.job == "Story" {
-                let addToArray = "\(member.originalName) (story by)"
-                storyByArray.append(addToArray)
-            } else if member.job == "Screenplay" {
-                let addToArray = "\(member.originalName) (screenplay by)"
-                screenplayByArray.append(addToArray)
-            }
-        }
-        
-        return writtenByArray + storyByArray + screenplayByArray
-    }
 
     var body: some View {
         GeometryReader { geo in
@@ -77,50 +49,50 @@ struct MovieView: View {
                             Text(movie.originalTitle)
                                 .font(.title.weight(.semibold))
                                 .padding(.bottom, geo.size.height * 0.01)
-                            
+
                             HStack {
                                 Image(systemName: "star.fill")
                                 Text("\(movie.convertRatingToString)/10")
                                     .font(.body)
-                                
+
                                 Spacer()
-                                
+
                                 Image(systemName: "calendar")
                                 Text("\(movie.formattedReleaseDateForViews)")
                                     .font(.body)
-                                
+
                                 Spacer()
                                 Spacer()
                                 Spacer()
                             }
                             .padding(.bottom, geo.size.height * 0.01)
-                            
+
                             Text(movie.overview)
                                 .font(.body)
                                 .padding(.bottom, geo.size.height * 0.01)
-                            
+
                             HStack {
                                 Button {
                                     viewModel.showingSheetWatchlist.toggle()
-                                    
+
                                     do {
                                         try moc.save()
                                     } catch {
                                         print("Something went wrong while saving: \(error.localizedDescription)")
                                     }
-                                    
+
                                     hapticEngine.complexSuccess()
-                                    
+
                                 } label: {
                                     Label("Watchlist", systemImage: "plus")
                                         .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
                                 }
                                 .buttonStyle(.bordered)
-                                
+
                                 Button {
                                     viewModel.showingSheetRating.toggle()
                                     hapticEngine.complexSuccess()
-                                    
+
                                 } label: {
                                     Label("Rate", systemImage: "star.fill")
                                         .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
@@ -138,25 +110,25 @@ struct MovieView: View {
                         .onAppear(perform: hapticEngine.prepareHaptics)
                         
                         Divider()
-                        
+
                         HStack {
                             Text("Cast")
                                 .font(.title2.weight(.semibold))
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.bottom, geo.size.height * 0.001)
-                            
+
                             NavigationLink {
-                                FullCrewView(movie: movie, cast: viewModel.cast, crew: viewModel.crew)
+                                FullCrewView(movie: movie, tvShow: nil, cast: viewModel.cast, crew: viewModel.crew)
                             } label: {
                                 Text("Full Cast & Crew")
-                                
+
                                 Image(systemName: "chevron.right")
                             }
 //                            .padding(.bottom)
                         }
                         
                         SideScroller(viewModel: viewModel, tvShows: nil, movies: nil, cast: viewModel.cast, crew: nil, url: url, geoWidth: geo.size.width)
-                        
+
                         Divider()
                         
                         Group {
@@ -184,7 +156,7 @@ struct MovieView: View {
                                     .padding(.bottom, geo.size.height * 0.001)
                             }
                             
-                            ForEach(writers, id:\.self) { writer in
+                            ForEach(viewModel.writers, id:\.self) { writer in
                                     Text(writer)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .padding(.bottom, geo.size.height * 0.01)
@@ -194,15 +166,9 @@ struct MovieView: View {
                     }
                     .padding(.horizontal)
                     .task {
-//                        cast = await FetchData.downloadCast(movieId: movie.id)
-//                        crew = await FetchData.downloadCrew(movieId: movie.id)
-//                        movieDetails = await FetchData.downloadSpecificMovie(movieId: movie.id)
                         await viewModel.fetchCastAndCrew(movieId: movie.id)
                     }
                     .refreshable {
-//                        cast = await FetchData.downloadCast(movieId: movie.id)
-//                        crew = await FetchData.downloadCrew(movieId: movie.id)
-//                        movieDetails = await FetchData.downloadSpecificMovie(movieId: movie.id)
                         await viewModel.fetchCastAndCrew(movieId: movie.id)
                     }
                 }
@@ -214,75 +180,37 @@ struct MovieView: View {
             Menu {
                 Menu("Copy Link") {
                     Button {
-                        copyToClipboard()
+                        viewModel.copyToClipboard(movie: movie, tvShow: nil)
                     } label: {
                         Label("Copy TMDB Link", systemImage: "link")
                     }
-                    
+
                     Button {
-                        copyToClipboardIMDB()
+                        viewModel.copyToClipboardIMDB()
                     } label: {
                         Label("Copy IMDB Link", systemImage: "link")
                     }
                 }
                 
-                Menu("Share") {
+                Menu("Share Link") {
                     Button {
-                        shareButton()
+                        viewModel.shareButton(movie: movie, tvShow: nil)
                     } label: {
                         Label("Share TMBD Link", systemImage: "square.and.arrow.up")
                     }
-                    
+
                     Button {
-                        shareImdbButton()
+                        viewModel.shareImdbButton()
                     } label: {
                         Label("Share IMDB Link", systemImage: "square.and.arrow.up")
                     }
                 }
-                
-                Button {
-                    print("Add to Watchlist")
-                } label: {
-                    Label("Add to Watchlist", systemImage: "play.circle.fill")
-                }
-                
             } label: {
-                Label("Options", systemImage: "ellipsis")
+                Label("Share Options", systemImage: "square.and.arrow.up")
             }
             .onAppear(perform: hapticEngine.prepareHaptics)
             .onTapGesture(perform: hapticEngine.complexSuccess)
         }
-    }
-    
-    func copyToClipboard() {
-        UIPasteboard.general.string = "https://www.themoviedb.org/movie/\(movie.id)"
-    }
-    
-    func copyToClipboardIMDB() {
-        UIPasteboard.general.string = "https://www.imdb.com/title/\(viewModel.movieDetails.unwrappedImdbId)"
-    }
-    
-    // To be moved from here
-    func addToWatchlist() { }
-    func shareButton() {
-        
-        let activityController = UIActivityViewController(activityItems: ["https://www.themoviedb.org/movie/\(movie.id)"], applicationActivities: nil)
-        
-        let scenes = UIApplication.shared.connectedScenes
-        let windowScene = scenes.first as? UIWindowScene
-        let window = windowScene?.windows.first
-        
-        window?.rootViewController!.present(activityController, animated: true, completion: nil)
-    }
-    func shareImdbButton() {
-        
-        let activityController = UIActivityViewController(activityItems: ["https://www.imdb.com/title/\(viewModel.movieDetails.unwrappedImdbId)"], applicationActivities: nil)
-        
-        let scenes = UIApplication.shared.connectedScenes
-        let windowScene = scenes.first as? UIWindowScene
-        let window = windowScene?.windows.first
-        
-        window?.rootViewController!.present(activityController, animated: true, completion: nil)
     }
 }
 
