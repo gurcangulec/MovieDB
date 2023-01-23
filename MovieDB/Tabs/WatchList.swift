@@ -58,69 +58,77 @@ struct WatchList: View {
                         EditButton()
                     }
                     ToolbarItem(placement: .navigationBarLeading) {
-//                        Menu {
+                        Menu {
                             Menu("Sort by Title") {
                                 Button {
-//                                    viewModel.watchlistedMovies.nsSortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
                                     viewModel.sortedBy = .title
+                                    viewModel.sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+                                    viewModel.fetchWatchlistedMovies()
                                 } label: {
                                     Text("A to Z")
                                 }
                                 Button {
-//                                    viewModel.watchlistedMovies.nsSortDescriptors = [NSSortDescriptor(key: "title", ascending: false)]
                                     viewModel.sortedBy = .title
+                                    viewModel.sortDescriptor = NSSortDescriptor(key: "title", ascending: false)
+                                    viewModel.fetchWatchlistedMovies()
                                 } label: {
                                     Text("Z to A")
                                 }
                             }
-//                            Menu("Sort by Date Added") {
-//                                Button {
-//                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: true)]
-//                                    viewModel.sortedBy = .dateAdded
-//                                } label: {
-//                                    Text("Ascending Order")
-//                                }
-//                                Button {
-//                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
-//                                    viewModel.sortedBy = .releaseDate
-//                                } label: {
-//                                    Text("Descending Order")
-//                                }
-//                            }
-//                            Menu("Sort by Release Date") {
-//                                Button {
-//                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: true)]
-//                                    viewModel.sortedBy = .dateAdded
-//                                } label: {
-//                                    Text("Ascending Order")
-//                                }
-//                                Button {
-//                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
-//                                    viewModel.sortedBy = .releaseDate
-//                                } label: {
-//                                    Text("Descending Order")
-//                                }
-//                            }
-//                            Menu("Sort by TMDB Rating") {
-//                                Button {
-//                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "rating", ascending: true)]
-//                                    viewModel.sortedBy = .rating
-//                                } label: {
-//                                    Text("Ascending Order")
-//                                }
-//                                Button {
-//                                    storedMovies.nsSortDescriptors = [NSSortDescriptor(key: "rating", ascending: false)]
-//                                    viewModel.sortedBy = .rating
-//                                } label: {
-//                                    Text("Descending Order")
-//                                }
-//                            }
-//                        } label: {
-//                            HStack {
-//                                Label("Sort", systemImage: "line.3.horizontal.decrease.circle")
-//                                Text("Sort")
-//                            }
-//                        }
+                            Menu("Sort by Date Added") {
+                                Button {
+                                    viewModel.sortedBy = .dateAdded
+                                    viewModel.sortDescriptor = NSSortDescriptor(key: "dateAdded", ascending: true)
+                                    viewModel.fetchWatchlistedMovies()
+                                } label: {
+                                    Text("Ascending Order")
+                                }
+                                Button {
+                                    viewModel.sortedBy = .dateAdded
+                                    viewModel.sortDescriptor = NSSortDescriptor(key: "dateAdded", ascending: false)
+                                    viewModel.sortedBy = .releaseDate
+                                } label: {
+                                    Text("Descending Order")
+                                }
+                            }
+                            Menu("Sort by Release Date") {
+                                Button {
+                                    viewModel.sortedBy = .releaseDate
+                                    viewModel.sortDescriptor = NSSortDescriptor(key: "releaseDate", ascending: true)
+                                    viewModel.fetchWatchlistedMovies()
+                                } label: {
+                                    Text("Ascending Order")
+                                }
+                                Button {
+                                    viewModel.sortedBy = .releaseDate
+                                    viewModel.sortDescriptor = NSSortDescriptor(key: "releaseDate", ascending: false)
+                                    viewModel.fetchWatchlistedMovies()
+                                } label: {
+                                    Text("Descending Order")
+                                }
+                            }
+                            Menu("Sort by TMDB Rating") {
+                                Button {
+                                    viewModel.sortedBy = .rating
+                                    viewModel.sortDescriptor = NSSortDescriptor(key: "rating", ascending: true)
+                                    viewModel.fetchWatchlistedMovies()
+                                } label: {
+                                    Text("Ascending Order")
+                                }
+                                Button {
+                                    viewModel.sortedBy = .rating
+                                    viewModel.sortDescriptor = NSSortDescriptor(key: "rating", ascending: false)
+                                    viewModel.fetchWatchlistedMovies()
+                                } label: {
+                                    Text("Descending Order")
+                                }
+                            }
+                        } label: {
+                            HStack {
+                                Label("Sort", systemImage: "line.3.horizontal.decrease.circle")
+                                Text("Sort")
+                            }
+                        }
                     }
                 }
             }
@@ -130,7 +138,13 @@ struct WatchList: View {
     func deleteWatchlistMovies(at offsets: IndexSet) {
         guard let index = offsets.first else { return }
         let watchlistedMovie = viewModel.watchlistedMovies[index]
-        viewModel.context.delete(watchlistedMovie)
+        
+        watchlistedMovie.watchlisted = false
+        
+        if watchlistedMovie.rated == false {
+            viewModel.context.delete(watchlistedMovie)
+        }
+       
         
         viewModel.saveData()
     }
