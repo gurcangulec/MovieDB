@@ -104,9 +104,8 @@ struct MovieView: View {
                             AddToWatchlistView(viewModel: viewModel, movie: movie, width: geo.size.width * 0.54, height: geo.size.width * 0.81)
                         }
                         .sheet(isPresented: $viewModel.showingSheetRating, content: {
-                            AddRatingView(movie: movie, width: geo.size.width * 0.54, height: geo.size.width * 0.81)
+                            AddRatingView(viewModel: viewModel, movie: movie, width: geo.size.width * 0.54, height: geo.size.width * 0.81)
                         })
-//                        .onAppear(perform: checkIfAdded)
                         .onAppear(perform: hapticEngine.prepareHaptics)
                         
                         Divider()

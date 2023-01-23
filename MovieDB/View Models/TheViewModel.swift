@@ -17,6 +17,7 @@ class TheViewModel: ObservableObject {
     init(context: NSManagedObjectContext) {
         self.context = context
         fetchWatchlistedMovies()
+        fetchRatedMovies()
     }
     
     let imageUrl = "https://image.tmdb.org/t/p/original/"
@@ -72,15 +73,14 @@ class TheViewModel: ObservableObject {
         case releaseDate = "Release Date"
         case rating = "TMBD Rating"
     }
-    @Published var sortedBy = SortedBy.title
     
-    let request = NSFetchRequest<StoredMovie>(entityName: "StoredMovie")
-//    request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+    @Published var sortedBy = SortedBy.title
+    @Published var sortDescriptor = NSSortDescriptor(key: "title", ascending: false)
     
     func fetchWatchlistedMovies() {
-        
-//        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-//        request.predicate = NSPredicate(format: "watchlisted == true")
+        let request = NSFetchRequest<StoredMovie>(entityName: "StoredMovie")
+        request.sortDescriptors = [sortDescriptor]
+        request.predicate = NSPredicate(format: "watchlisted == true")
         
         do {
             watchlistedMovies = try context.fetch(request)
@@ -108,9 +108,42 @@ class TheViewModel: ObservableObject {
         do {
             try context.save()
             fetchWatchlistedMovies()
+            fetchRatedMovies()
         } catch let error {
             print("Error saving: \(error)")
         }
+    }
+    
+    // MARK: RatingsList
+    
+    @Published var ratedMovies: [StoredMovie] = []
+    
+    func fetchRatedMovies() {
+        let request = NSFetchRequest<StoredMovie>(entityName: "StoredMovie")
+        request.sortDescriptors = [sortDescriptor]
+        request.predicate = NSPredicate(format: "rated == true")
+        
+        do {
+            ratedMovies = try context.fetch(request)
+        } catch let error {
+            print("Error fetching: \(error.localizedDescription)")
+        }
+    }
+    
+    func addToRated(movie: Movie, rating: Int) {
+        let ratedMovie = StoredMovie(context: context)
+        ratedMovie.id = Int32(movie.id)
+        ratedMovie.title = movie.originalTitle
+        ratedMovie.posterPath = movie.posterPath
+        ratedMovie.releaseDate = movie.formattedReleaseDateForStorage
+        ratedMovie.overview = movie.overview
+        ratedMovie.dateAdded = Date.now
+        ratedMovie.rating = movie.voteAverage
+        ratedMovie.backdropPath = movie.backdropPath
+        ratedMovie.rated = true
+        ratedMovie.userRating = Int16(rating)
+        print("Saving")
+        saveData()
     }
     
     // MARK: MovieView

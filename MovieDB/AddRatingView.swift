@@ -48,6 +48,8 @@ struct StarView: View {
 
 struct AddRatingView: View {
     
+    @ObservedObject var viewModel: TheViewModel
+    
     let movie: Movie
     let width: Double
     let height: Double
@@ -85,24 +87,10 @@ struct AddRatingView: View {
                     Divider()
                         .padding(.bottom)
                     
-                    Toggle("Remove from Watchlist?", isOn: $removeFromWatchlist)
-                    
                     Spacer()
                     
                     Button {
-                        let rateMovie = StoredMovie(context: moc)
-                        rateMovie.id = Int32(movie.id)
-                        rateMovie.userRating = Int16(rating)
-                        rateMovie.title = movie.originalTitle
-                        rateMovie.releaseDate = movie.formattedReleaseDateForStorage
-                        rateMovie.dateAdded = Date.now
-                        rateMovie.posterPath = movie.unwrappedPosterPath
-                        rateMovie.rating = movie.voteAverage
-                        rateMovie.backdropPath = movie.backdropPath
-                        rateMovie.overview = movie.overview
-                        rateMovie.rated = true
-                        
-                        try? moc.save()
+                        viewModel.addToRated(movie: movie, rating: rating)
                         
                         dismiss()
                     } label: {
