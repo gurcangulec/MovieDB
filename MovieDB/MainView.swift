@@ -27,7 +27,7 @@ struct MainView: View {
                     Label("Watchlist", systemImage: "play.circle")
                 }
                 .tag(2)
-            Ratings(viewModel: viewModel)
+            RatingsList(viewModel: viewModel)
                 .tabItem {
                     Label("Ratings", systemImage: "star.circle")
                 }

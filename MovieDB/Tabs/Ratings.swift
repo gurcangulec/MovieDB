@@ -1,5 +1,5 @@
 //
-//  Ratings.swift
+//  RatingsList.swift
 //  MovieDB
 //
 //  Created by Gürcan Güleç on 16.01.2023.
@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-struct Ratings: View {
+struct RatingsList: View {
     
     @ObservedObject var viewModel: TheViewModel
     
@@ -28,8 +28,8 @@ struct Ratings: View {
                     VStack(alignment: .leading) {
                         Text("\(viewModel.ratedMovies.count) Titles")
                             .foregroundColor(.primary)
-//                        Text("Sorted by \(sortedBy.rawValue)")
-//                            .foregroundColor(.secondary)
+                        Text("Sorted by \(viewModel.sortedBy.rawValue)")
+                            .foregroundColor(.secondary)
                     }
                     
                     ForEach(viewModel.ratedMovies) { storedMovie in
@@ -39,7 +39,6 @@ struct Ratings: View {
                     
                 }
                 .listStyle(.plain)
-                .navigationTitle("Your Ratings")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Menu {

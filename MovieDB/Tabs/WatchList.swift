@@ -7,20 +7,20 @@
 import CoreData
 import SwiftUI
 
-extension StoredMovie {
-    static var defaultFetchRequest: NSFetchRequest<StoredMovie> {
-        let request: NSFetchRequest<StoredMovie> = StoredMovie.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-        request.predicate = NSPredicate(format: "watchlisted == true")
-        return request
-    }
-    static var ratedFetchRequest: NSFetchRequest<StoredMovie> {
-        let request: NSFetchRequest<StoredMovie> = StoredMovie.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-        request.predicate = NSPredicate(format: "rated == true")
-        return request
-    }
-}
+//extension StoredMovie {
+//    static var defaultFetchRequest: NSFetchRequest<StoredMovie> {
+//        let request: NSFetchRequest<StoredMovie> = StoredMovie.fetchRequest()
+//        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+//        request.predicate = NSPredicate(format: "watchlisted == true")
+//        return request
+//    }
+//    static var ratedFetchRequest: NSFetchRequest<StoredMovie> {
+//        let request: NSFetchRequest<StoredMovie> = StoredMovie.fetchRequest()
+//        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+//        request.predicate = NSPredicate(format: "rated == true")
+//        return request
+//    }
+//}
 
 struct WatchList: View {
     @ObservedObject var viewModel: TheViewModel
@@ -55,9 +55,6 @@ struct WatchList: View {
                 .navigationTitle("Watchlist")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        EditButton()
-                    }
-                    ToolbarItem(placement: .navigationBarLeading) {
                         Menu {
                             Menu("Sort by Title") {
                                 Button {
