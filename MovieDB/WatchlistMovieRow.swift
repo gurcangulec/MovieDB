@@ -23,8 +23,9 @@ extension View {
 
 struct WatchlistMovieRow: View {
     @ObservedObject var viewModel: TheViewModel
-    @ObservedObject var storedMovie: StoredMovie
+    @ObservedObject var storedMovie: WatchlistedMovieEntity
     private let url = "https://image.tmdb.org/t/p/original/"
+    @State private var isShowingNotes = false
     
     let dateFormatter = DateFormatter()
     let dateNow = Date.now
@@ -58,16 +59,27 @@ struct WatchlistMovieRow: View {
                             .font(.subheadline)
                             .padding(.bottom)
                         
-                        VStack(alignment: .leading) {
-                            Text("Date Added")
-                                .font(.headline)
-                            
-                            Text("\(storedMovie.unwrappedDateAdded)")
-                                .font(.subheadline)
+                        HStack(spacing: 10) {
+                            VStack {
+                                Text("Date Added")
+                                    .font(.headline)
+                                
+                                Text("\(storedMovie.unwrappedDateAdded)")
+                                    .font(.subheadline)
+                            }
+                            .padding(.trailing, 10)
+                            VStack {
+                                Button("Notes") {
+                                    isShowingNotes.toggle()
+                                }
+                                .buttonStyle(.bordered)
+                                .disabled(storedMovie.notes == "")
+                            }
+                            .frame(maxWidth: .infinity, minHeight: 24, alignment: .leading)
                         }
                         .padding(.bottom)
                         
-                        HStack {
+                        HStack(alignment: .firstTextBaseline) {
                             Image(systemName: "star.fill")
                                 .font(.custom("StarSize", size: 14, relativeTo: .subheadline))
                             Text("\(storedMovie.unwrappedRating)")
@@ -77,23 +89,12 @@ struct WatchlistMovieRow: View {
 
                     }
                     .frame(height: geo.size.height * 0.98)
+                    .sheet(isPresented: $isShowingNotes) {
+                        Notes(viewModel: viewModel, storedMovie: storedMovie)
+                    }
                 }
             }
         }
-//        .contextMenu {
-//
-//            Button {
-//                print("Add to Watchlist")
-//            } label: {
-//                Label("Add to Watchlist", systemImage: "play.circle.fill")
-//            }
-//
-//            Button {
-//                print("Share")
-//            } label: {
-//                Label("Share", systemImage: "square.and.arrow.up")
-//            }
-//        }
     }
 }
 

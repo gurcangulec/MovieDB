@@ -7,21 +7,6 @@
 import CoreData
 import SwiftUI
 
-//extension StoredMovie {
-//    static var defaultFetchRequest: NSFetchRequest<StoredMovie> {
-//        let request: NSFetchRequest<StoredMovie> = StoredMovie.fetchRequest()
-//        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-//        request.predicate = NSPredicate(format: "watchlisted == true")
-//        return request
-//    }
-//    static var ratedFetchRequest: NSFetchRequest<StoredMovie> {
-//        let request: NSFetchRequest<StoredMovie> = StoredMovie.fetchRequest()
-//        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-//        request.predicate = NSPredicate(format: "rated == true")
-//        return request
-//    }
-//}
-
 struct WatchList: View {
     @ObservedObject var viewModel: TheViewModel
     
@@ -33,7 +18,6 @@ struct WatchList: View {
                         .font(.title)
                         .padding(.bottom)
                     Text("You haven't watchlisted anything yet.")
-                        .navigationTitle("Watchlist")
                         .font(.footnote)
                 }
             } else {
@@ -58,66 +42,66 @@ struct WatchList: View {
                         Menu {
                             Menu("Sort by Title") {
                                 Button {
-                                    viewModel.sortedBy = .title
+                                    viewModel.sortedBy = .titleAToZ
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
                                     viewModel.fetchWatchlistedMovies()
                                 } label: {
-                                    Text("A to Z")
+                                    Text("A - Z")
                                 }
                                 Button {
-                                    viewModel.sortedBy = .title
+                                    viewModel.sortedBy = .titleZToA
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "title", ascending: false)
                                     viewModel.fetchWatchlistedMovies()
                                 } label: {
-                                    Text("Z to A")
+                                    Text("Z - A")
                                 }
                             }
                             Menu("Sort by Date Added") {
                                 Button {
-                                    viewModel.sortedBy = .dateAdded
+                                    viewModel.sortedBy = .dateAddedOldToNew
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "dateAdded", ascending: true)
                                     viewModel.fetchWatchlistedMovies()
                                 } label: {
-                                    Text("Ascending Order")
+                                    Text("Oldest to Newewst")
                                 }
                                 Button {
-                                    viewModel.sortedBy = .dateAdded
+                                    viewModel.sortedBy = .dateAddedNewToOld
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "dateAdded", ascending: false)
-                                    viewModel.sortedBy = .releaseDate
+                                    viewModel.fetchWatchlistedMovies()
                                 } label: {
-                                    Text("Descending Order")
+                                    Text("Newest to Oldest")
                                 }
                             }
                             Menu("Sort by Release Date") {
                                 Button {
-                                    viewModel.sortedBy = .releaseDate
+                                    viewModel.sortedBy = .releaseDateOldToNew
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "releaseDate", ascending: true)
                                     viewModel.fetchWatchlistedMovies()
                                 } label: {
-                                    Text("Ascending Order")
+                                    Text("Oldest to Newest")
                                 }
                                 Button {
-                                    viewModel.sortedBy = .releaseDate
+                                    viewModel.sortedBy = .releaseDateNewToOld
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "releaseDate", ascending: false)
                                     viewModel.fetchWatchlistedMovies()
                                 } label: {
-                                    Text("Descending Order")
+                                    Text("Newest to Oldest")
                                 }
                             }
                             Menu("Sort by TMDB Rating") {
                                 Button {
-                                    viewModel.sortedBy = .rating
+                                    viewModel.sortedBy = .ratingHighToLow
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "rating", ascending: true)
                                     viewModel.fetchWatchlistedMovies()
                                 } label: {
-                                    Text("Ascending Order")
+                                    Text("Highest to Lowest")
                                 }
                                 Button {
-                                    viewModel.sortedBy = .rating
+                                    viewModel.sortedBy = .ratingLowToHigh
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "rating", ascending: false)
                                     viewModel.fetchWatchlistedMovies()
                                 } label: {
-                                    Text("Descending Order")
+                                    Text("Lowest to Highest")
                                 }
                             }
                         } label: {

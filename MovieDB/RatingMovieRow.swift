@@ -10,7 +10,7 @@ import Kingfisher
 
 struct RatingMovieRow: View {
     @ObservedObject var viewModel: TheViewModel
-    @ObservedObject var storedMovie: StoredMovie
+    @ObservedObject var ratedMovie: RatedMovieEntity
     private let url = "https://image.tmdb.org/t/p/original/"
     
     let dateFormatter = DateFormatter()
@@ -18,11 +18,11 @@ struct RatingMovieRow: View {
     
     var body: some View {
         NavigationLink {
-            let movie = Movie(id: Int(storedMovie.id), originalTitle: storedMovie.unwrappedTitle, overview: storedMovie.overview ?? "Unkown", posterPath: storedMovie.posterPath, releaseDate: String(storedMovie.unwrappedReleaseDate), backdropPath: storedMovie.unwrappedBackdropPath, voteAverage: Double(storedMovie.unwrappedRating)!)
+            let movie = Movie(id: Int(ratedMovie.id), originalTitle: ratedMovie.unwrappedTitle, overview: ratedMovie.overview ?? "Unkown", posterPath: ratedMovie.posterPath, releaseDate: String(ratedMovie.unwrappedReleaseDate), backdropPath: ratedMovie.unwrappedBackdropPath, voteAverage: Double(ratedMovie.unwrappedRating)!)
             MovieView(viewModel: viewModel, movie: movie)
         } label: {
             HStack {
-                if let unwrappedPath = storedMovie.posterPath {
+                if let unwrappedPath = ratedMovie.posterPath {
                     let unwrappedPath = URL(string: "\(url)\(unwrappedPath)")
                     KFImage(unwrappedPath)
                         .placeholder {
@@ -38,10 +38,10 @@ struct RatingMovieRow: View {
                 }
                 GeometryReader { geo in
                     VStack(alignment: .leading, spacing: 3) {
-                        Text(storedMovie.unwrappedTitle)
+                        Text(ratedMovie.unwrappedTitle)
                             .font(.headline.bold())
                         
-                        Text(storedMovie.unwrappedReleaseDate)
+                        Text(ratedMovie.unwrappedReleaseDate)
                             .font(.subheadline)
                             .padding(.bottom)
                         
@@ -49,7 +49,7 @@ struct RatingMovieRow: View {
                             Text("Date Rated")
                                 .font(.headline)
                             
-                            Text("\(storedMovie.unwrappedDateAdded)")
+                            Text("\(ratedMovie.unwrappedDateAdded)")
                                 .font(.subheadline)
                         }
                         .padding(.bottom)
@@ -58,34 +58,20 @@ struct RatingMovieRow: View {
                             
                             Image(systemName: "star.fill")
                                 .font(.custom("StarSize", size: 14, relativeTo: .subheadline))
-                            Text("\(storedMovie.unwrappedRating)")
+                            Text("\(ratedMovie.unwrappedRating)")
                                 .font(.custom("StarSize", size: 16, relativeTo: .subheadline))
                                 .padding(.trailing, 10)
                             
                             Image(systemName: "star.fill")
                                 .font(.custom("StarSize", size: 14, relativeTo: .subheadline))
                                 .foregroundColor(.blue)
-                            Text("\(storedMovie.userRating)")
+                            Text("\(ratedMovie.userRating)")
                                 .font(.custom("StarSize", size: 16, relativeTo: .subheadline))
                         }
 
                     }
                     .frame(height: geo.size.height * 0.98)
                 }
-            }
-        }
-        .contextMenu {
-
-            Button {
-                print("Add to Watchlist")
-            } label: {
-                Label("Add to Watchlist", systemImage: "play.circle.fill")
-            }
-
-            Button {
-                print("Share")
-            } label: {
-                Label("Share", systemImage: "square.and.arrow.up")
             }
         }
     }

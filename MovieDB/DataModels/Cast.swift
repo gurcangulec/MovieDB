@@ -21,12 +21,14 @@ struct CrewMember: Codable, Identifiable {
     var originalName: String
     var profilePath: String?
     var job: String?
+    var knownForDepartment: String?
     
     enum CodingKeys: String, CodingKey {
         case crewMemberId = "id"
         case originalName = "original_name"
         case profilePath = "profile_path"
         case job = "job"
+        case knownForDepartment = "known_for_department"
     }
 }
 

@@ -10,7 +10,8 @@ import SwiftUI
 struct AddToWatchlistView: View {
     @ObservedObject var viewModel: TheViewModel
     
-    let movie: Movie
+    let movie: Movie?
+    let tvShow: TVShow?
     let width: Double
     let height: Double
     @State private var notes = ""
@@ -27,12 +28,22 @@ struct AddToWatchlistView: View {
                 VStack {
                     if showImage {
                         VStack {
-                            ImageView(urlString: "\(url)\(movie.unwrappedPosterPath)", width: width, height: height)
-                                .padding(.bottom, 10)
-                            Text("Would you like to add a note?")
-                                .multilineTextAlignment(.center)
-                                .font(.body.bold())
-//                                .padding()
+                            if let tvShow {
+                                ImageView(urlString: "\(url)\(tvShow.unwrappedPosterPath)", width: width, height: height)
+                                    .padding(.bottom, 10)
+                                Text("Would you like to add a note?")
+                                    .multilineTextAlignment(.center)
+                                    .font(.body.bold())
+                                //                                .padding()
+                            }
+                            if let movie {
+                                ImageView(urlString: "\(url)\(movie.unwrappedPosterPath)", width: width, height: height)
+                                    .padding(.bottom, 10)
+                                Text("Would you like to add a note?")
+                                    .multilineTextAlignment(.center)
+                                    .font(.body.bold())
+                                //                                .padding()
+                            }
                         }
                         .transition(.move(edge: .top))
                     }
@@ -59,21 +70,18 @@ struct AddToWatchlistView: View {
                                     showImage = false
                                 }
                             }
-                            
-
                     }
-                    
-                    
+ 
                     Spacer()
                     
                     Button {
-                        viewModel.addToWatchlist(movie: movie)
+                        if let movie {
+                            viewModel.addToWatchlist(movie: movie, tvshow: nil, notes: notes)
+                        }
                         
-//                        do {
-//                            try moc.save()
-//                        } catch {
-//                            print("Something went wrong while saving: \(error.localizedDescription)")
-//                        }
+                        if let tvShow {
+                            viewModel.addToWatchlist(movie: nil, tvshow: tvShow, notes: notes)
+                        }
                         
                         dismiss()
                     } label: {

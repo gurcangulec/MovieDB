@@ -333,4 +333,26 @@ struct FetchData {
         return MovieDetails(imdbId: "")
     }
     
+    static func downloadSpecificTVShow(tvShowId: Int) async -> TVShowDetails {
+            // Check URL
+            guard let url = URL(string: "\(baseURL)tv/\(tvShowId)?api_key=\(APIKey)") else {
+                print("Invalid URL")
+                return TVShowDetails(id: 0, createdBy: [], numberOfEpisodes: 0)
+            }
+            
+            do {
+                let (data, _) = try await URLSession.shared.data(from: url)
+                
+                let decoder = JSONDecoder()
+                
+                // Decode from data
+                if let decoded = try? decoder.decode(TVShowDetails.self, from: data) {
+                    return decoded
+                }
+            } catch {
+                print("Invalid Something")
+            }
+        return TVShowDetails(id: 0, createdBy: [], numberOfEpisodes: 0)
+    }
+    
 }

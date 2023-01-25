@@ -50,7 +50,8 @@ struct AddRatingView: View {
     
     @ObservedObject var viewModel: TheViewModel
     
-    let movie: Movie
+    let movie: Movie?
+    let tvShow: TVShow?
     let width: Double
     let height: Double
     @State private var removeFromWatchlist = true
@@ -68,9 +69,16 @@ struct AddRatingView: View {
                 VStack {
                     if showImage {
                         VStack {
-                            ImageView(urlString: "\(url)\(movie.unwrappedPosterPath)", width: width, height: height)
-                                .padding(.bottom)
-                                .padding(.bottom)
+                            if let movie {
+                                ImageView(urlString: "\(url)\(movie.unwrappedPosterPath)", width: width, height: height)
+                                    .padding(.bottom)
+                                    .padding(.bottom)
+                            }
+                            if let tvShow {
+                                ImageView(urlString: "\(url)\(tvShow.unwrappedPosterPath)", width: width, height: height)
+                                    .padding(.bottom)
+                                    .padding(.bottom)
+                            }
                             Text("Would you like to rate the movie?")
                                 .multilineTextAlignment(.center)
                                 .font(.body.bold())
@@ -87,11 +95,22 @@ struct AddRatingView: View {
                     Divider()
                         .padding(.bottom)
                     
+                    if rating != 0 {
+                        Text("Your Rating: \(rating)")
+                            .font(.title3.bold())
+                            .padding(.bottom)
+                    }
+                    
                     Spacer()
                     
                     Button {
-                        viewModel.addToRated(movie: movie, rating: rating)
+                        if let movie {
+                            viewModel.addToRated(movie: movie, tvshow: tvShow, rating: rating)
+                        }
                         
+                        if let tvShow {
+                            viewModel.addToRated(movie: nil, tvshow: tvShow, rating: rating)
+                        }
                         dismiss()
                     } label: {
                         Label("Rate", systemImage: "star.fill")

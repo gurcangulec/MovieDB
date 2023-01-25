@@ -65,22 +65,35 @@ class TheViewModel: ObservableObject {
     }
     
     // MARK: Watchlist
-    @Published var watchlistedMovies: [StoredMovie] = []
+    @Published var watchlistedMovies: [WatchlistedMovieEntity] = []
     
     enum SortedBy: String {
-        case title = "Title"
-        case dateAdded = "Date Added"
-        case releaseDate = "Release Date"
-        case rating = "TMBD Rating"
+        case titleAToZ = "Title (A - Z)"
+        case titleZToA = "Title (Z - A)"
+        case dateAddedNewToOld = "Date Added (Newest to Oldest)"
+        case dateAddedOldToNew = "Date Added (Oldest to Newest)"
+        case releaseDateNewToOld = "Release Date (Newest to Oldest)"
+        case releaseDateOldToNew = "Release Date (Oldest to Newest)"
+        case ratingHighToLow = "TMBD Rating (Highest to Lowest)"
+        case ratingLowToHigh = "TMDB Rating (Lowest to Highest)"
+        case userRatingHighToLow = "User Rating (Highest to Lowest)"
+        case userRatingLowToHigh = "User Rating (Lowest to Highest)"
     }
     
-    @Published var sortedBy = SortedBy.title
-    @Published var sortDescriptor = NSSortDescriptor(key: "title", ascending: false)
+    @Published var sortedBy = SortedBy.titleAToZ
+    @Published var sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+    
+    func fetchWatchlistedMovie(movie: Movie) -> Bool {
+        return watchlistedMovies.contains(where: { $0.id == movie.id })
+    }
+    
+    func fetchWatchlistedTVShow(tvShow: TVShow) -> Bool {
+        return watchlistedMovies.contains(where: { $0.id == tvShow.id })
+    }
     
     func fetchWatchlistedMovies() {
-        let request = NSFetchRequest<StoredMovie>(entityName: "StoredMovie")
+        let request = NSFetchRequest<WatchlistedMovieEntity>(entityName: "WatchlistedMovieEntity")
         request.sortDescriptors = [sortDescriptor]
-        request.predicate = NSPredicate(format: "watchlisted == true")
         
         do {
             watchlistedMovies = try context.fetch(request)
@@ -89,19 +102,37 @@ class TheViewModel: ObservableObject {
         }
     }
     
-    func addToWatchlist(movie: Movie) {
-        let watchlistMovie = StoredMovie(context: context)
-        watchlistMovie.id = Int32(movie.id)
-        watchlistMovie.title = movie.originalTitle
-        watchlistMovie.posterPath = movie.posterPath
-        watchlistMovie.releaseDate = movie.formattedReleaseDateForStorage
-        watchlistMovie.overview = movie.overview
-        watchlistMovie.dateAdded = Date.now
-        watchlistMovie.rating = movie.voteAverage
-        watchlistMovie.backdropPath = movie.backdropPath
-        watchlistMovie.watchlisted = true
-        print("Saving")
-        saveData()
+    func addToWatchlist(movie: Movie?, tvshow: TVShow?, notes: String) {
+        if let movie {
+            let watchlistMovie = WatchlistedMovieEntity(context: context)
+            watchlistMovie.id = Int32(movie.id)
+            watchlistMovie.title = movie.originalTitle
+            watchlistMovie.posterPath = movie.posterPath
+            watchlistMovie.releaseDate = movie.formattedReleaseDateForStorage
+            watchlistMovie.overview = movie.overview
+            watchlistMovie.dateAdded = Date.now
+            watchlistMovie.rating = movie.voteAverage
+            watchlistMovie.backdropPath = movie.backdropPath
+            watchlistMovie.watchlisted = true
+            watchlistMovie.notes = notes
+            print("Saving")
+            saveData()
+        }
+        if let tvshow {
+            let watchlistMovie = WatchlistedMovieEntity(context: context)
+            watchlistMovie.id = Int32(tvshow.id)
+            watchlistMovie.title = tvshow.originalTitle
+            watchlistMovie.posterPath = tvshow.posterPath
+            watchlistMovie.releaseDate = tvshow.formattedReleaseDateForStorage
+            watchlistMovie.overview = tvshow.overview
+            watchlistMovie.dateAdded = Date.now
+            watchlistMovie.rating = tvshow.voteAverage
+            watchlistMovie.backdropPath = tvshow.backdropPath
+            watchlistMovie.watchlisted = true
+            watchlistMovie.notes = notes
+            print("Saving")
+            saveData()
+        }
     }
     
     func saveData() {
@@ -116,12 +147,19 @@ class TheViewModel: ObservableObject {
     
     // MARK: RatingsList
     
-    @Published var ratedMovies: [StoredMovie] = []
+    @Published var ratedMovies: [RatedMovieEntity] = []
+    
+    func fetchRatedMovie(movie: Movie) -> Bool {
+        return ratedMovies.contains(where: { $0.id == movie.id })
+    }
+    
+    func fetchRatedTVShow(tvShow: TVShow) -> Bool {
+        return ratedMovies.contains(where: { $0.id == tvShow.id })
+    }
     
     func fetchRatedMovies() {
-        let request = NSFetchRequest<StoredMovie>(entityName: "StoredMovie")
+        let request = NSFetchRequest<RatedMovieEntity>(entityName: "RatedMovieEntity")
         request.sortDescriptors = [sortDescriptor]
-        request.predicate = NSPredicate(format: "rated == true")
         
         do {
             ratedMovies = try context.fetch(request)
@@ -130,20 +168,38 @@ class TheViewModel: ObservableObject {
         }
     }
     
-    func addToRated(movie: Movie, rating: Int) {
-        let ratedMovie = StoredMovie(context: context)
-        ratedMovie.id = Int32(movie.id)
-        ratedMovie.title = movie.originalTitle
-        ratedMovie.posterPath = movie.posterPath
-        ratedMovie.releaseDate = movie.formattedReleaseDateForStorage
-        ratedMovie.overview = movie.overview
-        ratedMovie.dateAdded = Date.now
-        ratedMovie.rating = movie.voteAverage
-        ratedMovie.backdropPath = movie.backdropPath
-        ratedMovie.rated = true
-        ratedMovie.userRating = Int16(rating)
-        print("Saving")
-        saveData()
+    func addToRated(movie: Movie?, tvshow: TVShow?, rating: Int) {
+        if let movie {
+            let ratedMovie = RatedMovieEntity(context: context)
+            ratedMovie.id = Int32(movie.id)
+            ratedMovie.title = movie.originalTitle
+            ratedMovie.posterPath = movie.posterPath
+            ratedMovie.releaseDate = movie.formattedReleaseDateForStorage
+            ratedMovie.overview = movie.overview
+            ratedMovie.dateAdded = Date.now
+            ratedMovie.rating = movie.voteAverage
+            ratedMovie.backdropPath = movie.backdropPath
+            ratedMovie.rated = true
+            ratedMovie.userRating = Int16(rating)
+            print("Saving")
+            saveData()
+        }
+        
+        if let tvshow {
+            let ratedMovie = RatedMovieEntity(context: context)
+            ratedMovie.id = Int32(tvshow.id)
+            ratedMovie.title = tvshow.originalTitle
+            ratedMovie.posterPath = tvshow.posterPath
+            ratedMovie.releaseDate = tvshow.formattedReleaseDateForStorage
+            ratedMovie.overview = tvshow.overview
+            ratedMovie.dateAdded = Date.now
+            ratedMovie.rating = tvshow.voteAverage
+            ratedMovie.backdropPath = tvshow.backdropPath
+            ratedMovie.rated = true
+            ratedMovie.userRating = Int16(rating)
+            print("Saving")
+            saveData()
+        }
     }
     
     // MARK: MovieView
@@ -152,6 +208,7 @@ class TheViewModel: ObservableObject {
     @Published var watchlistButtonText = "Add to Watchlist"
     
     @Published var movieDetails = MovieDetails()
+    @Published var tvShowDetails = TVShowDetails(id: 0, createdBy: [], numberOfEpisodes: 0)
 //    @Published var cast = [CastMember]()
     @Published var crew = [CrewMember]()
     
@@ -185,6 +242,7 @@ class TheViewModel: ObservableObject {
     func fetchCastAndCrewTVShow(tvShowId: Int) async {
         cast = await FetchData.downloadCastTVShow(tvShowId: tvShowId)
         crew = await FetchData.downloadCrewTVShow(tvShowId: tvShowId)
+        tvShowDetails = await FetchData.downloadSpecificTVShow(tvShowId: tvShowId)
     }
     
     func copyToClipboard(movie: Movie?, tvShow: TVShow?) {

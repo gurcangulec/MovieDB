@@ -47,14 +47,16 @@ struct MovieAndTVShowRow: View {
                             Text(movie.originalTitle)
                                 .font(.headline.bold())
                             
-//                            Text(movie.formattedReleaseDate)
-//                                .padding(.bottom)
+                            Text(movie.formattedReleaseDateForViews)
+                                .padding(.bottom)
                             
                             Text(movie.overview)
                                 .font(.body)
                             
                         }
+                        .padding(5)
                         .frame(height: geo.size.height * 0.98)
+                        
                     }
                 } else {
                     if let tvShow = tvShow {
@@ -77,13 +79,14 @@ struct MovieAndTVShowRow: View {
                                 Text(tvShow.originalTitle)
                                     .font(.headline.bold())
                                 
-//                                Text(tvShow.formattedReleaseDate)
-//                                    .padding(.bottom)
+                                Text(tvShow.formattedReleaseDateForViews)
+                                    .padding(.bottom)
                                 
                                 Text(tvShow.overview)
                                     .font(.body)
                                 
                             }
+                            .padding(5)
                             .frame(height: geo.size.height * 0.98)
                         }
                     }

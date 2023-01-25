@@ -1,8 +1,8 @@
 //
-//  StoredMovie+CoreDataProperties.swift
+//  RatedMovieEntity+CoreDataProperties.swift
 //  MovieDB
 //
-//  Created by Gürcan Güleç on 17.01.2023.
+//  Created by Gürcan Güleç on 24.01.2023.
 //
 //
 
@@ -10,25 +10,25 @@ import Foundation
 import CoreData
 
 
-extension StoredMovie {
+extension RatedMovieEntity {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<StoredMovie> {
-        return NSFetchRequest<StoredMovie>(entityName: "StoredMovie")
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<RatedMovieEntity> {
+        return NSFetchRequest<RatedMovieEntity>(entityName: "RatedMovieEntity")
     }
 
-    @NSManaged public var id: Int32
-    @NSManaged public var title: String?
-    @NSManaged public var overview: String?
-    @NSManaged public var rating: Double
-    @NSManaged public var userRating: Int16
-    @NSManaged public var dateAdded: Date?
-    @NSManaged public var releaseDate: Date?
-    @NSManaged public var posterPath: String?
-    @NSManaged public var backdropPath: String?
-    @NSManaged public var posterImage: Data?
     @NSManaged public var backdropImage: Data?
-    @NSManaged public var note: String?
+    @NSManaged public var backdropPath: String?
+    @NSManaged public var dateAdded: Date?
+    @NSManaged public var id: Int32
+    @NSManaged public var notes: String?
+    @NSManaged public var overview: String?
+    @NSManaged public var posterImage: Data?
+    @NSManaged public var posterPath: String?
     @NSManaged public var rated: Bool
+    @NSManaged public var rating: Double
+    @NSManaged public var releaseDate: Date?
+    @NSManaged public var title: String?
+    @NSManaged public var userRating: Int16
     @NSManaged public var watchlisted: Bool
     
     public var unwrappedTitle: String {
@@ -56,8 +56,9 @@ extension StoredMovie {
     public var unwrappedBackdropPath: String {
         backdropPath ?? "Unknown"
     }
+
 }
 
-extension StoredMovie : Identifiable {
+extension RatedMovieEntity : Identifiable {
 
 }

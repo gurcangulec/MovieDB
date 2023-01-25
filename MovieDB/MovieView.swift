@@ -74,39 +74,46 @@ struct MovieView: View {
                             HStack {
                                 Button {
                                     viewModel.showingSheetWatchlist.toggle()
-
-                                    do {
-                                        try moc.save()
-                                    } catch {
-                                        print("Something went wrong while saving: \(error.localizedDescription)")
-                                    }
-
                                     hapticEngine.complexSuccess()
 
                                 } label: {
-                                    Label("Watchlist", systemImage: "plus")
-                                        .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                    if viewModel.fetchWatchlistedMovie(movie: movie) {
+                                        Label("In Watchlist", systemImage: "plus")
+                                            .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                    } else {
+                                        Label("Watchlist", systemImage: "plus")
+                                            .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                    }
                                 }
                                 .buttonStyle(.bordered)
+                                .disabled(viewModel.fetchWatchlistedMovie(movie: movie))
 
                                 Button {
                                     viewModel.showingSheetRating.toggle()
                                     hapticEngine.complexSuccess()
 
                                 } label: {
-                                    Label("Rate", systemImage: "star.fill")
-                                        .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                    if viewModel.fetchRatedMovie(movie: movie) {
+                                        Label("Rated", systemImage: "star.fill")
+                                            .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                    } else {
+                                        Label("Rate", systemImage: "star.fill")
+                                            .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                    }
                                 }
                                 .buttonStyle(.bordered)
+                                .disabled(viewModel.fetchRatedMovie(movie: movie))
                             }
                         }
                         .sheet(isPresented: $viewModel.showingSheetWatchlist) {
-                            AddToWatchlistView(viewModel: viewModel, movie: movie, width: geo.size.width * 0.54, height: geo.size.width * 0.81)
+                            AddToWatchlistView(viewModel: viewModel, movie: movie, tvShow: nil, width: geo.size.width * 0.54, height: geo.size.width * 0.81)
                         }
                         .sheet(isPresented: $viewModel.showingSheetRating, content: {
-                            AddRatingView(viewModel: viewModel, movie: movie, width: geo.size.width * 0.54, height: geo.size.width * 0.81)
+                            AddRatingView(viewModel: viewModel, movie: movie, tvShow: nil, width: geo.size.width * 0.54, height: geo.size.width * 0.81)
                         })
-                        .onAppear(perform: hapticEngine.prepareHaptics)
+                        .onAppear {
+                            hapticEngine.prepareHaptics()
+                        }
                         
                         Divider()
 
@@ -136,7 +143,7 @@ struct MovieView: View {
                                     .font(.title2.bold())
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding(.bottom, geo.size.height * 0.001)
-                                
+
                                 ForEach(viewModel.crew) { crewMember in
                                     if crewMember.job == "Director" {
                                         Text(crewMember.originalName)
@@ -145,9 +152,9 @@ struct MovieView: View {
                                     }
                                 }
                             }
-                            
+
                             Divider()
-                            
+
                             HStack {
                                 Text("Writer(s)")
                                     .font(.title2.bold())
@@ -190,7 +197,7 @@ struct MovieView: View {
                         Label("Copy IMDB Link", systemImage: "link")
                     }
                 }
-                
+
                 Menu("Share Link") {
                     Button {
                         viewModel.shareButton(movie: movie, tvShow: nil)

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="22C65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="StoredMovie" representedClassName=".StoredMovie" syncable="YES">
+    <entity name="RatedMovieEntity" representedClassName=".RatedMovieEntity" syncable="YES">
         <attribute name="backdropImage" optional="YES" attributeType="Binary"/>
         <attribute name="backdropPath" optional="YES" attributeType="String"/>
         <attribute name="dateAdded" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="note" optional="YES" attributeType="String"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="overview" optional="YES" attributeType="String"/>
         <attribute name="posterImage" optional="YES" attributeType="Binary"/>
         <attribute name="posterPath" optional="YES" attributeType="String"/>
@@ -21,5 +21,25 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="StoredTVShow" representedClassName="StoredTVShow" syncable="YES" codeGenerationType="class"/>
+    <entity name="WatchlistedMovieEntity" representedClassName=".WatchlistedMovieEntity" syncable="YES">
+        <attribute name="backdropImage" optional="YES" attributeType="Binary"/>
+        <attribute name="backdropPath" optional="YES" attributeType="String"/>
+        <attribute name="dateAdded" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="overview" optional="YES" attributeType="String"/>
+        <attribute name="posterImage" optional="YES" attributeType="Binary"/>
+        <attribute name="posterPath" optional="YES" attributeType="String"/>
+        <attribute name="rated" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="rating" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="releaseDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="userRating" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="watchlisted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
 </model>

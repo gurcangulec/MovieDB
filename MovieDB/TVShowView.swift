@@ -10,6 +10,7 @@ import SwiftUI
 
 struct TVShowView: View {
     @ObservedObject var viewModel: TheViewModel
+    @StateObject var hapticEngine = Haptics()
     
     let tvShow: TVShow
     private let url = "https://image.tmdb.org/t/p/original/"
@@ -39,9 +40,16 @@ struct TVShowView: View {
                         Divider()
                         
                         Group {
+                            
                             Text(tvShow.originalTitle)
                                 .font(.title.weight(.semibold))
                                 .padding(.bottom, geo.size.height * 0.01)
+                            HStack {
+                                Text("TV Series - \(viewModel.tvShowDetails.numberOfEpisodes) Episodes")
+                                    .font(.body.weight(.semibold))
+                                    .foregroundColor(.secondary)
+                                    .padding(.bottom, geo.size.height * 0.01)
+                            }
                             
                             HStack {
                                 Image(systemName: "star.fill")
@@ -66,31 +74,45 @@ struct TVShowView: View {
                             
                             HStack {
                                 Button {
-//                                    showingSheetWatchlist.toggle()
-                                    
-//                                    do {
-//                                        try moc.save()
-//                                    } catch {
-//                                        print("Something went wrong while saving: \(error.localizedDescription)")
-//                                    }
-                                    
-//                                    hapticEngine.complexSuccess()
-                                    
+                                    viewModel.showingSheetWatchlist.toggle()
+                                    hapticEngine.complexSuccess()
+
                                 } label: {
-                                    Label("Watchlist", systemImage: "plus")
-                                        .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                    if viewModel.fetchWatchlistedTVShow(tvShow: tvShow) {
+                                        Label("In Watchlist", systemImage: "plus")
+                                            .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                    } else {
+                                        Label("Watchlist", systemImage: "plus")
+                                            .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                    }
                                 }
                                 .buttonStyle(.bordered)
-                                
+                                .disabled(viewModel.fetchWatchlistedTVShow(tvShow: tvShow))
+
                                 Button {
-//                                    showingSheetRating.toggle()
-//                                    hapticEngine.complexSuccess()
-                                    
+                                    viewModel.showingSheetRating.toggle()
+                                    hapticEngine.complexSuccess()
+
                                 } label: {
-                                    Label("Rate", systemImage: "star.fill")
-                                        .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                    if viewModel.fetchRatedTVShow(tvShow: tvShow) {
+                                        Label("Rated", systemImage: "star.fill")
+                                            .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                    } else {
+                                        Label("Rate", systemImage: "star.fill")
+                                            .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                    }
                                 }
                                 .buttonStyle(.bordered)
+                                .disabled(viewModel.fetchRatedTVShow(tvShow: tvShow))
+                            }
+                            .sheet(isPresented: $viewModel.showingSheetWatchlist) {
+                                AddToWatchlistView(viewModel: viewModel, movie: nil, tvShow: tvShow, width: geo.size.width * 0.54, height: geo.size.width * 0.81)
+                            }
+                            .sheet(isPresented: $viewModel.showingSheetRating, content: {
+                                AddRatingView(viewModel: viewModel, movie: nil, tvShow: tvShow, width: geo.size.width * 0.54, height: geo.size.width * 0.81)
+                            })
+                            .onAppear {
+                                hapticEngine.prepareHaptics()
                             }
                             
                             Divider()
@@ -113,6 +135,27 @@ struct TVShowView: View {
                             
                             SideScroller(viewModel: viewModel, tvShows: nil, movies: nil, cast: viewModel.cast, crew: nil, url: url, geoWidth: geo.size.width)
                             
+                            Divider()
+                            
+                            if !viewModel.tvShowDetails.createdBy.isEmpty {
+                                Group {
+                                    VStack {
+                                        Text("Creator(s)")
+                                            .font(.title2.bold())
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .padding(.bottom, geo.size.height * 0.001)
+                                        
+                                        ForEach(viewModel.tvShowDetails.createdBy) { creator in
+                                            Text(creator.name)
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                                .padding(.bottom, geo.size.height * 0.01)
+                                        }
+                                    }
+                                    
+                                    
+                                    Divider()
+                                }
+                            }
                         }
                     }
                     .task {
@@ -128,44 +171,23 @@ struct TVShowView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-//            Menu {
-//                Menu("Copy Link") {
-//                    Button {
-//                        viewModel.copyToClipboard(movie: nil, tvShow: tvShow)
-//                    } label: {
-//                        Label("Copy TMDB Link", systemImage: "link")
-//                    }
-//
-//                    Button {
-//                        viewModel.copyToClipboardIMDB()
-//                    } label: {
-//                        Label("Copy IMDB Link", systemImage: "link")
-//                    }
-//                }
-//
-                Menu("Share") {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Menu {
+                    Button {
+                        viewModel.copyToClipboard(movie: nil, tvShow: tvShow)
+                    } label: {
+                        Label("Copy TMBD Link", systemImage: "link")
+                    }
                     Button {
                         viewModel.shareButton(movie: nil, tvShow: tvShow)
                     } label: {
                         Label("Share TMBD Link", systemImage: "square.and.arrow.up")
                     }
-
-//                    Button {
-//                        viewModel.shareImdbButton()
-//                    } label: {
-//                        Label("Share IMDB Link", systemImage: "square.and.arrow.up")
-//                    }
+                  
+                } label: {
+                    Label("Share Options", systemImage: "square.and.arrow.up")
                 }
-//
-//                Button {
-//                    print("Add to Watchlist")
-//                } label: {
-//                    Label("Add to Watchlist", systemImage: "play.circle.fill")
-//                }
-//
-//            } label: {
-//                Label("Options", systemImage: "ellipsis")
-//            }
+            }
 //            .onAppear(perform: hapticEngine.prepareHaptics)
 //            .onTapGesture(perform: hapticEngine.complexSuccess)
         }

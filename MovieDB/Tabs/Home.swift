@@ -33,7 +33,7 @@ struct Home: View {
                                         .foregroundColor(.white)
                                         .background(.black.opacity(0.75))
                                         .clipShape(Capsule())
-                                        .offset(y: 85)
+                                        .offset(y: height * 120)
                                 }
                                 .tag(index)
                                 
