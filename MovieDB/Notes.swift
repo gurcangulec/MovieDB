@@ -29,7 +29,6 @@ struct Notes: View {
                             ScrollView {
                                 Text(storedMovie.notes ?? "")
                             }
-                            //                                .padding()
                         }
                         .padding()
                         Spacer()

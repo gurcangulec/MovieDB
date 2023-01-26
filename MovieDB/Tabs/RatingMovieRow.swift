@@ -18,8 +18,25 @@ struct RatingMovieRow: View {
     
     var body: some View {
         NavigationLink {
-            let movie = Movie(id: Int(ratedMovie.id), originalTitle: ratedMovie.unwrappedTitle, overview: ratedMovie.overview ?? "Unkown", posterPath: ratedMovie.posterPath, releaseDate: String(ratedMovie.unwrappedReleaseDate), backdropPath: ratedMovie.unwrappedBackdropPath, voteAverage: Double(ratedMovie.unwrappedRating)!)
-            MovieView(viewModel: viewModel, movie: movie)
+            if !ratedMovie.tvShow {
+                let movie = Movie(id: Int(ratedMovie.id),
+                                  originalTitle: ratedMovie.unwrappedTitle,
+                                  overview: ratedMovie.overview ?? "Unkown",
+                                  posterPath: ratedMovie.posterPath,
+                                  releaseDate: String(ratedMovie.unwrappedReleaseDate),
+                                  backdropPath: ratedMovie.unwrappedBackdropPath,
+                                  voteAverage: Double(ratedMovie.unwrappedRating)!)
+                MovieView(viewModel: viewModel, movie: movie)
+            } else {
+                let tvShow = TVShow(id: Int(ratedMovie.id),
+                                    originalTitle: ratedMovie.unwrappedTitle,
+                                    overview: ratedMovie.overview ?? "Unkown",
+                                    posterPath: ratedMovie.posterPath,
+                                    releaseDate: String(ratedMovie.unwrappedReleaseDate),
+                                    backdropPath: ratedMovie.unwrappedBackdropPath,
+                                    voteAverage: Double(ratedMovie.unwrappedRating)!)
+                TVShowView(viewModel: viewModel, tvShow: tvShow)
+            }
         } label: {
             HStack {
                 if let unwrappedPath = ratedMovie.posterPath {
