@@ -57,7 +57,7 @@ struct MovieView: View {
                                 Spacer()
 
                                 Image(systemName: "calendar")
-                                Text("\(movie.formattedReleaseDateForViews)")
+                                Text("\(movie.releaseDate ?? "Unknown")")
                                     .font(.body)
 
                                 Spacer()

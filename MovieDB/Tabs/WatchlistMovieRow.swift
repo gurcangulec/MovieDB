@@ -40,6 +40,7 @@ struct WatchlistMovieRow: View {
                                   releaseDate: String(storedMovie.unwrappedReleaseDate),
                                   backdropPath: storedMovie.unwrappedBackdropPath,
                                   voteAverage: Double(storedMovie.unwrappedRating)!)
+                
                 MovieView(viewModel: viewModel, movie: movie)
             } else {
                 let tvShow = TVShow(id: Int(storedMovie.id),

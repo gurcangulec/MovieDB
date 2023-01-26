@@ -186,9 +186,10 @@ struct TVShowView: View {
                 } label: {
                     Label("Share Options", systemImage: "square.and.arrow.up")
                 }
+                .onAppear(perform: hapticEngine.prepareHaptics)
+                .onTapGesture(perform: hapticEngine.complexSuccess)
             }
-//            .onAppear(perform: hapticEngine.prepareHaptics)
-//            .onTapGesture(perform: hapticEngine.complexSuccess)
+            
         }
     }
 }
