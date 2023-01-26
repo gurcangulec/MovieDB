@@ -36,7 +36,7 @@ struct Home: View {
                                         .offset(y: height * 120)
                                 }
                                 .tag(index)
-                                
+                                .padding(.trailing, 5)
                             }
                         }
                         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))

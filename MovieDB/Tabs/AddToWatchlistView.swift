@@ -34,7 +34,6 @@ struct AddToWatchlistView: View {
                                 Text("Would you like to add a note?")
                                     .multilineTextAlignment(.center)
                                     .font(.body.bold())
-                                //                                .padding()
                             }
                             if let movie {
                                 ImageView(urlString: "\(url)\(movie.unwrappedPosterPath)", width: width, height: height)
@@ -42,7 +41,6 @@ struct AddToWatchlistView: View {
                                 Text("Would you like to add a note?")
                                     .multilineTextAlignment(.center)
                                     .font(.body.bold())
-                                //                                .padding()
                             }
                         }
                         .transition(.move(edge: .top))
@@ -59,9 +57,6 @@ struct AddToWatchlistView: View {
                             .autocorrectionDisabled()
                             .padding(8)
                             .padding(.leading, 2)
-//                            .overlay(RoundedRectangle(cornerRadius: 8)
-//                                    .stroke(Color.secondary).opacity(0.5))
-//                            .background(Color.yellow.opacity(0.5))
                             .cornerRadius(15)
                             .opacity(notes.isEmpty ? 0.25 : 1)
                             .overlay(RoundedRectangle(cornerRadius: 15).stroke(lineWidth: 1).foregroundColor(.secondary).opacity(0.8))

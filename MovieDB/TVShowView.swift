@@ -130,7 +130,6 @@ struct TVShowView: View {
                                     
                                     Image(systemName: "chevron.right")
                                 }
-    //                            .padding(.bottom)
                             }
                             
                             SideScroller(viewModel: viewModel, tvShows: nil, movies: nil, cast: viewModel.cast, crew: nil, url: url, geoWidth: geo.size.width)

@@ -77,7 +77,7 @@ struct WatchlistMovieRow: View {
                             .padding(.bottom)
                         
                         HStack(spacing: 10) {
-                            VStack {
+                            VStack(alignment: .leading) {
                                 Text("Date Added")
                                     .font(.headline)
                                 

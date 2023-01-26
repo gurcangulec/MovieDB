@@ -56,17 +56,6 @@ struct Search: View {
                 }
                 .searchable(text: $viewModel.searchQuery)
             }
-            
-            //                        suggestions: {
-            //                Text("Some suggestions")
-            //                    .font(.title2)
-            //                    .foregroundColor(.primary)
-            //
-            //                ForEach(popularMovies.prefix(3)) { popularMovie in
-            //                    Text(popularMovie.originalTitle).searchCompletion("\(popularMovie.originalTitle)")
-            //                        .font(.body)
-            //                }
-            //            })
         }
         .disableAutocorrection(true)
         .onSubmit(of: .search) {

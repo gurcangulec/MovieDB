@@ -129,17 +129,6 @@ struct WatchList: View {
         
         viewModel.saveData()
     }
-    
-//
-//    func deleteWatchlistMovies(at offsets: IndexSet) {
-//        for offset in offsets {
-//            let storedMovie = storedMovies[offset]
-//
-//            moc.delete(storedMovie)
-//        }
-//
-//        try? moc.save()
-//    }
 }
 
 //struct WatchList_Previews: PreviewProvider {
