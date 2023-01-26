@@ -32,8 +32,25 @@ struct WatchlistMovieRow: View {
     
     var body: some View {
         NavigationLink {
-            let movie = Movie(id: Int(storedMovie.id), originalTitle: storedMovie.unwrappedTitle, overview: storedMovie.overview ?? "Unkown", posterPath: storedMovie.posterPath, releaseDate: String(storedMovie.unwrappedReleaseDate), backdropPath: storedMovie.unwrappedBackdropPath, voteAverage: Double(storedMovie.unwrappedRating)!)
-            MovieView(viewModel: viewModel, movie: movie)
+            if !storedMovie.tvShow {
+                let movie = Movie(id: Int(storedMovie.id),
+                                  originalTitle: storedMovie.unwrappedTitle,
+                                  overview: storedMovie.overview ?? "Unkown",
+                                  posterPath: storedMovie.posterPath,
+                                  releaseDate: String(storedMovie.unwrappedReleaseDate),
+                                  backdropPath: storedMovie.unwrappedBackdropPath,
+                                  voteAverage: Double(storedMovie.unwrappedRating)!)
+                MovieView(viewModel: viewModel, movie: movie)
+            } else {
+                let tvShow = TVShow(id: Int(storedMovie.id),
+                                    originalTitle: storedMovie.unwrappedTitle,
+                                    overview: storedMovie.overview ?? "Unkown",
+                                    posterPath: storedMovie.posterPath,
+                                    releaseDate: String(storedMovie.unwrappedReleaseDate),
+                                    backdropPath: storedMovie.unwrappedBackdropPath,
+                                    voteAverage: Double(storedMovie.unwrappedRating)!)
+                TVShowView(viewModel: viewModel, tvShow: tvShow)
+            }
         } label: {
             HStack {
                 if let unwrappedPath = storedMovie.posterPath {

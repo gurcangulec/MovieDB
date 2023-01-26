@@ -115,6 +115,7 @@ class TheViewModel: ObservableObject {
             watchlistMovie.backdropPath = movie.backdropPath
             watchlistMovie.watchlisted = true
             watchlistMovie.notes = notes
+            watchlistMovie.tvShow = false
             print("Saving")
             saveData()
         }
@@ -130,6 +131,7 @@ class TheViewModel: ObservableObject {
             watchlistMovie.backdropPath = tvshow.backdropPath
             watchlistMovie.watchlisted = true
             watchlistMovie.notes = notes
+            watchlistMovie.tvShow = true
             print("Saving")
             saveData()
         }
@@ -181,6 +183,7 @@ class TheViewModel: ObservableObject {
             ratedMovie.backdropPath = movie.backdropPath
             ratedMovie.rated = true
             ratedMovie.userRating = Int16(rating)
+            ratedMovie.tvShow = false
             print("Saving")
             saveData()
         }
@@ -197,6 +200,7 @@ class TheViewModel: ObservableObject {
             ratedMovie.backdropPath = tvshow.backdropPath
             ratedMovie.rated = true
             ratedMovie.userRating = Int16(rating)
+            ratedMovie.tvShow = true
             print("Saving")
             saveData()
         }

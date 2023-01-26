@@ -62,7 +62,7 @@ struct WatchList: View {
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "dateAdded", ascending: true)
                                     viewModel.fetchWatchlistedMovies()
                                 } label: {
-                                    Text("Oldest to Newewst")
+                                    Text("Oldest to Newest")
                                 }
                                 Button {
                                     viewModel.sortedBy = .dateAddedNewToOld
@@ -91,14 +91,14 @@ struct WatchList: View {
                             Menu("Sort by TMDB Rating") {
                                 Button {
                                     viewModel.sortedBy = .ratingHighToLow
-                                    viewModel.sortDescriptor = NSSortDescriptor(key: "rating", ascending: true)
+                                    viewModel.sortDescriptor = NSSortDescriptor(key: "rating", ascending: false)
                                     viewModel.fetchWatchlistedMovies()
                                 } label: {
                                     Text("Highest to Lowest")
                                 }
                                 Button {
                                     viewModel.sortedBy = .ratingLowToHigh
-                                    viewModel.sortDescriptor = NSSortDescriptor(key: "rating", ascending: false)
+                                    viewModel.sortDescriptor = NSSortDescriptor(key: "rating", ascending: true)
                                     viewModel.fetchWatchlistedMovies()
                                 } label: {
                                     Text("Lowest to Highest")

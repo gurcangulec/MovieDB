@@ -30,6 +30,7 @@ extension RatedMovieEntity {
     @NSManaged public var title: String?
     @NSManaged public var userRating: Int16
     @NSManaged public var watchlisted: Bool
+    @NSManaged public var tvShow: Bool
     
     public var unwrappedTitle: String {
         title ?? "Unknown Title"

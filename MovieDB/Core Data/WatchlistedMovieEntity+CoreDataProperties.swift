@@ -30,6 +30,7 @@ extension WatchlistedMovieEntity {
     @NSManaged public var notes: String?
     @NSManaged public var rated: Bool
     @NSManaged public var watchlisted: Bool
+    @NSManaged public var tvShow: Bool
     
     public var unwrappedTitle: String {
         title ?? "Unknown Title"
