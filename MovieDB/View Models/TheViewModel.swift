@@ -116,7 +116,6 @@ class TheViewModel: ObservableObject {
             watchlistMovie.watchlisted = true
             watchlistMovie.notes = notes
             watchlistMovie.tvShow = false
-            print("Saving")
             saveData()
         }
         if let tvshow {
@@ -132,7 +131,6 @@ class TheViewModel: ObservableObject {
             watchlistMovie.watchlisted = true
             watchlistMovie.notes = notes
             watchlistMovie.tvShow = true
-            print("Saving")
             saveData()
         }
     }
@@ -184,7 +182,6 @@ class TheViewModel: ObservableObject {
             ratedMovie.rated = true
             ratedMovie.userRating = Int16(rating)
             ratedMovie.tvShow = false
-            print("Saving")
             saveData()
         }
         
@@ -201,7 +198,6 @@ class TheViewModel: ObservableObject {
             ratedMovie.rated = true
             ratedMovie.userRating = Int16(rating)
             ratedMovie.tvShow = true
-            print("Saving")
             saveData()
         }
     }
