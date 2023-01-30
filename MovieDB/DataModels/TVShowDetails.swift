@@ -5,7 +5,6 @@
 //  Created by Gürcan Güleç on 25.01.2023.
 //
 
-import CodableX
 import Foundation
 
 struct TVShowDetails: Decodable {

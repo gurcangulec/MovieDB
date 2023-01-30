@@ -6,14 +6,13 @@
 //
 
 import Foundation
-import CodableX
 
 struct Actor: Codable, Identifiable {
-    @Nullable var id: Int?
-    @Nullable var biography: String?
-    @Nullable var birthday: String?
-    @Nullable var profilePath: String?
-    @Nullable var placeOfBirth: String?
+    var id: Int?
+    var biography: String?
+    var birthday: String?
+    var profilePath: String?
+    var placeOfBirth: String?
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
