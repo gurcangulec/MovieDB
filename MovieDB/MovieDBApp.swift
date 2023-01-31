@@ -17,7 +17,7 @@ struct MovieDBApp: App {
             
             let viewContext = DataController.shared.persistentStoreContainer.viewContext
             
-            MainView(viewModel: TheViewModel(context: viewContext))
+            MainScreen(viewModel: TheViewModel(context: viewContext))
                 .environment(\.managedObjectContext, viewContext)
                 .environmentObject(theViewModel)
         }

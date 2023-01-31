@@ -1,5 +1,5 @@
 //
-//  WatchList.swift
+//  WatchlistScreen.swift
 //  MovieDB
 //
 //  Created by Gürcan Güleç on 07.01.2023.
@@ -7,7 +7,7 @@
 import CoreData
 import SwiftUI
 
-struct WatchList: View {
+struct WatchlistScreen: View {
     @ObservedObject var viewModel: TheViewModel
     
     var body: some View {
@@ -131,8 +131,8 @@ struct WatchList: View {
     }
 }
 
-//struct WatchList_Previews: PreviewProvider {
+//struct WatchlistScreen_Previews: PreviewProvider {
 //    static var previews: some View {
-//        WatchList()
+//        WatchlistScreen()
 //    }
 //}

@@ -1,5 +1,5 @@
 //
-//  Home.swift
+//  HomeScreen.swift
 //  MovieDB
 //
 //  Created by Gürcan Güleç on 07.01.2023.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Home: View {
+struct HomeScreen: View {
     
     @ObservedObject var viewModel: TheViewModel
     

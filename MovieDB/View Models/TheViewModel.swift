@@ -38,7 +38,10 @@ class TheViewModel: ObservableObject {
     let topRatedTVShowsString = "Top Rated TV Shows"
     let onTheAirTVShowsString = "On The Air"
     
+    @Published var temp = Images()
+    
     func fetchMoviesAndTVShows() async {
+//        self.temp = await FetchData.getConfiguration()
         self.popularMovies = await FetchData.downloadPopularMovies()
         self.upcomingMovies = await FetchData.downloadUpcomingMovies()
         self.popularTVShows = await FetchData.downloadPopularTVShows()

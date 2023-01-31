@@ -1,5 +1,5 @@
 //
-//  Search.swift
+//  SearchScreen.swift
 //  MovieDB
 //
 //  Created by Gürcan Güleç on 29.06.2022.
@@ -8,7 +8,7 @@
 import SwiftUI
 import Kingfisher
 
-struct Search: View {
+struct SearchScreen: View {
     @ObservedObject var viewModel: TheViewModel
     
     var body: some View {
@@ -68,8 +68,8 @@ struct Search: View {
     }
 }
 
-//struct Search_Previews: PreviewProvider {
+//struct SearchScreen_Previews: PreviewProvider {
 //    static var previews: some View {
-//        Search()
+//        SearchScreen()
 //    }
 //}

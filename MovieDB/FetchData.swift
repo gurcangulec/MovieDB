@@ -9,6 +9,24 @@ import Foundation
 
 struct FetchData {
     
+//    static func getConfiguration() async -> Images {
+//        let url = URL.Endpoint.configuration.url
+//        print(url)
+//        do {
+//            let (data, _) = try await URLSession.shared.data(from: url)
+//            
+//            let decoder = JSONDecoder()
+//            
+//            if let decoded = try? decoder.decode(APIConfig.self, from: data) {
+//                return decoded.images
+//            }
+//        } catch {
+//            print("Invalid")
+//        }
+//        
+//        return Images()
+//    }
+    
     static let baseURL = "https://api.themoviedb.org/3/"
     static let APIKey = "c74260965badd03144f9a327f254f0a2"
 
@@ -19,7 +37,7 @@ struct FetchData {
                 print("Invalid URL")
                 return []
             }
-            
+        
             do {
                 let (data, _) = try await URLSession.shared.data(from: url)
                 
