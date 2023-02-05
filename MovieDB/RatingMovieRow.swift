@@ -20,21 +20,21 @@ struct RatingMovieRow: View {
         NavigationLink {
             if !ratedMovie.tvShow {
                 let movie = Movie(id: Int(ratedMovie.id),
-                                  originalTitle: ratedMovie.unwrappedTitle,
-                                  overview: ratedMovie.overview ?? "Unkown",
-                                  posterPath: ratedMovie.posterPath,
-                                  releaseDate: String(ratedMovie.unwrappedReleaseDate),
-                                  backdropPath: ratedMovie.unwrappedBackdropPath,
-                                  voteAverage: Double(ratedMovie.unwrappedRating)!)
+                                  originalTitle: ratedMovie.rMovieTitle,
+                                  overview: ratedMovie.rMmovieOverview,
+                                  posterPath: ratedMovie.rMmoviePosterPath,
+                                  releaseDate: String(ratedMovie.rMmovieReleaseDate),
+                                  backdropPath: ratedMovie.rMmovieBackdropPath,
+                                  voteAverage: Double(ratedMovie.rMmovieRating)!)
                 MovieView(viewModel: viewModel, movie: movie)
             } else {
                 let tvShow = TVShow(id: Int(ratedMovie.id),
-                                    originalTitle: ratedMovie.unwrappedTitle,
-                                    overview: ratedMovie.overview ?? "Unkown",
-                                    posterPath: ratedMovie.posterPath,
-                                    releaseDate: String(ratedMovie.unwrappedReleaseDate),
-                                    backdropPath: ratedMovie.unwrappedBackdropPath,
-                                    voteAverage: Double(ratedMovie.unwrappedRating)!)
+                                    originalTitle: ratedMovie.rMovieTitle,
+                                    overview: ratedMovie.rMmovieOverview,
+                                    posterPath: ratedMovie.rMmoviePosterPath,
+                                    releaseDate: String(ratedMovie.rMmovieReleaseDate),
+                                    backdropPath: ratedMovie.rMmovieBackdropPath,
+                                    voteAverage: Double(ratedMovie.rMmovieRating)!)
                 TVShowView(viewModel: viewModel, tvShow: tvShow)
             }
         } label: {
@@ -55,10 +55,10 @@ struct RatingMovieRow: View {
                 }
                 GeometryReader { geo in
                     VStack(alignment: .leading, spacing: 3) {
-                        Text(ratedMovie.unwrappedTitle)
+                        Text(ratedMovie.rMovieTitle)
                             .font(.headline.bold())
                         
-                        Text(ratedMovie.unwrappedReleaseDate)
+                        Text(ratedMovie.rMmovieReleaseDate)
                             .font(.subheadline)
                             .padding(.bottom)
                         
@@ -66,7 +66,7 @@ struct RatingMovieRow: View {
                             Text("Date Rated")
                                 .font(.headline)
                             
-                            Text("\(ratedMovie.unwrappedDateAdded)")
+                            Text("\(ratedMovie.rMmovieDateAdded)")
                                 .font(.subheadline)
                         }
                         .padding(.bottom)
@@ -75,7 +75,7 @@ struct RatingMovieRow: View {
                             
                             Image(systemName: "star.fill")
                                 .font(.custom("StarSize", size: 14, relativeTo: .subheadline))
-                            Text("\(ratedMovie.unwrappedRating)")
+                            Text("\(ratedMovie.rMmovieRating)")
                                 .font(.custom("StarSize", size: 16, relativeTo: .subheadline))
                                 .padding(.trailing, 10)
                             

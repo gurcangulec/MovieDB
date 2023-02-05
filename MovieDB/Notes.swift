@@ -21,7 +21,7 @@ struct Notes: View {
                 VStack {
                     if showImage {
                         VStack {
-                            ImageView(urlString: "\(viewModel.imageUrl)\(storedMovie.unwrappedPosterPath)", width: geo.size.width * 0.54, height: geo.size.width * 0.81)
+                            ImageView(urlString: "\(viewModel.imageUrl)\(storedMovie.wMmoviePosterPath)", width: geo.size.width * 0.54, height: geo.size.width * 0.81)
                                 .padding(.bottom, 10)
                             Text("Your Notes")
                                 .font(.title3.bold())
@@ -34,7 +34,7 @@ struct Notes: View {
                         Spacer()
                     }
                 }
-                .navigationTitle("Notes About \(storedMovie.unwrappedTitle)")
+                .navigationTitle("Notes About \(storedMovie.wMovieTitle)")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -53,7 +53,7 @@ struct Notes: View {
                         viewModel.saveData()
                     }
                 }, message: {
-                    Text("Notes about \(storedMovie.unwrappedTitle) will be deleted.")
+                    Text("Notes about \(storedMovie.wMovieTitle) will be deleted.")
                 })
             }
         }

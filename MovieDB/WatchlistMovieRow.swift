@@ -34,22 +34,22 @@ struct WatchlistMovieRow: View {
         NavigationLink {
             if !storedMovie.tvShow {
                 let movie = Movie(id: Int(storedMovie.id),
-                                  originalTitle: storedMovie.unwrappedTitle,
-                                  overview: storedMovie.overview ?? "Unkown",
-                                  posterPath: storedMovie.posterPath,
-                                  releaseDate: String(storedMovie.unwrappedReleaseDate),
-                                  backdropPath: storedMovie.unwrappedBackdropPath,
-                                  voteAverage: Double(storedMovie.unwrappedRating)!)
+                                  originalTitle: storedMovie.wMovieTitle,
+                                  overview: storedMovie.wMmovieOverview,
+                                  posterPath: storedMovie.wMmoviePosterPath,
+                                  releaseDate: String(storedMovie.wMmovieReleaseDate),
+                                  backdropPath: storedMovie.wMmovieBackdropPath,
+                                  voteAverage: Double(storedMovie.wMmovieRating)!)
                 
                 MovieView(viewModel: viewModel, movie: movie)
             } else {
                 let tvShow = TVShow(id: Int(storedMovie.id),
-                                    originalTitle: storedMovie.unwrappedTitle,
-                                    overview: storedMovie.overview ?? "Unkown",
-                                    posterPath: storedMovie.posterPath,
-                                    releaseDate: String(storedMovie.unwrappedReleaseDate),
-                                    backdropPath: storedMovie.unwrappedBackdropPath,
-                                    voteAverage: Double(storedMovie.unwrappedRating)!)
+                                    originalTitle: storedMovie.wMovieTitle,
+                                    overview: storedMovie.wMmovieOverview,
+                                    posterPath: storedMovie.wMmoviePosterPath,
+                                    releaseDate: String(storedMovie.wMmovieReleaseDate),
+                                    backdropPath: storedMovie.wMmovieBackdropPath,
+                                    voteAverage: Double(storedMovie.wMmovieRating)!)
                 TVShowView(viewModel: viewModel, tvShow: tvShow)
             }
         } label: {
@@ -70,10 +70,10 @@ struct WatchlistMovieRow: View {
                 }
                 GeometryReader { geo in
                     VStack(alignment: .leading, spacing: 3) {
-                        Text(storedMovie.unwrappedTitle)
+                        Text(storedMovie.wMovieTitle)
                             .font(.headline.bold())
                         
-                        Text(storedMovie.unwrappedReleaseDate)
+                        Text(storedMovie.wMmovieReleaseDate)
                             .font(.subheadline)
                             .padding(.bottom)
                         
@@ -82,7 +82,7 @@ struct WatchlistMovieRow: View {
                                 Text("Date Added")
                                     .font(.headline)
                                 
-                                Text("\(storedMovie.unwrappedDateAdded)")
+                                Text("\(storedMovie.wMmovieDateAdded)")
                                     .font(.subheadline)
                             }
                             .padding(.trailing, 10)
@@ -100,7 +100,7 @@ struct WatchlistMovieRow: View {
                         HStack(alignment: .firstTextBaseline) {
                             Image(systemName: "star.fill")
                                 .font(.custom("StarSize", size: 14, relativeTo: .subheadline))
-                            Text("\(storedMovie.unwrappedRating)")
+                            Text("\(storedMovie.wMmovieRating)")
                                 .font(.custom("StarSize", size: 16, relativeTo: .subheadline))
                                 .padding(.trailing, 10)
                         }
