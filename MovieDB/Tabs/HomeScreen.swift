@@ -19,24 +19,28 @@ struct HomeScreen: View {
                 VStack {
                     ScrollView(showsIndicators: false) {
                         TabView{
-                            ForEach(viewModel.sliderMovies.indices, id: \.self) { index in
-                                ZStack(alignment: .center) {
-                                    NavigationLink {
-                                        MovieView(viewModel: viewModel, movie: viewModel.popularMovies[index])
-                                    } label: {
-                                        ImageView(urlString: "\(viewModel.imageUrl)\(viewModel.popularMovies[index].unwrappedBackdropPath)", width: width * 0.97, height: geo.size.height * 0.3)
+                            if viewModel.sliderMovies.count >= 1 {
+                                ForEach(viewModel.sliderMovies.indices, id: \.self) { index in
+                                    ZStack(alignment: .center) {
+                                        NavigationLink {
+                                            MovieView(viewModel: viewModel, movie: viewModel.popularMovies[index])
+                                        } label: {
+                                            ImageView(urlString: "\(viewModel.imageUrl)\(viewModel.popularMovies[index].unwrappedBackdropPath)", width: width * 0.97, height: geo.size.height * 0.3)
+                                        }
+                                        Text(viewModel.popularMovies[index].originalTitle)
+                                            .font(.caption)
+                                            .fontWeight(.black)
+                                            .padding(8)
+                                            .foregroundColor(.white)
+                                            .background(.black.opacity(0.75))
+                                            .clipShape(Capsule())
+                                            .offset(y: height * 120)
                                     }
-                                    Text(viewModel.popularMovies[index].originalTitle)
-                                        .font(.caption)
-                                        .fontWeight(.black)
-                                        .padding(8)
-                                        .foregroundColor(.white)
-                                        .background(.black.opacity(0.75))
-                                        .clipShape(Capsule())
-                                        .offset(y: height * 120)
+                                    .tag(index)
+                                    .padding(.trailing, 5)
                                 }
-                                .tag(index)
-                                .padding(.trailing, 5)
+                            } else {
+                                ProgressView()
                             }
                         }
                         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
