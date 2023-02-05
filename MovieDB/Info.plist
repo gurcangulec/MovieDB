@@ -4,5 +4,12 @@
 <dict>
 	<key>LSMinimumSystemVersion</key>
 	<string>13.0.0</string>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<true/>
+		<key>UISceneConfigurations</key>
+		<dict/>
+	</dict>
 </dict>
 </plist>
