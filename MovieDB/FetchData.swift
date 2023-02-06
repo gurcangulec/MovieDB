@@ -39,24 +39,6 @@ struct Resource<T: Codable> {
 
 class HTTPClient {
     
-//    static func getConfiguration() async -> Images {
-//        let url = URL.Endpoint.configuration.url
-//        print(url)
-//        do {
-//            let (data, _) = try await URLSession.shared.data(from: url)
-//            
-//            let decoder = JSONDecoder()
-//            
-//            if let decoded = try? decoder.decode(APIConfig.self, from: data) {
-//                return decoded.images
-//            }
-//        } catch {
-//            print("Invalid")
-//        }
-//        
-//        return Images()
-//    }
-    
     // For movies and tv shows
     func fetchData<T: Decodable>(_ resource: Resource<T>, completion: @escaping (Result<T, NetworkError>) -> Void) {
         

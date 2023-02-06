@@ -45,18 +45,33 @@ class TheViewModel: ObservableObject {
     func fetchMoviesAndTVShows() async {
 //        self.temp = await FetchData.getConfiguration()
 //        self.popularMovies = await HTTPClient.downloadPopularMovies()
-        self.upcomingMovies = await HTTPClient.downloadUpcomingMovies()
+//        self.upcomingMovies = await HTTPClient.downloadUpcomingMovies()
         self.popularTVShows = await HTTPClient.downloadPopularTVShows()
         self.topRatedMovies = await HTTPClient.downloadTopRatedMovies()
         self.topRatedTVShows = await HTTPClient.downloadTopRatedTVShows()
         self.onTheAirTVShows = await HTTPClient.downloadOnTheAirTVShows()
+        
+        
+        // For Upcoming Movies
+        httpClient.fetchData(Resource(url: URL.upcomingMovies), completion: { (result: Result<Movies, NetworkError>) in
+            switch result {
+            case .success(let movies):
+                DispatchQueue.main.async {
+                    self.upcomingMovies = movies.results
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+            
+        })
+        
+        // For Popular Movies
         httpClient.fetchData(Resource(url: URL.popularMovies), completion: { (result: Result<Movies, NetworkError>) in
             switch result {
             case .success(let movies):
                 DispatchQueue.main.async {
                     self.popularMovies = movies.results
                 }
-                
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -122,7 +137,7 @@ class TheViewModel: ObservableObject {
         if let movie {
             let watchlistMovie = WatchlistedMovieEntity(context: context)
             watchlistMovie.id = Int32(movie.id)
-            watchlistMovie.title = movie.originalTitle
+            watchlistMovie.title = movie.title
             watchlistMovie.posterPath = movie.posterPath
             watchlistMovie.releaseDate = movie.formattedReleaseDateForStorage
             watchlistMovie.overview = movie.overview
@@ -188,7 +203,7 @@ class TheViewModel: ObservableObject {
         if let movie {
             let ratedMovie = RatedMovieEntity(context: context)
             ratedMovie.id = Int32(movie.id)
-            ratedMovie.title = movie.originalTitle
+            ratedMovie.title = movie.title
             ratedMovie.posterPath = movie.posterPath
             ratedMovie.releaseDate = movie.formattedReleaseDateForStorage
             ratedMovie.overview = movie.overview

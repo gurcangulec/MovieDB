@@ -15,7 +15,7 @@ struct Movies: Codable {
 // Struct for each movie
 struct Movie: Codable, Identifiable {
     let id: Int
-    let originalTitle: String
+    let title: String
     let overview: String
     let posterPath: String?
     let releaseDate: String?
@@ -24,7 +24,7 @@ struct Movie: Codable, Identifiable {
 
     enum CodingKeys: String, CodingKey {
         case id = "id"
-        case originalTitle = "original_title"
+        case title = "title"
         case overview = "overview"
         case posterPath = "poster_path"
         case releaseDate = "release_date"
@@ -60,5 +60,5 @@ struct Movie: Codable, Identifiable {
            return String(format: "%.1f", voteAverage)
     }
     
-    static let example = Movie(id: 12, originalTitle: "Some Movie", overview: "An amazing title to be watched and remembered for the rest of our lives.", posterPath: "/huD4cMhHtLkxcdM6PbKBcivBZuE.jpg", releaseDate: "11-11-2022", backdropPath: "/huD4cMhHtLkxcdM6PbKBcivBZuE.jpg", voteAverage: 1.0)
+    static let example = Movie(id: 12, title: "Some Movie", overview: "An amazing title to be watched and remembered for the rest of our lives.", posterPath: "/huD4cMhHtLkxcdM6PbKBcivBZuE.jpg", releaseDate: "11-11-2022", backdropPath: "/huD4cMhHtLkxcdM6PbKBcivBZuE.jpg", voteAverage: 1.0)
 }

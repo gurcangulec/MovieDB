@@ -45,7 +45,7 @@ struct MovieView: View {
                         Divider()
                         
                         Group {
-                            Text(movie.originalTitle)
+                            Text(movie.title)
                                 .font(.title.weight(.semibold))
                                 .padding(.bottom, geo.size.height * 0.01)
 
@@ -177,7 +177,7 @@ struct MovieView: View {
                     }
                 }
             }
-            .navigationTitle(movie.originalTitle)
+            .navigationTitle(movie.title)
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {

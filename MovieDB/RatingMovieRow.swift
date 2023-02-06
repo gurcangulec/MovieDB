@@ -20,7 +20,7 @@ struct RatingMovieRow: View {
         NavigationLink {
             if !ratedMovie.tvShow {
                 let movie = Movie(id: Int(ratedMovie.id),
-                                  originalTitle: ratedMovie.rMovieTitle,
+                                  title: ratedMovie.rMovieTitle,
                                   overview: ratedMovie.rMmovieOverview,
                                   posterPath: ratedMovie.rMmoviePosterPath,
                                   releaseDate: String(ratedMovie.rMmovieReleaseDate),

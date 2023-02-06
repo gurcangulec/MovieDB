@@ -27,7 +27,7 @@ struct HomeScreen: View {
                                         } label: {
                                             ImageView(urlString: "\(viewModel.imageUrl)\(viewModel.popularMovies[index].unwrappedBackdropPath)", width: width * 0.97, height: geo.size.height * 0.3)
                                         }
-                                        Text(viewModel.popularMovies[index].originalTitle)
+                                        Text(viewModel.popularMovies[index].title)
                                             .font(.caption)
                                             .fontWeight(.black)
                                             .padding(8)

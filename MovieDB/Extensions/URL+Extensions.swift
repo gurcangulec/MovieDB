@@ -13,6 +13,7 @@ extension URL {
         case configuration
         case searchMovie(query: String)
         case popularMovies
+        case upcomingMovies
         
         var url: URL {
             var components = URLComponents()
@@ -36,6 +37,12 @@ extension URL {
                     URLQueryItem(name: "api_key", value: Constants.APIKEY),
                     URLQueryItem(name: "language", value: "en-US")
                 ]
+            case .upcomingMovies:
+                components.path = "/3/movie/upcoming"
+                components.queryItems = [
+                    URLQueryItem(name: "api_key", value: Constants.APIKEY),
+                    URLQueryItem(name: "language", value: "en-US")
+                ]
             }
             return components.url!
         }
@@ -43,6 +50,10 @@ extension URL {
     
     static var popularMovies: URL {
         Endpoint.popularMovies.url
+    }
+    
+    static var upcomingMovies: URL {
+        Endpoint.upcomingMovies.url
     }
     
     static func forMoviesByName(_ name: String) -> URL {

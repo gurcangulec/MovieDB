@@ -124,7 +124,7 @@ struct ActorView: View {
                                             }
                                             
                                             VStack(spacing: 10) {
-                                                Text(relatedMovie.originalTitle)
+                                                Text(relatedMovie.title)
                                                     .font(.headline)
                                                     .frame(maxWidth: geo.size.width * 0.3, alignment: .leading)
                                             }

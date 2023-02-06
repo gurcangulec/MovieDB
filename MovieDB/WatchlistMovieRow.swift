@@ -34,7 +34,7 @@ struct WatchlistMovieRow: View {
         NavigationLink {
             if !storedMovie.tvShow {
                 let movie = Movie(id: Int(storedMovie.id),
-                                  originalTitle: storedMovie.wMovieTitle,
+                                  title: storedMovie.wMovieTitle,
                                   overview: storedMovie.wMmovieOverview,
                                   posterPath: storedMovie.wMmoviePosterPath,
                                   releaseDate: String(storedMovie.wMmovieReleaseDate),

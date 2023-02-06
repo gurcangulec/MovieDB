@@ -44,7 +44,7 @@ struct MovieAndTVShowRow: View {
                     }
                     GeometryReader { geo in
                         VStack(alignment: .leading, spacing: 3) {
-                            Text(movie.originalTitle)
+                            Text(movie.title)
                                 .font(.headline.bold())
                             
                             Text(movie.formattedReleaseDateForViews)

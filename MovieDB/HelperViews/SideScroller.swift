@@ -82,7 +82,7 @@ struct SideScroller: View {
                                     }
                                     
                                     VStack(spacing: 10) {
-                                        Text(movie.originalTitle)
+                                        Text(movie.title)
                                             .font(.headline)
                                             .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
                                         
