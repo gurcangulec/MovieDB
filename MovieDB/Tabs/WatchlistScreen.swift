@@ -106,8 +106,7 @@ struct WatchlistScreen: View {
                             }
                         } label: {
                             HStack {
-                                Label("Sort", systemImage: "line.3.horizontal.decrease.circle")
-                                Text("Sort")
+                                Label("Sort", systemImage: "arrow.up.arrow.down")
                             }
                         }
                     }

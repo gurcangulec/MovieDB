@@ -137,7 +137,7 @@ struct ActorView: View {
                             }
                         }
                         .task {
-                            relatedMovies = await FetchData.downloadRelatedMovies(personId: cast.id)
+                            relatedMovies = await HTTPClient.downloadRelatedMovies(personId: cast.id)
                         }
                         
                     }
@@ -145,7 +145,7 @@ struct ActorView: View {
                     
                 }
                 .task{
-                    actor = await FetchData.downloadPerson(personId: cast.id)
+                    actor = await HTTPClient.downloadPerson(personId: cast.id)
                 }
             }
         }

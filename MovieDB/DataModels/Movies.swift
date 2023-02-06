@@ -8,12 +8,12 @@
 import Foundation
 
 // Struct for results
-struct Movies: Decodable {
+struct Movies: Codable {
     let results: [Movie]
 }
 
 // Struct for each movie
-struct Movie: Decodable, Identifiable {
+struct Movie: Codable, Identifiable {
     let id: Int
     let originalTitle: String
     let overview: String

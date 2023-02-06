@@ -14,6 +14,8 @@ class TheViewModel: ObservableObject {
     
     private(set) var context: NSManagedObjectContext
     
+    let httpClient = HTTPClient()
+    
     init(context: NSManagedObjectContext) {
         self.context = context
         fetchWatchlistedMovies()
@@ -42,13 +44,24 @@ class TheViewModel: ObservableObject {
     
     func fetchMoviesAndTVShows() async {
 //        self.temp = await FetchData.getConfiguration()
-        self.popularMovies = await FetchData.downloadPopularMovies()
-        self.upcomingMovies = await FetchData.downloadUpcomingMovies()
-        self.popularTVShows = await FetchData.downloadPopularTVShows()
-        self.topRatedMovies = await FetchData.downloadTopRatedMovies()
-        self.topRatedTVShows = await FetchData.downloadTopRatedTVShows()
-        self.onTheAirTVShows = await FetchData.downloadOnTheAirTVShows()
-        self.sliderMovies = await FetchData.downloadPopularMovies()
+//        self.popularMovies = await HTTPClient.downloadPopularMovies()
+        self.upcomingMovies = await HTTPClient.downloadUpcomingMovies()
+        self.popularTVShows = await HTTPClient.downloadPopularTVShows()
+        self.topRatedMovies = await HTTPClient.downloadTopRatedMovies()
+        self.topRatedTVShows = await HTTPClient.downloadTopRatedTVShows()
+        self.onTheAirTVShows = await HTTPClient.downloadOnTheAirTVShows()
+        httpClient.fetchData(Resource(url: URL.popularMovies), completion: { (result: Result<Movies, NetworkError>) in
+            switch result {
+            case .success(let movies):
+                DispatchQueue.main.async {
+                    self.popularMovies = movies.results
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+            
+        })
     }
 
     // MARK: Search
@@ -63,8 +76,8 @@ class TheViewModel: ObservableObject {
     @Published var searchQuery = ""
     
     func searchMoviesAndTVShows() async {
-        searchedMovies = await FetchData.downloadMovies(searchQuery: searchQuery)
-        searchedTvShows = await FetchData.downloadTVShows(searchQuery: searchQuery)
+        searchedMovies = await HTTPClient.downloadMovies(searchQuery: searchQuery)
+        searchedTvShows = await HTTPClient.downloadTVShows(searchQuery: searchQuery)
     }
     
     // MARK: Watchlist
@@ -237,15 +250,15 @@ class TheViewModel: ObservableObject {
     }
     
     func fetchCastAndCrew(movieId: Int) async {
-        cast = await FetchData.downloadCast(movieId: movieId)
-        crew = await FetchData.downloadCrew(movieId: movieId)
-        movieDetails = await FetchData.downloadSpecificMovie(movieId: movieId)
+        cast = await HTTPClient.downloadCast(movieId: movieId)
+        crew = await HTTPClient.downloadCrew(movieId: movieId)
+        movieDetails = await HTTPClient.downloadSpecificMovie(movieId: movieId)
     }
     
     func fetchCastAndCrewTVShow(tvShowId: Int) async {
-        cast = await FetchData.downloadCastTVShow(tvShowId: tvShowId)
-        crew = await FetchData.downloadCrewTVShow(tvShowId: tvShowId)
-        tvShowDetails = await FetchData.downloadSpecificTVShow(tvShowId: tvShowId)
+        cast = await HTTPClient.downloadCastTVShow(tvShowId: tvShowId)
+        crew = await HTTPClient.downloadCrewTVShow(tvShowId: tvShowId)
+        tvShowDetails = await HTTPClient.downloadSpecificTVShow(tvShowId: tvShowId)
     }
     
     func copyToClipboard(movie: Movie?, tvShow: TVShow?) {

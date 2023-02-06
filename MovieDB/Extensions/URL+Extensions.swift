@@ -11,20 +11,41 @@ extension URL {
     
     enum Endpoint {
         case configuration
+        case searchMovie(query: String)
+        case popularMovies
         
         var url: URL {
             var components = URLComponents()
             components.host = "api.themoviedb.org"
             components.scheme = "https"
-            components.path = "/3"
             switch self {
             case .configuration:
-                components.path = "/configuration"
+                components.path = "/3/configuration"
                 components.queryItems = [
                     URLQueryItem(name: "api_key", value: Constants.APIKEY)
+                ]
+            case .searchMovie(let query):
+                components.path = "/3/search/movie"
+                components.queryItems = [
+                    URLQueryItem(name: "api_key", value: Constants.APIKEY),
+                    URLQueryItem(name: "query", value: query)
+                ]
+            case .popularMovies:
+                components.path = "/3/movie/popular"
+                components.queryItems = [
+                    URLQueryItem(name: "api_key", value: Constants.APIKEY),
+                    URLQueryItem(name: "language", value: "en-US")
                 ]
             }
             return components.url!
         }
+    }
+    
+    static var popularMovies: URL {
+        Endpoint.popularMovies.url
+    }
+    
+    static func forMoviesByName(_ name: String) -> URL {
+        Endpoint.searchMovie(query: name).url
     }
 }

@@ -19,8 +19,8 @@ struct HomeScreen: View {
                 VStack {
                     ScrollView(showsIndicators: false) {
                         TabView{
-                            if viewModel.sliderMovies.count >= 1 {
-                                ForEach(viewModel.sliderMovies.indices, id: \.self) { index in
+                            if viewModel.popularMovies.count >= 1 {
+                                ForEach(viewModel.popularMovies.indices, id: \.self) { index in
                                     ZStack(alignment: .center) {
                                         NavigationLink {
                                             MovieView(viewModel: viewModel, movie: viewModel.popularMovies[index])

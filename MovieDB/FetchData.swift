@@ -7,7 +7,37 @@
 
 import Foundation
 
-struct FetchData {
+enum NetworkError: Error {
+    case badURL
+    case invalidResponse
+    case noData
+    case decodingError
+}
+
+enum HttpMethod {
+    case get([URLQueryItem])
+    case post(Data?)
+    case delete
+    
+    var name: String {
+        switch self {
+        case .get:
+            return "GET"
+        case .post:
+            return "POST"
+        case .delete:
+            return "DELETE"
+        }
+    }
+}
+
+struct Resource<T: Codable> {
+    let url: URL
+    var headers: [String: String] = [:]
+    var method: HttpMethod = .get([])
+}
+
+class HTTPClient {
     
 //    static func getConfiguration() async -> Images {
 //        let url = URL.Endpoint.configuration.url
@@ -26,6 +56,49 @@ struct FetchData {
 //        
 //        return Images()
 //    }
+    
+    // For movies and tv shows
+    func fetchData<T: Decodable>(_ resource: Resource<T>, completion: @escaping (Result<T, NetworkError>) -> Void) {
+        
+        var request = URLRequest(url: resource.url)
+        request.allHTTPHeaderFields = resource.headers
+        request.httpMethod = resource.method.name
+        
+        switch resource.method {
+        case .get(let queryItems):
+            var components = URLComponents(url: resource.url, resolvingAgainstBaseURL: true)
+            components?.queryItems = queryItems
+            guard let url = components?.url else {
+                return completion(.failure(NetworkError.badURL))
+            }
+            request.url = url
+        case .post(_ ):
+            break
+        default:
+            break
+        }
+        
+        let configuration = URLSessionConfiguration.default
+        configuration.httpAdditionalHeaders = ["Content-Type": "application/json"]
+        
+        let session = URLSession(configuration: configuration)
+        session.dataTask(with: resource.url) { data, response, error in
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 || httpResponse.statusCode == 201 else {
+                return completion(.failure(.invalidResponse))
+            }
+            
+            guard let data = data, error == nil else {
+                return completion(.failure(.noData))
+            }
+            
+            guard let result = try? JSONDecoder().decode(T.self, from: data) else {
+                return completion(.failure(.decodingError))
+            }
+            
+            completion(.success(result))
+        }
+        .resume()
+    }
     
     static let baseURL = "https://api.themoviedb.org/3/"
     static let APIKey = "c74260965badd03144f9a327f254f0a2"
