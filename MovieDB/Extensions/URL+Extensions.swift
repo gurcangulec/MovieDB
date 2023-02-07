@@ -14,8 +14,8 @@ extension URL {
         case searchMovie(query: String)
         case searchTVShow(query: String)
         
-        case movieCrew(movieId: Int)
-        case tvShowCrew(tvShowId: Int)
+        case movieCrewAndCast(movieId: Int)
+        case tvShowCrewAndCast(tvShowId: Int)
         
         case popularMovies
         case upcomingMovies
@@ -24,6 +24,8 @@ extension URL {
         case popularTVShows
         case onTheAirTVShows
         case topRatedTVShows
+        
+        case relatedMovies(personId: Int)
         
         var url: URL {
             var components = URLComponents()
@@ -47,13 +49,13 @@ extension URL {
                     URLQueryItem(name: "api_key", value: Constants.APIKEY),
                     URLQueryItem(name: "query", value: query)
                 ]
-            case .movieCrew(let movieId):
+            case .movieCrewAndCast(let movieId):
                 components.path = "/3/movie/\(movieId)/credits"
                 components.queryItems = [
                     URLQueryItem(name: "api_key", value: Constants.APIKEY)
 //                    URLQueryItem(name: "query", value: query)
                 ]
-            case .tvShowCrew(let tvShowId):
+            case .tvShowCrewAndCast(let tvShowId):
                 components.path = "/3/tv/\(tvShowId)/credits"
                 components.queryItems = [
                     URLQueryItem(name: "api_key", value: Constants.APIKEY)
@@ -95,7 +97,13 @@ extension URL {
                     URLQueryItem(name: "api_key", value: Constants.APIKEY),
                     URLQueryItem(name: "language", value: "en-US")
                 ]
-                
+            case .relatedMovies(let personId):
+                components.path = "/3/person/\(personId)/movie_credits"
+                components.queryItems = [
+                    URLQueryItem(name: "api_key", value: Constants.APIKEY),
+                    URLQueryItem(name: "language", value: "en-US")
+//                    URLQueryItem(name: "query", value: query)
+                ]
             }
             return components.url!
         }
@@ -126,11 +134,11 @@ extension URL {
     }
     
     static func forMovieCastAndCrew(movieId: Int) -> URL {
-        Endpoint.movieCrew(movieId: movieId).url
+        Endpoint.movieCrewAndCast(movieId: movieId).url
     }
     
-    static func forTVShowCrew(tvShowId: Int) -> URL {
-        Endpoint.tvShowCrew(tvShowId: tvShowId).url
+    static func forTVShowCastAndCrew(tvShowId: Int) -> URL {
+        Endpoint.tvShowCrewAndCast(tvShowId: tvShowId).url
     }
     
     static func forMoviesByName(_ name: String) -> URL {
@@ -141,5 +149,9 @@ extension URL {
     static func forTVShowsbyName(_ name: String) -> URL {
         let replaced = name.replacingOccurrences(of: " ", with: "+").lowercased()
         return Endpoint.searchTVShow(query: replaced).url
+    }
+    
+    static func forRelatedMovies(personId: Int) -> URL {
+        Endpoint.relatedMovies(personId: personId).url
     }
 }

@@ -282,8 +282,15 @@ class TheViewModel: ObservableObject {
     }
     
     func fetchCastAndCrewTVShow(tvShowId: Int) async {
-        cast = await HTTPClient.downloadCastTVShow(tvShowId: tvShowId)
-        crew = await HTTPClient.downloadCrewTVShow(tvShowId: tvShowId)
+        do {
+            let decodedTVShowCrew = try await httpClient.fetchData(of: Crew.self, Resource(url: URL.forTVShowCastAndCrew(tvShowId: tvShowId)))
+            crew = decodedTVShowCrew.results
+            let decodedTVShowCast = try await httpClient.fetchData(of: Cast.self, Resource(url: URL.forTVShowCastAndCrew(tvShowId: tvShowId)))
+            cast = decodedTVShowCast.results
+        } catch {
+            print(error.localizedDescription)
+        }
+        
         tvShowDetails = await HTTPClient.downloadSpecificTVShow(tvShowId: tvShowId)
     }
     
