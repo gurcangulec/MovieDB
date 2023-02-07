@@ -12,6 +12,10 @@ extension URL {
     enum Endpoint {
         case configuration
         case searchMovie(query: String)
+        case searchTVShow(query: String)
+        
+        case movieCrew(movieId: Int)
+        case tvShowCrew(tvShowId: Int)
         
         case popularMovies
         case upcomingMovies
@@ -36,6 +40,24 @@ extension URL {
                 components.queryItems = [
                     URLQueryItem(name: "api_key", value: Constants.APIKEY),
                     URLQueryItem(name: "query", value: query)
+                ]
+            case .searchTVShow(let query):
+                components.path = "/3/search/tv"
+                components.queryItems = [
+                    URLQueryItem(name: "api_key", value: Constants.APIKEY),
+                    URLQueryItem(name: "query", value: query)
+                ]
+            case .movieCrew(let movieId):
+                components.path = "/3/movie/\(movieId)/credits"
+                components.queryItems = [
+                    URLQueryItem(name: "api_key", value: Constants.APIKEY)
+//                    URLQueryItem(name: "query", value: query)
+                ]
+            case .tvShowCrew(let tvShowId):
+                components.path = "/3/tv/\(tvShowId)/credits"
+                components.queryItems = [
+                    URLQueryItem(name: "api_key", value: Constants.APIKEY)
+//                    URLQueryItem(name: "query", value: query)
                 ]
             case .popularMovies:
                 components.path = "/3/movie/popular"
@@ -103,7 +125,21 @@ extension URL {
         Endpoint.topRatedTVShows.url
     }
     
+    static func forMovieCastAndCrew(movieId: Int) -> URL {
+        Endpoint.movieCrew(movieId: movieId).url
+    }
+    
+    static func forTVShowCrew(tvShowId: Int) -> URL {
+        Endpoint.tvShowCrew(tvShowId: tvShowId).url
+    }
+    
     static func forMoviesByName(_ name: String) -> URL {
-        Endpoint.searchMovie(query: name).url
+        let replaced = name.replacingOccurrences(of: " ", with: "+").lowercased()
+        return Endpoint.searchMovie(query: replaced).url
+    }
+    
+    static func forTVShowsbyName(_ name: String) -> URL {
+        let replaced = name.replacingOccurrences(of: " ", with: "+").lowercased()
+        return Endpoint.searchTVShow(query: replaced).url
     }
 }

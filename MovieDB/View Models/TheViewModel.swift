@@ -22,8 +22,6 @@ class TheViewModel: ObservableObject {
         fetchRatedMovies()
     }
     
-    let imageUrl = "https://image.tmdb.org/t/p/original/"
-    
     // MARK: Home
     @Published var popularMovies = [Movie]()
     @Published var upcomingMovies = [Movie]()
@@ -31,7 +29,6 @@ class TheViewModel: ObservableObject {
     @Published var topRatedMovies = [Movie]()
     @Published var topRatedTVShows = [TVShow]()
     @Published var onTheAirTVShows = [TVShow]()
-    @Published var sliderMovies = [Movie]()
     
     let popularMoviesString = "Popular Movies"
     let upcomingMoviesString = "Upcoming Movies"
@@ -84,9 +81,21 @@ class TheViewModel: ObservableObject {
     
     @Published var searchQuery = ""
     
-    func searchMoviesAndTVShows() async {
-        searchedMovies = await HTTPClient.downloadMovies(searchQuery: searchQuery)
-        searchedTvShows = await HTTPClient.downloadTVShows(searchQuery: searchQuery)
+    func searchMoviesAndTVShows(searchQuery: String) async {
+        
+        do {
+            let decodedSearchedMovies = try await httpClient.fetchData(of: Movies.self, Resource(url: URL.forMoviesByName(searchQuery)))
+            searchedMovies = decodedSearchedMovies.results
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        do {
+            let decodedSearchedTVShows = try await httpClient.fetchData(of: TVShows.self, Resource(url: URL.forTVShowsbyName(searchQuery)))
+            searchedTvShows = decodedSearchedTVShows.results
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
     // MARK: Watchlist
@@ -259,8 +268,16 @@ class TheViewModel: ObservableObject {
     }
     
     func fetchCastAndCrew(movieId: Int) async {
-        cast = await HTTPClient.downloadCast(movieId: movieId)
-        crew = await HTTPClient.downloadCrew(movieId: movieId)
+        
+        do {
+            let decodedMovieCrew = try await httpClient.fetchData(of: Crew.self, Resource(url: URL.forMovieCastAndCrew(movieId: movieId)))
+            crew = decodedMovieCrew.results
+            let decodedMovieCast = try await httpClient.fetchData(of: Cast.self, Resource(url: URL.forMovieCastAndCrew(movieId: movieId)))
+            cast = decodedMovieCast.results
+        } catch {
+            print(error.localizedDescription)
+        }
+ 
         movieDetails = await HTTPClient.downloadSpecificMovie(movieId: movieId)
     }
     

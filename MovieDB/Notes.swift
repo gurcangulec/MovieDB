@@ -21,7 +21,7 @@ struct Notes: View {
                 VStack {
                     if showImage {
                         VStack {
-                            ImageView(urlString: "\(viewModel.imageUrl)\(storedMovie.wMmoviePosterPath)", width: geo.size.width * 0.54, height: geo.size.width * 0.81)
+                            ImageView(urlString: "\(Constants.imageURL)\(storedMovie.wMmoviePosterPath)", width: geo.size.width * 0.54, height: geo.size.width * 0.81)
                                 .padding(.bottom, 10)
                             Text("Your Notes")
                                 .font(.title3.bold())

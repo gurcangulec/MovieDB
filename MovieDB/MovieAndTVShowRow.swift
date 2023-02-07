@@ -28,9 +28,8 @@ struct MovieAndTVShowRow: View {
         } label: {
             HStack {
                 if let movie = movie {
-                    if let unwrappedPath = movie.posterPath {
-                        let unwrappedPath = URL(string: "\(url)\(unwrappedPath)")
-                        KFImage(unwrappedPath)
+                    if movie.unwrappedPosterPath != "Unknown" {
+                        KFImage(URL(string: "\(Constants.imageURL)\(movie.unwrappedPosterPath)"))
                             .placeholder {
                                 ProgressView()
                             }
@@ -60,9 +59,8 @@ struct MovieAndTVShowRow: View {
                     }
                 } else {
                     if let tvShow = tvShow {
-                        if let unwrappedPath = tvShow.unwrappedPosterPath {
-                            let unwrappedPath = URL(string: "\(url)\(unwrappedPath)")
-                            KFImage(unwrappedPath)
+                        if tvShow.unwrappedPosterPath != "Unknown" {
+                            KFImage(URL(string: "\(url)\(tvShow.unwrappedPosterPath)"))
                                 .placeholder {
                                     ProgressView()
                                 }

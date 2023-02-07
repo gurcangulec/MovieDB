@@ -60,7 +60,7 @@ struct SearchScreen: View {
         .disableAutocorrection(true)
         .onSubmit(of: .search) {
             Task {
-                await viewModel.searchMoviesAndTVShows()
+                await viewModel.searchMoviesAndTVShows(searchQuery: viewModel.searchQuery)
                 viewModel.pickerVisible = true
             }
         }

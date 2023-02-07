@@ -25,7 +25,7 @@ struct HomeScreen: View {
                                         NavigationLink {
                                             MovieView(viewModel: viewModel, movie: viewModel.popularMovies[index])
                                         } label: {
-                                            ImageView(urlString: "\(viewModel.imageUrl)\(viewModel.popularMovies[index].unwrappedBackdropPath)", width: width * 0.97, height: geo.size.height * 0.3)
+                                            ImageView(urlString: "\(Constants.imageURL)\(viewModel.popularMovies[index].unwrappedBackdropPath)", width: width * 0.97, height: geo.size.height * 0.3)
                                         }
                                         Text(viewModel.popularMovies[index].title)
                                             .font(.caption)
