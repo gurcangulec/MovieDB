@@ -12,8 +12,14 @@ extension URL {
     enum Endpoint {
         case configuration
         case searchMovie(query: String)
+        
         case popularMovies
         case upcomingMovies
+        case topRatedMovies
+        
+        case popularTVShows
+        case onTheAirTVShows
+        case topRatedTVShows
         
         var url: URL {
             var components = URLComponents()
@@ -43,6 +49,31 @@ extension URL {
                     URLQueryItem(name: "api_key", value: Constants.APIKEY),
                     URLQueryItem(name: "language", value: "en-US")
                 ]
+            case .topRatedMovies:
+                components.path = "/3/movie/top_rated"
+                components.queryItems = [
+                    URLQueryItem(name: "api_key", value: Constants.APIKEY),
+                    URLQueryItem(name: "language", value: "en-US")
+                ]
+            case .popularTVShows:
+                components.path = "/3/tv/popular"
+                components.queryItems = [
+                    URLQueryItem(name: "api_key", value: Constants.APIKEY),
+                    URLQueryItem(name: "language", value: "en-US")
+                ]
+            case .onTheAirTVShows:
+                components.path = "/3/tv/on_the_air"
+                components.queryItems = [
+                    URLQueryItem(name: "api_key", value: Constants.APIKEY),
+                    URLQueryItem(name: "language", value: "en-US")
+                ]
+            case .topRatedTVShows:
+                components.path = "/3/tv/top_rated"
+                components.queryItems = [
+                    URLQueryItem(name: "api_key", value: Constants.APIKEY),
+                    URLQueryItem(name: "language", value: "en-US")
+                ]
+                
             }
             return components.url!
         }
@@ -54,6 +85,22 @@ extension URL {
     
     static var upcomingMovies: URL {
         Endpoint.upcomingMovies.url
+    }
+    
+    static var topRatedMovies: URL {
+        Endpoint.topRatedMovies.url
+    }
+    
+    static var popularTVShows: URL {
+        Endpoint.popularTVShows.url
+    }
+    
+    static var onTheAirTVShows: URL {
+        Endpoint.onTheAirTVShows.url
+    }
+    
+    static var topRatedTVShows: URL {
+        Endpoint.topRatedTVShows.url
     }
     
     static func forMoviesByName(_ name: String) -> URL {

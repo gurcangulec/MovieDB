@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct TVShows: Decodable {
+struct TVShows: Codable {
     let results: [TVShow]
 }
 
-struct TVShow: Decodable, Identifiable {
+struct TVShow: Codable, Identifiable {
     let id: Int
     let originalTitle: String
     let overview: String

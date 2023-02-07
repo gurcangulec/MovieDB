@@ -15,7 +15,7 @@ enum NetworkError: Error {
 }
 
 enum HttpMethod {
-    case get([URLQueryItem])
+    case get
     case post(Data?)
     case delete
     
@@ -34,27 +34,23 @@ enum HttpMethod {
 struct Resource<T: Codable> {
     let url: URL
     var headers: [String: String] = [:]
-    var method: HttpMethod = .get([])
+    var method: HttpMethod = .get
 }
 
 class HTTPClient {
     
     // For movies and tv shows
-    func fetchData<T: Decodable>(_ resource: Resource<T>, completion: @escaping (Result<T, NetworkError>) -> Void) {
+    func fetchData<T: Decodable>(of type: T.Type, _ resource: Resource<T>) async throws -> T {
         
         var request = URLRequest(url: resource.url)
         request.allHTTPHeaderFields = resource.headers
         request.httpMethod = resource.method.name
         
         switch resource.method {
-        case .get(let queryItems):
-            var components = URLComponents(url: resource.url, resolvingAgainstBaseURL: true)
-            components?.queryItems = queryItems
-            guard let url = components?.url else {
-                return completion(.failure(NetworkError.badURL))
-            }
-            request.url = url
+        case .get:
+            request.url = resource.url
         case .post(_ ):
+            // Will come back later
             break
         default:
             break
@@ -64,22 +60,18 @@ class HTTPClient {
         configuration.httpAdditionalHeaders = ["Content-Type": "application/json"]
         
         let session = URLSession(configuration: configuration)
-        session.dataTask(with: resource.url) { data, response, error in
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 || httpResponse.statusCode == 201 else {
-                return completion(.failure(.invalidResponse))
-            }
-            
-            guard let data = data, error == nil else {
-                return completion(.failure(.noData))
-            }
-            
-            guard let result = try? JSONDecoder().decode(T.self, from: data) else {
-                return completion(.failure(.decodingError))
-            }
-            
-            completion(.success(result))
+        
+        let (data, response) = try await session.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 || httpResponse.statusCode == 201 else {
+            throw NetworkError.invalidResponse
         }
-        .resume()
+        
+        guard let result = try? JSONDecoder().decode(T.self, from: data) else {
+            throw NetworkError.decodingError
+        }
+        
+        return result
     }
     
     static let baseURL = "https://api.themoviedb.org/3/"
@@ -123,29 +115,6 @@ class HTTPClient {
                 
                 // Decode from data
                 if let decoded = try? decoder.decode(TVShows.self, from: data) {
-                    return decoded.results
-                }
-            } catch {
-                print("Invalid Something")
-            }
-        return []
-    }
-    
-    
-    static func downloadPopularMovies() async-> [Movie] {
-            // Check URL
-            guard let url = URL(string: "\(baseURL)movie/popular?api_key=\(APIKey)&language=en-US&page=1") else {
-                print("Invalid URL")
-                return []
-            }
-            
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                
-                let decoder = JSONDecoder()
-                
-                // Decode from data
-                if let decoded = try? decoder.decode(Movies.self, from: data) {
                     return decoded.results
                 }
             } catch {
@@ -266,116 +235,6 @@ class HTTPClient {
                 let decoder = JSONDecoder()
                 // Decode from data
                 if let decoded = try? decoder.decode(RelatedMovies.self, from: data) {
-                    return decoded.results
-                }
-            } catch {
-                print("Invalid Something")
-            }
-        return []
-    }
-    
-    static func downloadPopularTVShows() async-> [TVShow] {
-            // Check URL
-            guard let url = URL(string: "\(baseURL)tv/popular?api_key=\(APIKey)&language=en-US&page=1") else {
-                print("Invalid URL")
-                return []
-            }
-            
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                
-                let decoder = JSONDecoder()
-                
-                // Decode from data
-                if let decoded = try? decoder.decode(TVShows.self, from: data) {
-                    return decoded.results
-                }
-            } catch {
-                print("Invalid Something")
-            }
-        return []
-    }
-    
-    static func downloadTopRatedMovies() async-> [Movie] {
-            // Check URL
-            guard let url = URL(string: "\(baseURL)movie/top_rated?api_key=\(APIKey)&language=en-US&page=1") else {
-                print("Invalid URL")
-                return []
-            }
-            
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                
-                let decoder = JSONDecoder()
-                
-                // Decode from data
-                if let decoded = try? decoder.decode(Movies.self, from: data) {
-                    return decoded.results
-                }
-            } catch {
-                print("Invalid Something")
-            }
-        return []
-    }
-    
-    static func downloadUpcomingMovies() async-> [Movie] {
-            // Check URL
-            guard let url = URL(string: "\(baseURL)movie/upcoming?api_key=\(APIKey)&language=en-US&page=1") else {
-                print("Invalid URL")
-                return []
-            }
-            
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                
-                let decoder = JSONDecoder()
-                
-                // Decode from data
-                if let decoded = try? decoder.decode(Movies.self, from: data) {
-                    return decoded.results
-                }
-            } catch {
-                print("Invalid Something")
-            }
-        return []
-    }
-    
-    static func downloadTopRatedTVShows() async-> [TVShow] {
-            // Check URL
-            guard let url = URL(string: "\(baseURL)tv/top_rated?api_key=\(APIKey)&language=en-US&page=1") else {
-                print("Invalid URL")
-                return []
-            }
-            
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                
-                let decoder = JSONDecoder()
-                
-                // Decode from data
-                if let decoded = try? decoder.decode(TVShows.self, from: data) {
-                    return decoded.results
-                }
-            } catch {
-                print("Invalid Something")
-            }
-        return []
-    }
-    
-    static func downloadOnTheAirTVShows() async-> [TVShow] {
-            // Check URL
-            guard let url = URL(string: "\(baseURL)tv/on_the_air?api_key=\(APIKey)&language=en-US&page=1") else {
-                print("Invalid URL")
-                return []
-            }
-            
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                
-                let decoder = JSONDecoder()
-                
-                // Decode from data
-                if let decoded = try? decoder.decode(TVShows.self, from: data) {
                     return decoded.results
                 }
             } catch {

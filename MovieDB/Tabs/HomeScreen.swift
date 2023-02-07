@@ -59,13 +59,16 @@ struct HomeScreen: View {
                 .navigationTitle("Home")
                 .refreshable {
                     Task {
-                        await viewModel.fetchMoviesAndTVShows()
+                        await viewModel.fetchMovies()
+                        await viewModel.fetchTVShows()
+                        
                     }
                 }
             }
             .onAppear {
                 Task {
-                    await viewModel.fetchMoviesAndTVShows()
+                    await viewModel.fetchMovies()
+                    await viewModel.fetchTVShows()
                 }
             }
         }

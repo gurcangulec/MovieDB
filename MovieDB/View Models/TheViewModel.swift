@@ -40,43 +40,37 @@ class TheViewModel: ObservableObject {
     let topRatedTVShowsString = "Top Rated TV Shows"
     let onTheAirTVShowsString = "On The Air"
     
-    @Published var temp = Images()
+    func fetchMovies() async {
+        
+        do {
+            let decodedPopular = try await httpClient.fetchData(of: Movies.self, Resource(url: URL.popularMovies))
+            self.popularMovies = decodedPopular.results
+            
+            let decodedUpcoming = try await httpClient.fetchData(of: Movies.self, Resource(url: URL.upcomingMovies))
+            self.upcomingMovies = decodedUpcoming.results
+            
+            let decodedTopRated = try await httpClient.fetchData(of: Movies.self, Resource(url: URL.topRatedMovies))
+            self.topRatedMovies = decodedTopRated.results
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
     
-    func fetchMoviesAndTVShows() async {
-//        self.temp = await FetchData.getConfiguration()
-//        self.popularMovies = await HTTPClient.downloadPopularMovies()
-//        self.upcomingMovies = await HTTPClient.downloadUpcomingMovies()
-        self.popularTVShows = await HTTPClient.downloadPopularTVShows()
-        self.topRatedMovies = await HTTPClient.downloadTopRatedMovies()
-        self.topRatedTVShows = await HTTPClient.downloadTopRatedTVShows()
-        self.onTheAirTVShows = await HTTPClient.downloadOnTheAirTVShows()
+    func fetchTVShows() async {
         
-        
-        // For Upcoming Movies
-        httpClient.fetchData(Resource(url: URL.upcomingMovies), completion: { (result: Result<Movies, NetworkError>) in
-            switch result {
-            case .success(let movies):
-                DispatchQueue.main.async {
-                    self.upcomingMovies = movies.results
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
+        do {
+            let decodedPopular = try await httpClient.fetchData(of: TVShows.self, Resource(url: URL.popularTVShows))
+            self.popularTVShows = decodedPopular.results
             
-        })
-        
-        // For Popular Movies
-        httpClient.fetchData(Resource(url: URL.popularMovies), completion: { (result: Result<Movies, NetworkError>) in
-            switch result {
-            case .success(let movies):
-                DispatchQueue.main.async {
-                    self.popularMovies = movies.results
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
+            let decodedUpcoming = try await httpClient.fetchData(of: TVShows.self, Resource(url: URL.onTheAirTVShows))
+            self.onTheAirTVShows = decodedUpcoming.results
             
-        })
+            let decodedTopRated = try await httpClient.fetchData(of: TVShows.self, Resource(url: URL.topRatedTVShows))
+            self.topRatedTVShows = decodedTopRated.results
+        } catch {
+            print(error.localizedDescription)
+        }
+        
     }
 
     // MARK: Search
