@@ -22,6 +22,7 @@ class TheViewModel: ObservableObject {
         fetchRatedMovies()
     }
     
+    
     // MARK: Home
     @Published var popularMovies = [Movie]()
     @Published var upcomingMovies = [Movie]()
@@ -37,6 +38,7 @@ class TheViewModel: ObservableObject {
     let topRatedTVShowsString = "Top Rated TV Shows"
     let onTheAirTVShowsString = "On The Air"
     
+    // Fetch Movies for Home
     func fetchMovies() async {
         
         do {
@@ -53,6 +55,7 @@ class TheViewModel: ObservableObject {
         }
     }
     
+    // Fetch TV Shows for Home
     func fetchTVShows() async {
         
         do {
@@ -70,6 +73,7 @@ class TheViewModel: ObservableObject {
         
     }
 
+    
     // MARK: Search
     @Published var searchedMovies = [Movie]()
     @Published var searchedTvShows = [TVShow]()
@@ -81,6 +85,7 @@ class TheViewModel: ObservableObject {
     
     @Published var searchQuery = ""
     
+    // Search Movies and TV Shows
     func searchMoviesAndTVShows(searchQuery: String) async {
         
         do {
@@ -97,6 +102,7 @@ class TheViewModel: ObservableObject {
             print(error.localizedDescription)
         }
     }
+    
     
     // MARK: Watchlist
     @Published var watchlistedMovies: [WatchlistedMovieEntity] = []
@@ -179,8 +185,8 @@ class TheViewModel: ObservableObject {
         }
     }
     
-    // MARK: RatingsList
     
+    // MARK: RatingsList
     @Published var ratedMovies: [RatedMovieEntity] = []
     
     func fetchRatedMovie(movie: Movie) -> Bool {
@@ -236,6 +242,7 @@ class TheViewModel: ObservableObject {
         }
     }
     
+    
     // MARK: MovieView
     @Published var showingSheetWatchlist = false
     @Published var showingSheetRating = false
@@ -243,7 +250,6 @@ class TheViewModel: ObservableObject {
     
     @Published var movieDetails = MovieDetails()
     @Published var tvShowDetails = TVShowDetails(id: 0, createdBy: [], numberOfEpisodes: 0)
-//    @Published var cast = [CastMember]()
     @Published var crew = [CrewMember]()
     
     var writers: [String] {
@@ -277,8 +283,13 @@ class TheViewModel: ObservableObject {
         } catch {
             print(error.localizedDescription)
         }
- 
-        movieDetails = await HTTPClient.downloadSpecificMovie(movieId: movieId)
+        
+        do {
+            let decodedMovieDetails = try await httpClient.fetchData(of: MovieDetails.self, Resource(url: URL.forSpecificMovie(movieId: movieId)))
+            movieDetails = decodedMovieDetails
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
     func fetchCastAndCrewTVShow(tvShowId: Int) async {
@@ -292,6 +303,20 @@ class TheViewModel: ObservableObject {
         }
         
         tvShowDetails = await HTTPClient.downloadSpecificTVShow(tvShowId: tvShowId)
+    }
+    
+    // MARK: ActorView
+    @Published var actor = Actor()
+    @Published var relatedMovies = [Movie]()
+    
+    func fetchRelatedMovies(personId: Int) async {
+        print(personId)
+        do {
+            let decodedRelatedMovies = try await httpClient.fetchData(of: RelatedMovies.self, Resource(url: URL.forRelatedMovies(personId: personId)))
+            relatedMovies = decodedRelatedMovies.results
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
     func copyToClipboard(movie: Movie?, tvShow: TVShow?) {
@@ -328,6 +353,7 @@ class TheViewModel: ObservableObject {
             window?.rootViewController!.present(activityController, animated: true, completion: nil)
         }
     }
+    
     func shareImdbButton() {
 
         let activityController = UIActivityViewController(activityItems: ["https://www.imdb.com/title/\(movieDetails.unwrappedImdbId)"], applicationActivities: nil)

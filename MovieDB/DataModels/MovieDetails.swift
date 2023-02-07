@@ -7,15 +7,3 @@
 
 import Foundation
 
-struct MovieDetails: Decodable {
-    
-    var imdbId: String?
-
-    enum CodingKeys: String, CodingKey {
-        case imdbId = "imdb_id"
-    }
-    
-    var unwrappedImdbId: String {
-        imdbId ?? "Unknown"
-    }
-}

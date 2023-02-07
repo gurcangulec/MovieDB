@@ -26,6 +26,9 @@ extension URL {
         case topRatedTVShows
         
         case relatedMovies(personId: Int)
+        case personDetails(personId: Int)
+        
+        case specificMovie(movieId: Int)
         
         var url: URL {
             var components = URLComponents()
@@ -104,6 +107,20 @@ extension URL {
                     URLQueryItem(name: "language", value: "en-US")
 //                    URLQueryItem(name: "query", value: query)
                 ]
+            case .personDetails(let personId):
+                components.path = "/3/person/\(personId)"
+                components.queryItems = [
+                    URLQueryItem(name: "api_key", value: Constants.APIKEY),
+                    URLQueryItem(name: "language", value: "en-US")
+//                    URLQueryItem(name: "query", value: query)
+                ]
+            case .specificMovie(let movieId):
+                components.path = "/3/movie/\(movieId)"
+                components.queryItems = [
+                    URLQueryItem(name: "api_key", value: Constants.APIKEY),
+                    URLQueryItem(name: "language", value: "en-US")
+//                    URLQueryItem(name: "query", value: query)
+                ]
             }
             return components.url!
         }
@@ -153,5 +170,13 @@ extension URL {
     
     static func forRelatedMovies(personId: Int) -> URL {
         Endpoint.relatedMovies(personId: personId).url
+    }
+    
+    static func forPersonDetails(personId: Int) -> URL {
+        Endpoint.personDetails(personId: personId).url
+    }
+    
+    static func forSpecificMovie(movieId: Int) -> URL {
+        Endpoint.specificMovie(movieId: movieId).url
     }
 }

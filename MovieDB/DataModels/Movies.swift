@@ -62,3 +62,24 @@ struct Movie: Codable, Identifiable {
     
     static let example = Movie(id: 12, title: "Some Movie", overview: "An amazing title to be watched and remembered for the rest of our lives.", posterPath: "/huD4cMhHtLkxcdM6PbKBcivBZuE.jpg", releaseDate: "11-11-2022", backdropPath: "/huD4cMhHtLkxcdM6PbKBcivBZuE.jpg", voteAverage: 1.0)
 }
+
+struct RelatedMovies: Codable {
+    var results: [Movie]
+    
+    enum CodingKeys: String, CodingKey {
+        case results = "cast"
+    }
+}
+
+struct MovieDetails: Codable {
+    
+    var imdbId: String?
+
+    enum CodingKeys: String, CodingKey {
+        case imdbId = "imdb_id"
+    }
+    
+    var unwrappedImdbId: String {
+        imdbId ?? "Unknown"
+    }
+}

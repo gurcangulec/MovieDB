@@ -10,21 +10,21 @@ import Kingfisher
 
 struct ActorView: View {
     @ObservedObject var viewModel: TheViewModel
+    
     let cast: CastMember
-    @State private var actor = Actor()
-    @State private var relatedMovies = [Movie]()
-    private let url = "https://image.tmdb.org/t/p/original/"
     
     var body: some View {
         GeometryReader { geo in
-            VStack {
+            ZStack {
                 ScrollView {
                     VStack {
-                        if let unwrappedPath = actor.profilePath {
-                            let unwrappedPath = URL(string: "\(url)\(unwrappedPath)")
+                        if let unwrappedPath = viewModel.actor.profilePath {
+                            let unwrappedPath = URL(string: "\(Constants.imageURL)\(unwrappedPath)")
                             KFImage(unwrappedPath)
                                 .placeholder {
                                     ProgressView()
+                                        .frame(height: geo.size.height * 0.32)
+                                        .frame(width: geo.size.width * 0.4)
                                 }
                                 .resizable()
                                 .scaledToFit()
@@ -52,10 +52,10 @@ struct ActorView: View {
                         
                         Divider()
                         
-                        Text(actor.formattedBirthday)
+                        Text(viewModel.actor.formattedBirthday)
                             .font(.body)
                         
-                        Text(actor.placeOfBirth ?? "N/A")
+                        Text(viewModel.actor.placeOfBirth ?? "N/A")
                             .font(.body)
                         
                         Divider()
@@ -65,7 +65,7 @@ struct ActorView: View {
                             .frame(maxWidth: geo.size.width, alignment: .leading)
                             .padding(.bottom, geo.size.height * 0.01)
                         
-                        Text(actor.formattedBiography)
+                        Text(viewModel.actor.formattedBiography)
                             .font(.body)
                             .frame(maxWidth: geo.size.width, alignment: .leading)
                             .padding(.bottom, geo.size.height * 0.01)
@@ -78,13 +78,13 @@ struct ActorView: View {
                         
                         ScrollView(.horizontal, showsIndicators: false) {
                             LazyHStack {
-                                ForEach(relatedMovies) { relatedMovie in
+                                ForEach(viewModel.relatedMovies) { relatedMovie in
                                     NavigationLink {
                                         MovieView(viewModel: viewModel, movie: relatedMovie)
                                     } label: {
                                         VStack {
                                             if let unwrappedPath = relatedMovie.posterPath {
-                                                let unwrappedPath = URL(string: "\(url)\(unwrappedPath)")
+                                                let unwrappedPath = URL(string: "\(Constants.imageURL)\(unwrappedPath)")
                                                 KFImage(unwrappedPath)
                                                     .placeholder {
                                                         ProgressView()
@@ -137,7 +137,7 @@ struct ActorView: View {
                             }
                         }
                         .task {
-                            relatedMovies = await HTTPClient.downloadRelatedMovies(personId: cast.id)
+                            await viewModel.fetchRelatedMovies(personId: cast.id)
                         }
                         
                     }
@@ -145,7 +145,7 @@ struct ActorView: View {
                     
                 }
                 .task{
-                    actor = await HTTPClient.downloadPerson(personId: cast.id)
+                    viewModel.actor = await HTTPClient.downloadPerson(personId: cast.id)
                 }
             }
         }

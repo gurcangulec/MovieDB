@@ -39,6 +39,7 @@ struct Resource<T: Codable> {
 
 class HTTPClient {
     
+    // One function to rule them all
     // Fetch data related to movies and tv shows
     func fetchData<T: Decodable>(of type: T.Type, _ resource: Resource<T>) async throws -> T {
         
@@ -50,7 +51,7 @@ class HTTPClient {
         case .get:
             request.url = resource.url
         case .post(_ ):
-            // Will come back later
+            // Will be needed later
             break
         default:
             break
@@ -92,48 +93,6 @@ class HTTPClient {
                 print("Invalid Something")
             }
         return Actor.example
-    }
-    
-    static func downloadRelatedMovies(personId: Int) async -> [Movie] {
-            // Check URL
-        guard let url = URL(string: "\(Constants.baseURL)person/\(personId)/movie_credits?api_key=\(Constants.APIKEY)&language=en-US") else {
-                print("Invalid URL")
-                return []
-            }
-
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                let decoder = JSONDecoder()
-                // Decode from data
-                if let decoded = try? decoder.decode(RelatedMovies.self, from: data) {
-                    return decoded.results
-                }
-            } catch {
-                print("Invalid Something")
-            }
-        return []
-    }
-    
-    static func downloadSpecificMovie(movieId: Int) async -> MovieDetails {
-            // Check URL
-            guard let url = URL(string: "\(Constants.baseURL)movie/\(movieId)?api_key=\(Constants.APIKEY)") else {
-                print("Invalid URL")
-                return MovieDetails(imdbId: "")
-            }
-            
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                
-                let decoder = JSONDecoder()
-                
-                // Decode from data
-                if let decoded = try? decoder.decode(MovieDetails.self, from: data) {
-                    return decoded
-                }
-            } catch {
-                print("Invalid Something")
-            }
-        return MovieDetails(imdbId: "")
     }
     
     static func downloadSpecificTVShow(tvShowId: Int) async -> TVShowDetails {
