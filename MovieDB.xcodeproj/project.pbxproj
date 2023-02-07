@@ -33,7 +33,6 @@
 		79806DD02970DF97006B6C0A /* TVShowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79806DCF2970DF97006B6C0A /* TVShowView.swift */; };
 		79806DD22971A11D006B6C0A /* HomeSectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79806DD12971A11D006B6C0A /* HomeSectionsView.swift */; };
 		798BF9F5297200810017BAC4 /* AddToWatchlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798BF9F4297200810017BAC4 /* AddToWatchlistView.swift */; };
-		798BF9F7297208ED0017BAC4 /* MovieDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798BF9F6297208ED0017BAC4 /* MovieDetails.swift */; };
 		798BFA5429755AF70017BAC4 /* AddRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798BFA5329755AF70017BAC4 /* AddRatingView.swift */; };
 		798BFA74297562270017BAC4 /* RatingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798BFA73297562270017BAC4 /* RatingScreen.swift */; };
 		798BFA76297564F10017BAC4 /* RatingMovieRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798BFA75297564F10017BAC4 /* RatingMovieRow.swift */; };
@@ -78,7 +77,6 @@
 		79806DCF2970DF97006B6C0A /* TVShowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowView.swift; sourceTree = "<group>"; };
 		79806DD12971A11D006B6C0A /* HomeSectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSectionsView.swift; sourceTree = "<group>"; };
 		798BF9F4297200810017BAC4 /* AddToWatchlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToWatchlistView.swift; sourceTree = "<group>"; };
-		798BF9F6297208ED0017BAC4 /* MovieDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetails.swift; sourceTree = "<group>"; };
 		798BFA5329755AF70017BAC4 /* AddRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRatingView.swift; sourceTree = "<group>"; };
 		798BFA73297562270017BAC4 /* RatingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingScreen.swift; sourceTree = "<group>"; };
 		798BFA75297564F10017BAC4 /* RatingMovieRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingMovieRow.swift; sourceTree = "<group>"; };
@@ -240,7 +238,6 @@
 		79EA9F75287C248F0076D18A /* DataModels */ = {
 			isa = PBXGroup;
 			children = (
-				798BF9F6297208ED0017BAC4 /* MovieDetails.swift */,
 				797863CA286F967400A05498 /* Movies.swift */,
 				79C3F6C52876F1FC005CB367 /* Cast.swift */,
 				792F743A297070DB007E686E /* TVShows.swift */,
@@ -358,7 +355,6 @@
 				7952B842298195A3004FAB42 /* TVShowDetails.swift in Sources */,
 				7903111629802CED00BB8153 /* Notes.swift in Sources */,
 				79806DD22971A11D006B6C0A /* HomeSectionsView.swift in Sources */,
-				798BF9F7297208ED0017BAC4 /* MovieDetails.swift in Sources */,
 				792F73D6296B4355007E686E /* SideScroller.swift in Sources */,
 				792F743D2970C0A0007E686E /* ListMovies.swift in Sources */,
 				79DB77612968DA690084E08F /* HomeScreen.swift in Sources */,
