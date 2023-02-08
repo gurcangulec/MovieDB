@@ -66,7 +66,6 @@ struct MovieView: View {
                             .padding(.bottom, geo.size.height * 0.01)
 
                             Text(movie.overview)
-                                .textSelection(.enabled)
                                 .font(.body)
                                 .padding(.bottom, geo.size.height * 0.01)
 
@@ -179,6 +178,7 @@ struct MovieView: View {
             }
             .navigationTitle(movie.title)
         }
+        .textSelection(.enabled)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             Menu {

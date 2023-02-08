@@ -27,12 +27,8 @@ struct Notes: View {
                             Text("Your Notes")
                                 .font(.title3.bold())
                                 .padding(5)
-                            //                            ScrollView {
-                            //                                Text(storedMovie.notes ?? "")
-                            //                            }
                         }
                         .padding()
-                        //                        Spacer()
                     }
                     
                         ZStack(alignment: .topLeading) {
@@ -66,7 +62,6 @@ struct Notes: View {
                     ToolbarItem(placement: .confirmationAction) {
                         Button("Done") {
                             dismiss()
-//                            viewModel.saveData()
                         }
                     }
                     ToolbarItem(placement: .cancellationAction) {
@@ -74,13 +69,11 @@ struct Notes: View {
                             showingAlert.toggle()
                         } label: {
                             HStack {
-//                                Label("Delete", systemImage: "trash")
                                 Text("Delete")
                                     .font(.body.weight(.semibold))
                             }
                         }
                         .foregroundColor(storedMovie.notes == "" ? Color.secondary : Color.red)
-                        .opacity(<#T##opacity: Double##Double#>)
                         .disabled(storedMovie.notes == "")
                     }
                 }
@@ -92,16 +85,6 @@ struct Notes: View {
                                             viewModel.saveData()
                                         }
                 }
-//                .alert("Are you sure?", isPresented: $showingAlert, actions: {
-//                    Button("Cancel", role: .cancel) { }
-//                    Button("Yes", role: .destructive) {
-//                        storedMovie.notes = ""
-//                        dismiss()
-//                        viewModel.saveData()
-//                    }
-//                }, message: {
-//                    Text("Notes about \(storedMovie.wMovieTitle) will be deleted.")
-//                })
             }
         }
     }

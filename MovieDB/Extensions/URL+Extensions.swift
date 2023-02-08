@@ -24,6 +24,7 @@ extension URL {
         case popularTVShows
         case onTheAirTVShows
         case topRatedTVShows
+        case tvShowCredits(tvShowId: Int)
         
         case relatedMovies(personId: Int)
         case personDetails(personId: Int)
@@ -99,6 +100,12 @@ extension URL {
                 components.queryItems = [
                     URLQueryItem(name: "api_key", value: Constants.APIKEY),
                     URLQueryItem(name: "with_original_language", value: "en")
+                ]
+            case .tvShowCredits(let tvShowId):
+                components.path = "/3/tv/\(tvShowId)/aggregate_credits"
+                components.queryItems = [
+                    URLQueryItem(name: "api_key", value: Constants.APIKEY),
+                    URLQueryItem(name: "language", value: "en-US")
                 ]
             case .relatedMovies(let personId):
                 components.path = "/3/person/\(personId)/movie_credits"
@@ -185,5 +192,9 @@ extension URL {
     
     static func forSpecificTVShow(tvshowId: Int) -> URL {
         Endpoint.specificTVShow(tvShowId: tvshowId).url
+    }
+    
+    static func forTVShowCredits(tvShowId: Int) -> URL {
+        Endpoint.tvShowCredits(tvShowId: tvShowId).url
     }
 }
