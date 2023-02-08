@@ -87,11 +87,11 @@ struct WatchlistMovieRow: View {
                             }
                             .padding(.trailing, 10)
                             VStack {
-                                Button("Notes") {
+                                Button(storedMovie.notes == "" ? "Add note" : "Notes") {
                                     isShowingNotes.toggle()
                                 }
                                 .buttonStyle(.bordered)
-                                .disabled(storedMovie.notes == "")
+//                                .disabled(storedMovie.notes == "")
                             }
                             .frame(maxWidth: .infinity, minHeight: 24, alignment: .leading)
                         }

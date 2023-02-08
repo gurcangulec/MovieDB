@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Notes: View {
+    @FocusState private var textEditorFocused: Bool
     
     @ObservedObject var viewModel: TheViewModel
     @ObservedObject var storedMovie: WatchlistedMovieEntity
@@ -26,35 +27,81 @@ struct Notes: View {
                             Text("Your Notes")
                                 .font(.title3.bold())
                                 .padding(5)
-                            ScrollView {
-                                Text(storedMovie.notes ?? "")
-                            }
+                            //                            ScrollView {
+                            //                                Text(storedMovie.notes ?? "")
+                            //                            }
                         }
                         .padding()
-                        Spacer()
+                        //                        Spacer()
                     }
+                    
+                        ZStack(alignment: .topLeading) {
+                            if let notes = storedMovie.notes {
+                                if notes.isEmpty {
+                                    Text("Add a note...")
+                                        .padding()
+                                }
+                                
+                                TextEditor(text: Binding($storedMovie.notes)!)
+                                    .focused($textEditorFocused)
+                                    .autocorrectionDisabled()
+                                    .padding(8)
+                                    .padding(.leading, 2)
+                                    .cornerRadius(15)
+                                    .opacity(notes.isEmpty ? 0.25 : 1)
+                                    .overlay(RoundedRectangle(cornerRadius: 15).stroke(lineWidth: 1).foregroundColor(.secondary).opacity(0.8))
+                                    .onChange(of: textEditorFocused) { _ in
+                                        withAnimation {
+                                            showImage = false
+                                        }
+                                    }
+                            }
+                        }
+                        Spacer()
                 }
-                .navigationTitle("Notes About \(storedMovie.wMovieTitle)")
+                .frame(maxWidth: geo.size.width * 0.9)
+                .navigationTitle("Notes")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("Done") {
+                            dismiss()
+//                            viewModel.saveData()
+                        }
+                    }
+                    ToolbarItem(placement: .cancellationAction) {
                         Button(role: .destructive) {
                             showingAlert.toggle()
                         } label: {
-                            Label("Delete Title", systemImage: "trash")
+                            HStack {
+//                                Label("Delete", systemImage: "trash")
+                                Text("Delete")
+                                    .font(.body.weight(.semibold))
+                            }
                         }
+                        .foregroundColor(storedMovie.notes == "" ? Color.secondary : Color.red)
+                        .opacity(<#T##opacity: Double##Double#>)
+                        .disabled(storedMovie.notes == "")
                     }
                 }
-                .alert("Are you sure?", isPresented: $showingAlert, actions: {
+                .confirmationDialog("Delete this note?", isPresented: $showingAlert, titleVisibility: .visible) {
                     Button("Cancel", role: .cancel) { }
-                    Button("Yes", role: .destructive) {
-                        storedMovie.notes = ""
-                        dismiss()
-                        viewModel.saveData()
-                    }
-                }, message: {
-                    Text("Notes about \(storedMovie.wMovieTitle) will be deleted.")
-                })
+                    Button("Delete", role: .destructive) {
+                                            storedMovie.notes = ""
+                                            dismiss()
+                                            viewModel.saveData()
+                                        }
+                }
+//                .alert("Are you sure?", isPresented: $showingAlert, actions: {
+//                    Button("Cancel", role: .cancel) { }
+//                    Button("Yes", role: .destructive) {
+//                        storedMovie.notes = ""
+//                        dismiss()
+//                        viewModel.saveData()
+//                    }
+//                }, message: {
+//                    Text("Notes about \(storedMovie.wMovieTitle) will be deleted.")
+//                })
             }
         }
     }
