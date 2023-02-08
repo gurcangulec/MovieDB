@@ -69,37 +69,37 @@ extension URL {
                 components.path = "/3/movie/popular"
                 components.queryItems = [
                     URLQueryItem(name: "api_key", value: Constants.APIKEY),
-                    URLQueryItem(name: "language", value: "en-US")
+                    URLQueryItem(name: "with_original_language", value: "en")
                 ]
             case .upcomingMovies:
                 components.path = "/3/movie/upcoming"
                 components.queryItems = [
                     URLQueryItem(name: "api_key", value: Constants.APIKEY),
-                    URLQueryItem(name: "language", value: "en-US")
+                    URLQueryItem(name: "with_original_language", value: "en")
                 ]
             case .topRatedMovies:
                 components.path = "/3/movie/top_rated"
                 components.queryItems = [
                     URLQueryItem(name: "api_key", value: Constants.APIKEY),
-                    URLQueryItem(name: "language", value: "en-US")
+                    URLQueryItem(name: "with_original_language", value: "en")
                 ]
             case .popularTVShows:
                 components.path = "/3/tv/popular"
                 components.queryItems = [
                     URLQueryItem(name: "api_key", value: Constants.APIKEY),
-                    URLQueryItem(name: "language", value: "en-US")
+                    URLQueryItem(name: "with_original_language", value: "en")
                 ]
             case .onTheAirTVShows:
                 components.path = "/3/tv/on_the_air"
                 components.queryItems = [
                     URLQueryItem(name: "api_key", value: Constants.APIKEY),
-                    URLQueryItem(name: "language", value: "en-US")
+                    URLQueryItem(name: "with_original_language", value: "en")
                 ]
             case .topRatedTVShows:
                 components.path = "/3/tv/top_rated"
                 components.queryItems = [
                     URLQueryItem(name: "api_key", value: Constants.APIKEY),
-                    URLQueryItem(name: "language", value: "en-US")
+                    URLQueryItem(name: "with_original_language", value: "en")
                 ]
             case .relatedMovies(let personId):
                 components.path = "/3/person/\(personId)/movie_credits"
