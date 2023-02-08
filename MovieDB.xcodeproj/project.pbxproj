@@ -19,10 +19,9 @@
 		792F74362970625B007E686E /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792F74352970625B007E686E /* ImageView.swift */; };
 		792F743B297070DB007E686E /* TVShows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792F743A297070DB007E686E /* TVShows.swift */; };
 		792F743D2970C0A0007E686E /* ListMovies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792F743C2970C0A0007E686E /* ListMovies.swift */; };
-		794A0FFC2876FDA4008BF0F5 /* FetchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A0FFB2876FDA4008BF0F5 /* FetchData.swift */; };
+		794A0FFC2876FDA4008BF0F5 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A0FFB2876FDA4008BF0F5 /* HTTPClient.swift */; };
 		794A0FFE28782C3B008BF0F5 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A0FFD28782C3B008BF0F5 /* Actor.swift */; };
 		794A1000287831D3008BF0F5 /* ActorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A0FFF287831D3008BF0F5 /* ActorView.swift */; };
-		7952B842298195A3004FAB42 /* TVShowDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7952B841298195A3004FAB42 /* TVShowDetails.swift */; };
 		796575D5298FFCD100A79C82 /* WatchlistedMovie-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796575D4298FFCD100A79C82 /* WatchlistedMovie-CoreDataHelpers.swift */; };
 		796575D72990003900A79C82 /* RatedMovie-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796575D62990003900A79C82 /* RatedMovie-CoreDataHelpers.swift */; };
 		7968890428958B16001BF304 /* APIConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7968890328958B16001BF304 /* APIConfig.swift */; };
@@ -62,10 +61,9 @@
 		792F74352970625B007E686E /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		792F743A297070DB007E686E /* TVShows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShows.swift; sourceTree = "<group>"; };
 		792F743C2970C0A0007E686E /* ListMovies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListMovies.swift; sourceTree = "<group>"; };
-		794A0FFB2876FDA4008BF0F5 /* FetchData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchData.swift; sourceTree = "<group>"; };
+		794A0FFB2876FDA4008BF0F5 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		794A0FFD28782C3B008BF0F5 /* Actor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
 		794A0FFF287831D3008BF0F5 /* ActorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorView.swift; sourceTree = "<group>"; };
-		7952B841298195A3004FAB42 /* TVShowDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowDetails.swift; sourceTree = "<group>"; };
 		796575D3298FF9A800A79C82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		796575D4298FFCD100A79C82 /* WatchlistedMovie-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WatchlistedMovie-CoreDataHelpers.swift"; sourceTree = "<group>"; };
 		796575D62990003900A79C82 /* RatedMovie-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RatedMovie-CoreDataHelpers.swift"; sourceTree = "<group>"; };
@@ -207,7 +205,7 @@
 				792F7437297065CC007E686E /* HelperViews */,
 				792F742A296EBAF1007E686E /* Core Data */,
 				79EA9F75287C248F0076D18A /* DataModels */,
-				794A0FFB2876FDA4008BF0F5 /* FetchData.swift */,
+				794A0FFB2876FDA4008BF0F5 /* HTTPClient.swift */,
 				792F73D7296B6943007E686E /* Haptics.swift */,
 				792F7403296DB4F4007E686E /* MovieDB.xcdatamodeld */,
 				79C2DD0E285DD0FB00D6E6E4 /* Assets.xcassets */,
@@ -243,7 +241,6 @@
 				792F743A297070DB007E686E /* TVShows.swift */,
 				794A0FFD28782C3B008BF0F5 /* Actor.swift */,
 				7968890328958B16001BF304 /* APIConfig.swift */,
-				7952B841298195A3004FAB42 /* TVShowDetails.swift */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -330,7 +327,7 @@
 				792F74362970625B007E686E /* ImageView.swift in Sources */,
 				792F73D8296B6943007E686E /* Haptics.swift in Sources */,
 				791187EA2989AAF200045FE2 /* URL+Extensions.swift in Sources */,
-				794A0FFC2876FDA4008BF0F5 /* FetchData.swift in Sources */,
+				794A0FFC2876FDA4008BF0F5 /* HTTPClient.swift in Sources */,
 				796575D72990003900A79C82 /* RatedMovie-CoreDataHelpers.swift in Sources */,
 				798BF9F5297200810017BAC4 /* AddToWatchlistView.swift in Sources */,
 				79CC882B28A40C0C00E1E37E /* FullCrewView.swift in Sources */,
@@ -352,7 +349,6 @@
 				797863CB286F967400A05498 /* Movies.swift in Sources */,
 				794A1000287831D3008BF0F5 /* ActorView.swift in Sources */,
 				79DB776B2968F72F0084E08F /* WatchlistScreen.swift in Sources */,
-				7952B842298195A3004FAB42 /* TVShowDetails.swift in Sources */,
 				7903111629802CED00BB8153 /* Notes.swift in Sources */,
 				79806DD22971A11D006B6C0A /* HomeSectionsView.swift in Sources */,
 				792F73D6296B4355007E686E /* SideScroller.swift in Sources */,

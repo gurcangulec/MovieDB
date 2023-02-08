@@ -145,7 +145,7 @@ struct ActorView: View {
                     
                 }
                 .task{
-                    viewModel.actor = await HTTPClient.downloadPerson(personId: cast.id)
+                    await viewModel.fetchRelatedMovies(personId: cast.id)
                 }
             }
         }

@@ -54,3 +54,26 @@ struct TVShow: Codable, Identifiable {
            return String(format: "%.1f", voteAverage)
     }
 }
+
+struct TVShowDetails: Codable {
+    let id: Int
+    let createdBy: [Creators]
+    let numberOfEpisodes: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case createdBy = "created_by"
+        case numberOfEpisodes = "number_of_episodes"
+    }
+}
+
+struct Creators: Codable, Identifiable {
+    let id: Int
+    let name: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case name = "name"
+    }
+    
+}

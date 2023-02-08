@@ -29,6 +29,7 @@ extension URL {
         case personDetails(personId: Int)
         
         case specificMovie(movieId: Int)
+        case specificTVShow(tvShowId: Int)
         
         var url: URL {
             var components = URLComponents()
@@ -121,6 +122,13 @@ extension URL {
                     URLQueryItem(name: "language", value: "en-US")
 //                    URLQueryItem(name: "query", value: query)
                 ]
+            case .specificTVShow(let tvShowId):
+                components.path = "/3/tv/\(tvShowId)"
+                components.queryItems = [
+                    URLQueryItem(name: "api_key", value: Constants.APIKEY),
+                    URLQueryItem(name: "language", value: "en-US")
+//                    URLQueryItem(name: "query", value: query)
+                ]
             }
             return components.url!
         }
@@ -178,5 +186,9 @@ extension URL {
     
     static func forSpecificMovie(movieId: Int) -> URL {
         Endpoint.specificMovie(movieId: movieId).url
+    }
+    
+    static func forSpecificTVShow(tvshowId: Int) -> URL {
+        Endpoint.specificTVShow(tvShowId: tvshowId).url
     }
 }

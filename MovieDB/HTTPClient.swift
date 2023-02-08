@@ -75,46 +75,4 @@ class HTTPClient {
         return result
     }
     
-    static func downloadPerson(personId: Int) async -> Actor {
-            // Check URL
-        guard let url = URL(string: "\(Constants.baseURL)person/\(personId)?api_key=\(Constants.APIKEY)&language=en-US") else {
-                print("Invalid URL")
-                return Actor.example
-            }
-
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                let decoder = JSONDecoder()
-                // Decode from data
-                if let decoded = try? decoder.decode(Actor.self, from: data) {
-                    return decoded
-                }
-            } catch {
-                print("Invalid Something")
-            }
-        return Actor.example
-    }
-    
-    static func downloadSpecificTVShow(tvShowId: Int) async -> TVShowDetails {
-            // Check URL
-            guard let url = URL(string: "\(Constants.baseURL)tv/\(tvShowId)?api_key=\(Constants.APIKEY)") else {
-                print("Invalid URL")
-                return TVShowDetails(id: 0, createdBy: [], numberOfEpisodes: 0)
-            }
-            
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                
-                let decoder = JSONDecoder()
-                
-                // Decode from data
-                if let decoded = try? decoder.decode(TVShowDetails.self, from: data) {
-                    return decoded
-                }
-            } catch {
-                print("Invalid Something")
-            }
-        return TVShowDetails(id: 0, createdBy: [], numberOfEpisodes: 0)
-    }
-    
 }

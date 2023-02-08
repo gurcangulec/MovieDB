@@ -302,7 +302,14 @@ class TheViewModel: ObservableObject {
             print(error.localizedDescription)
         }
         
-        tvShowDetails = await HTTPClient.downloadSpecificTVShow(tvShowId: tvShowId)
+        do {
+            let decodedTVShowDetails = try await httpClient.fetchData(of: TVShowDetails.self, Resource(url: URL.forSpecificTVShow(tvshowId: tvShowId)))
+            tvShowDetails = decodedTVShowDetails
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+//        tvShowDetails = await HTTPClient.downloadSpecificTVShow(tvShowId: tvShowId)
     }
     
     // MARK: ActorView
@@ -310,10 +317,12 @@ class TheViewModel: ObservableObject {
     @Published var relatedMovies = [Movie]()
     
     func fetchRelatedMovies(personId: Int) async {
-        print(personId)
         do {
             let decodedRelatedMovies = try await httpClient.fetchData(of: RelatedMovies.self, Resource(url: URL.forRelatedMovies(personId: personId)))
             relatedMovies = decodedRelatedMovies.results
+            
+            let decodedActors = try await httpClient.fetchData(of: Actor.self, Resource(url: URL.forPersonDetails(personId: personId)))
+            actor = decodedActors
         } catch {
             print(error.localizedDescription)
         }
