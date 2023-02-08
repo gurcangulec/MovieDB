@@ -45,7 +45,8 @@ extension URL {
                 components.path = "/3/search/movie"
                 components.queryItems = [
                     URLQueryItem(name: "api_key", value: Constants.APIKEY),
-                    URLQueryItem(name: "query", value: query)
+                    URLQueryItem(name: "query", value: query),
+                    URLQueryItem(name: "include_adult", value: "false")
                 ]
             case .searchTVShow(let query):
                 components.path = "/3/search/tv"
@@ -57,13 +58,11 @@ extension URL {
                 components.path = "/3/movie/\(movieId)/credits"
                 components.queryItems = [
                     URLQueryItem(name: "api_key", value: Constants.APIKEY)
-//                    URLQueryItem(name: "query", value: query)
                 ]
             case .tvShowCrewAndCast(let tvShowId):
                 components.path = "/3/tv/\(tvShowId)/credits"
                 components.queryItems = [
                     URLQueryItem(name: "api_key", value: Constants.APIKEY)
-//                    URLQueryItem(name: "query", value: query)
                 ]
             case .popularMovies:
                 components.path = "/3/movie/popular"
@@ -106,28 +105,24 @@ extension URL {
                 components.queryItems = [
                     URLQueryItem(name: "api_key", value: Constants.APIKEY),
                     URLQueryItem(name: "language", value: "en-US")
-//                    URLQueryItem(name: "query", value: query)
                 ]
             case .personDetails(let personId):
                 components.path = "/3/person/\(personId)"
                 components.queryItems = [
                     URLQueryItem(name: "api_key", value: Constants.APIKEY),
                     URLQueryItem(name: "language", value: "en-US")
-//                    URLQueryItem(name: "query", value: query)
                 ]
             case .specificMovie(let movieId):
                 components.path = "/3/movie/\(movieId)"
                 components.queryItems = [
                     URLQueryItem(name: "api_key", value: Constants.APIKEY),
                     URLQueryItem(name: "language", value: "en-US")
-//                    URLQueryItem(name: "query", value: query)
                 ]
             case .specificTVShow(let tvShowId):
                 components.path = "/3/tv/\(tvShowId)"
                 components.queryItems = [
                     URLQueryItem(name: "api_key", value: Constants.APIKEY),
                     URLQueryItem(name: "language", value: "en-US")
-//                    URLQueryItem(name: "query", value: query)
                 ]
             }
             return components.url!

@@ -18,14 +18,13 @@ struct MovieView: View {
     @StateObject var hapticEngine = Haptics()
     
     let movie: Movie
-    private let url = "https://image.tmdb.org/t/p/original/"
-
+    
     var body: some View {
         GeometryReader { geo in
             ScrollView {
                 VStack {
                     if let unwrappedPath = movie.backdropPath {
-                        let unwrappedPath = URL(string: "\(url)\(unwrappedPath)")
+                        let unwrappedPath = URL(string: "\(Constants.imageURL)\(unwrappedPath)")
                         KFImage(unwrappedPath)
                             .placeholder {
                                 ProgressView()
@@ -67,6 +66,7 @@ struct MovieView: View {
                             .padding(.bottom, geo.size.height * 0.01)
 
                             Text(movie.overview)
+                                .textSelection(.enabled)
                                 .font(.body)
                                 .padding(.bottom, geo.size.height * 0.01)
 
@@ -131,7 +131,7 @@ struct MovieView: View {
                             }
                         }
                         
-                        SideScroller(viewModel: viewModel, tvShows: nil, movies: nil, cast: viewModel.cast, crew: nil, url: url, geoWidth: geo.size.width)
+                        SideScroller(viewModel: viewModel, tvShows: nil, movies: nil, cast: viewModel.cast, crew: nil, url: Constants.imageURL, geoWidth: geo.size.width)
 
                         Divider()
                         

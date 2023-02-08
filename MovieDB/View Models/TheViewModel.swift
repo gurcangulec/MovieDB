@@ -107,7 +107,18 @@ class TheViewModel: ObservableObject {
     // MARK: Watchlist
     @Published var watchlistedMovies: [WatchlistedMovieEntity] = []
     
-    enum SortedBy: String {
+    enum SortedByForWatchlist: String {
+        case titleAToZ = "Title (A - Z)"
+        case titleZToA = "Title (Z - A)"
+        case dateAddedNewToOld = "Date Added (Newest to Oldest)"
+        case dateAddedOldToNew = "Date Added (Oldest to Newest)"
+        case releaseDateNewToOld = "Release Date (Newest to Oldest)"
+        case releaseDateOldToNew = "Release Date (Oldest to Newest)"
+        case ratingHighToLow = "TMBD Rating (Highest to Lowest)"
+        case ratingLowToHigh = "TMDB Rating (Lowest to Highest)"
+    }
+    
+    enum SortedByForRated: String {
         case titleAToZ = "Title (A - Z)"
         case titleZToA = "Title (Z - A)"
         case dateAddedNewToOld = "Date Added (Newest to Oldest)"
@@ -120,7 +131,11 @@ class TheViewModel: ObservableObject {
         case userRatingLowToHigh = "User Rating (Lowest to Highest)"
     }
     
-    @Published var sortedBy = SortedBy.titleAToZ
+    
+//    @Published var sortedBy = SortedBy.titleAToZ
+    @Published var sortedByForWatchlist = SortedByForWatchlist.titleAToZ
+    @Published var sortedByForRated = SortedByForRated.titleAToZ
+    
     @Published var sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
     
     func fetchWatchlistedMovie(movie: Movie) -> Bool {

@@ -115,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				798BFA5329755AF70017BAC4 /* AddRatingView.swift */,
+				798BF9F4297200810017BAC4 /* AddToWatchlistView.swift */,
 				792F743C2970C0A0007E686E /* ListMovies.swift */,
 				79806DCF2970DF97006B6C0A /* TVShowView.swift */,
 				794A0FFF287831D3008BF0F5 /* ActorView.swift */,
@@ -189,15 +190,14 @@
 		79C2DD09285DD0F900D6E6E4 /* MovieDB */ = {
 			isa = PBXGroup;
 			children = (
+				79C2DD0A285DD0F900D6E6E4 /* MovieDBApp.swift */,
 				796575D3298FF9A800A79C82 /* Info.plist */,
 				791187EB2989AB0B00045FE2 /* Utils */,
 				791187E82989AAD700045FE2 /* Extensions */,
-				79C2DD0A285DD0F900D6E6E4 /* MovieDBApp.swift */,
 				791187E62989A8C300045FE2 /* Screens */,
 				79DB776C296905CB0084E08F /* Tabs */,
 				791187E72989AA1700045FE2 /* Views */,
 				792F7408296DC633007E686E /* WatchlistMovieRow.swift */,
-				798BF9F4297200810017BAC4 /* AddToWatchlistView.swift */,
 				798BFA75297564F10017BAC4 /* RatingMovieRow.swift */,
 				797863CE286F985E00A05498 /* MovieAndTVShowRow.swift */,
 				7903111529802CED00BB8153 /* Notes.swift */,

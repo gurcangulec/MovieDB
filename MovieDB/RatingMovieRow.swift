@@ -11,7 +11,6 @@ import Kingfisher
 struct RatingMovieRow: View {
     @ObservedObject var viewModel: TheViewModel
     @ObservedObject var ratedMovie: RatedMovieEntity
-    private let url = "https://image.tmdb.org/t/p/original/"
     
     let dateFormatter = DateFormatter()
     let dateNow = Date.now
@@ -40,7 +39,7 @@ struct RatingMovieRow: View {
         } label: {
             HStack {
                 if let unwrappedPath = ratedMovie.posterPath {
-                    let unwrappedPath = URL(string: "\(url)\(unwrappedPath)")
+                    let unwrappedPath = URL(string: "\(Constants.imageURL)\(unwrappedPath)")
                     KFImage(unwrappedPath)
                         .placeholder {
                             ProgressView()
@@ -79,11 +78,27 @@ struct RatingMovieRow: View {
                                 .font(.custom("StarSize", size: 16, relativeTo: .subheadline))
                                 .padding(.trailing, 10)
                             
-                            Image(systemName: "star.fill")
-                                .font(.custom("StarSize", size: 14, relativeTo: .subheadline))
-                                .foregroundColor(.blue)
-                            Text("\(ratedMovie.userRating)")
-                                .font(.custom("StarSize", size: 16, relativeTo: .subheadline))
+                            HStack {
+                                Image(systemName: "star.fill")
+                                    .font(.custom("StarSize", size: 14, relativeTo: .subheadline))
+                                    .foregroundColor(.blue)
+                                Text("\(ratedMovie.userRating)")
+                                    .font(.custom("StarSize", size: 16, relativeTo: .subheadline))
+                                
+                                Spacer()
+                                
+                                Menu("Change") {
+                                    ForEach(1..<11) { value in
+                                        Button("\(value)") {
+                                            ratedMovie.userRating = Int16(value)
+                                            viewModel.saveData()
+                                        }
+                                    }
+                                }
+                                .buttonStyle(.bordered)
+                            }
+                            .frame(maxWidth: .infinity, minHeight: 24, alignment: .leading)
+                            
                         }
 
                     }

@@ -27,7 +27,7 @@ struct RatingsList: View {
                     VStack(alignment: .leading) {
                         Text("\(viewModel.ratedMovies.count) Titles")
                             .foregroundColor(.primary)
-                        Text("Sorted by \(viewModel.sortedBy.rawValue)")
+                        Text("Sorted by \(viewModel.sortedByForRated.rawValue)")
                             .foregroundColor(.secondary)
                     }
                     
@@ -45,14 +45,14 @@ struct RatingsList: View {
                             Menu("Sort by Title") {
                                 Button {
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
-                                    viewModel.sortedBy = .titleAToZ
+                                    viewModel.sortedByForRated = .titleAToZ
                                     viewModel.fetchRatedMovies()
                                 } label: {
                                     Text("A - Z")
                                 }
                                 Button {
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "title", ascending: false)
-                                    viewModel.sortedBy = .titleZToA
+                                    viewModel.sortedByForRated = .titleZToA
                                     viewModel.fetchRatedMovies()
                                 } label: {
                                     Text("Z - A")
@@ -61,14 +61,14 @@ struct RatingsList: View {
                             Menu("Sort by Date Added") {
                                 Button {
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "dateAdded", ascending: false)
-                                    viewModel.sortedBy = .dateAddedNewToOld
+                                    viewModel.sortedByForRated = .dateAddedNewToOld
                                     viewModel.fetchRatedMovies()
                                 } label: {
                                     Text("Newest to Oldest")
                                 }
                                 Button {
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "dateAdded", ascending: true)
-                                    viewModel.sortedBy = .dateAddedOldToNew
+                                    viewModel.sortedByForRated = .dateAddedOldToNew
                                     viewModel.fetchRatedMovies()
                                 } label: {
                                     Text("Oldest to Newest")
@@ -77,14 +77,14 @@ struct RatingsList: View {
                             Menu("Sort by Release Date") {
                                 Button {
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "releaseDate", ascending: false)
-                                    viewModel.sortedBy = .releaseDateNewToOld
+                                    viewModel.sortedByForRated = .releaseDateNewToOld
                                     viewModel.fetchRatedMovies()
                                 } label: {
                                     Text("Newest to Oldest")
                                 }
                                 Button {
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "releaseDate", ascending: true)
-                                    viewModel.sortedBy = .releaseDateOldToNew
+                                    viewModel.sortedByForRated = .releaseDateOldToNew
                                     viewModel.fetchRatedMovies()
                                 } label: {
                                     Text("Oldest to Newest")
@@ -93,14 +93,14 @@ struct RatingsList: View {
                             Menu("Sort by TMDB Rating") {
                                 Button {
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "rating", ascending: false)
-                                    viewModel.sortedBy = .ratingHighToLow
+                                    viewModel.sortedByForRated = .ratingHighToLow
                                     viewModel.fetchRatedMovies()
                                 } label: {
                                     Text("Highest to Lowest")
                                 }
                                 Button {
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "rating", ascending: true)
-                                    viewModel.sortedBy = .ratingLowToHigh
+                                    viewModel.sortedByForRated = .ratingLowToHigh
                                     viewModel.fetchRatedMovies()
                                 } label: {
                                     Text("Lowest to Highest")
@@ -109,14 +109,14 @@ struct RatingsList: View {
                             Menu("Sort by User Rating") {
                                 Button {
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "userRating", ascending: false)
-                                    viewModel.sortedBy = .userRatingHighToLow
+                                    viewModel.sortedByForRated = .userRatingHighToLow
                                     viewModel.fetchRatedMovies()
                                 } label: {
                                     Text("Highest to Lowest")
                                 }
                                 Button {
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "userRating", ascending: true)
-                                    viewModel.sortedBy = .userRatingLowToHigh
+                                    viewModel.sortedByForRated = .userRatingLowToHigh
                                     viewModel.fetchRatedMovies()
                                 } label: {
                                     Text("Lowest to Highest")

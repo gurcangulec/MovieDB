@@ -86,14 +86,6 @@ struct WatchlistMovieRow: View {
                                     .font(.subheadline)
                             }
                             .padding(.trailing, 10)
-                            VStack {
-                                Button(storedMovie.notes == "" ? "Add note" : "Notes") {
-                                    isShowingNotes.toggle()
-                                }
-                                .buttonStyle(.bordered)
-//                                .disabled(storedMovie.notes == "")
-                            }
-                            .frame(maxWidth: .infinity, minHeight: 24, alignment: .leading)
                         }
                         .padding(.bottom)
                         
@@ -103,6 +95,13 @@ struct WatchlistMovieRow: View {
                             Text("\(storedMovie.wMmovieRating)")
                                 .font(.custom("StarSize", size: 16, relativeTo: .subheadline))
                                 .padding(.trailing, 10)
+                            VStack {
+                                Button(storedMovie.notes == "" ? "Add Note" : "Show Note") {
+                                    isShowingNotes.toggle()
+                                }
+                                .buttonStyle(.bordered)
+                            }
+                            .frame(maxWidth: .infinity, minHeight: 24, alignment: .leading)
                         }
 
                     }

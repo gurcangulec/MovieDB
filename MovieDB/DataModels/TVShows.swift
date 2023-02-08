@@ -22,7 +22,7 @@ struct TVShow: Codable, Identifiable {
 
     enum CodingKeys: String, CodingKey {
         case id = "id"
-        case originalTitle = "original_name"
+        case originalTitle = "name"
         case overview = "overview"
         case posterPath = "poster_path"
         case releaseDate = "first_air_date"

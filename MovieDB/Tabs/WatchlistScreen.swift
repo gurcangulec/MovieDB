@@ -25,7 +25,7 @@ struct WatchlistScreen: View {
                     VStack(alignment: .leading) {
                         Text("\(viewModel.watchlistedMovies.count) Titles")
                             .foregroundColor(.primary)
-                        Text("Sorted by \(viewModel.sortedBy.rawValue)")
+                        Text("Sorted by \(viewModel.sortedByForWatchlist.rawValue)")
                             .foregroundColor(.secondary)
                     }
                     
@@ -42,14 +42,14 @@ struct WatchlistScreen: View {
                         Menu {
                             Menu("Sort by Title") {
                                 Button {
-                                    viewModel.sortedBy = .titleAToZ
+                                    viewModel.sortedByForWatchlist = .titleAToZ
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
                                     viewModel.fetchWatchlistedMovies()
                                 } label: {
                                     Text("A - Z")
                                 }
                                 Button {
-                                    viewModel.sortedBy = .titleZToA
+                                    viewModel.sortedByForWatchlist = .titleZToA
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "title", ascending: false)
                                     viewModel.fetchWatchlistedMovies()
                                 } label: {
@@ -58,14 +58,14 @@ struct WatchlistScreen: View {
                             }
                             Menu("Sort by Date Added") {
                                 Button {
-                                    viewModel.sortedBy = .dateAddedOldToNew
+                                    viewModel.sortedByForWatchlist = .dateAddedOldToNew
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "dateAdded", ascending: true)
                                     viewModel.fetchWatchlistedMovies()
                                 } label: {
                                     Text("Oldest to Newest")
                                 }
                                 Button {
-                                    viewModel.sortedBy = .dateAddedNewToOld
+                                    viewModel.sortedByForWatchlist = .dateAddedNewToOld
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "dateAdded", ascending: false)
                                     viewModel.fetchWatchlistedMovies()
                                 } label: {
@@ -74,14 +74,14 @@ struct WatchlistScreen: View {
                             }
                             Menu("Sort by Release Date") {
                                 Button {
-                                    viewModel.sortedBy = .releaseDateOldToNew
+                                    viewModel.sortedByForWatchlist = .releaseDateOldToNew
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "releaseDate", ascending: true)
                                     viewModel.fetchWatchlistedMovies()
                                 } label: {
                                     Text("Oldest to Newest")
                                 }
                                 Button {
-                                    viewModel.sortedBy = .releaseDateNewToOld
+                                    viewModel.sortedByForWatchlist = .releaseDateNewToOld
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "releaseDate", ascending: false)
                                     viewModel.fetchWatchlistedMovies()
                                 } label: {
@@ -90,14 +90,14 @@ struct WatchlistScreen: View {
                             }
                             Menu("Sort by TMDB Rating") {
                                 Button {
-                                    viewModel.sortedBy = .ratingHighToLow
+                                    viewModel.sortedByForWatchlist = .ratingHighToLow
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "rating", ascending: false)
                                     viewModel.fetchWatchlistedMovies()
                                 } label: {
                                     Text("Highest to Lowest")
                                 }
                                 Button {
-                                    viewModel.sortedBy = .ratingLowToHigh
+                                    viewModel.sortedByForWatchlist = .ratingLowToHigh
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "rating", ascending: true)
                                     viewModel.fetchWatchlistedMovies()
                                 } label: {

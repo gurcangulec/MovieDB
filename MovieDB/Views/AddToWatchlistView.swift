@@ -91,7 +91,7 @@ struct AddToWatchlistView: View {
                 .navigationTitle("Add to Watchlist")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
+                    ToolbarItem(placement: .cancellationAction) {
 
                         Button("Cancel") {
                             textEditorFocused = false

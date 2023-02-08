@@ -59,7 +59,7 @@ struct AddRatingView: View {
     @State private var notes = ""
     @State private var showImage = true
     @Environment(\.dismiss) var dismiss
-    @Environment(\.managedObjectContext) var moc
+//    @Environment(\.managedObjectContext) var moc
     
     private let url = "https://image.tmdb.org/t/p/original/"
     
@@ -116,6 +116,7 @@ struct AddRatingView: View {
                         Label("Rate", systemImage: "star.fill")
                             .frame(maxWidth: .infinity, minHeight: 32, alignment: .center)
                     }
+                    .disabled(rating == 0)
                     .buttonStyle(.bordered)
                     .padding(.bottom, 10)
                     
@@ -123,6 +124,13 @@ struct AddRatingView: View {
                 .frame(maxWidth: geo.size.width * 0.9)
                 .navigationTitle("Rate the Movie")
                 .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Cancel", role: .cancel) {
+                            dismiss()
+                        }
+                    }
+                }
             }
         }
     }
