@@ -121,8 +121,8 @@ class TheViewModel: ObservableObject {
     enum SortedByForRated: String {
         case titleAToZ = "Title (A - Z)"
         case titleZToA = "Title (Z - A)"
-        case dateAddedNewToOld = "Date Added (Newest to Oldest)"
-        case dateAddedOldToNew = "Date Added (Oldest to Newest)"
+        case dateAddedNewToOld = "Date Rated (Newest to Oldest)"
+        case dateAddedOldToNew = "Date Rated (Oldest to Newest)"
         case releaseDateNewToOld = "Release Date (Newest to Oldest)"
         case releaseDateOldToNew = "Release Date (Oldest to Newest)"
         case ratingHighToLow = "TMBD Rating (Highest to Lowest)"

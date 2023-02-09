@@ -58,7 +58,7 @@ struct RatingsList: View {
                                     Text("Z - A")
                                 }
                             }
-                            Menu("Sort by Date Added") {
+                            Menu("Sort by Date Rated") {
                                 Button {
                                     viewModel.sortDescriptor = NSSortDescriptor(key: "dateAdded", ascending: false)
                                     viewModel.sortedByForRated = .dateAddedNewToOld

@@ -97,7 +97,7 @@ struct RatingMovieRow: View {
                                 }
                                 .buttonStyle(.bordered)
                             }
-                            .frame(maxWidth: .infinity, minHeight: 24, alignment: .leading)
+                            .frame(width: 150)
                             
                         }
 

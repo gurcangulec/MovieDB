@@ -94,14 +94,19 @@ struct WatchlistMovieRow: View {
                                 .font(.custom("StarSize", size: 14, relativeTo: .subheadline))
                             Text("\(storedMovie.wMmovieRating)")
                                 .font(.custom("StarSize", size: 16, relativeTo: .subheadline))
-                                .padding(.trailing, 10)
-                            VStack {
+//                                .padding(.trailing, 10)
+                            
+                            Spacer()
+                            
+                            HStack {
+                                Spacer()
                                 Button(storedMovie.notes == "" ? "Add Note" : "Show Note") {
                                     isShowingNotes.toggle()
                                 }
                                 .buttonStyle(.bordered)
                             }
-                            .frame(maxWidth: .infinity, minHeight: 24, alignment: .leading)
+                            .frame(width: 150)
+//                            .frame(maxWidth: .infinity, minHeight: 24, alignment: .leading)
                         }
 
                     }
