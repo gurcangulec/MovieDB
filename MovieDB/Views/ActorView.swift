@@ -55,7 +55,7 @@ struct ActorView: View {
                         Text(viewModel.actor.formattedBirthday)
                             .font(.body)
                         
-                        Text(viewModel.actor.placeOfBirth ?? "N/A")
+                        Text(viewModel.actor.placeOfBirth ?? "No place of birth information.")
                             .font(.body)
                         
                         Divider()
@@ -72,74 +72,75 @@ struct ActorView: View {
                         
                         Divider()
                         
-                        Text("Movies")
-                            .font(.title.bold())
-                            .frame(maxWidth: geo.size.width, alignment: .leading)
-                        
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            LazyHStack {
-                                ForEach(viewModel.relatedMovies) { relatedMovie in
-                                    NavigationLink {
-                                        MovieView(viewModel: viewModel, movie: relatedMovie)
-                                    } label: {
-                                        VStack {
-                                            if let unwrappedPath = relatedMovie.posterPath {
-                                                let unwrappedPath = URL(string: "\(Constants.imageURL)\(unwrappedPath)")
-                                                KFImage(unwrappedPath)
-                                                    .placeholder {
-                                                        ProgressView()
-                                                            .frame(width: geo.size.width * 0.3)
-                                                    }
-                                                    .resizable()
-                                                    .scaledToFit()
-                                                    .frame(width: geo.size.width * 0.3, height: geo.size.width * 0.45)
-                                                    .clipped()
-                                                    .cornerRadius(10)
-                                                    .overlay(
-                                                        RoundedRectangle(cornerRadius: 10)
-                                                            .stroke(
-                                                                Color.gray
-                                                                    .opacity(0.5)
-                                                            )
-                                                    )
-                                                    .padding([.top, .bottom, .trailing], 5)
-
-                                            } else {
-                                                Image(systemName: "photo")
-                                                    .font(.system(size: 20))
-                                                    .frame(width: geo.size.width * 0.3, height: geo.size.width * 0.45)
-                                                    .aspectRatio(3.8, contentMode: .fit)
-                                                    .foregroundColor(.white)
-                                                    .background(.gray)
-                                                    .clipped()
-                                                    .cornerRadius(10)
-                                                    .overlay(
-                                                        RoundedRectangle(cornerRadius: 10)
-                                                            .stroke(
-                                                                Color.gray
-                                                                    .opacity(0.5)
-                                                            )
-                                                    )
-                                                    .padding([.top, .bottom, .trailing], 5)
+                        if viewModel.relatedMovies.count >= 1 {
+                            Text("Movies")
+                                .font(.title.bold())
+                                .frame(maxWidth: geo.size.width, alignment: .leading)
+                            
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                LazyHStack {
+                                    ForEach(viewModel.relatedMovies) { relatedMovie in
+                                        NavigationLink {
+                                            MovieView(viewModel: viewModel, movie: relatedMovie)
+                                        } label: {
+                                            VStack {
+                                                if let unwrappedPath = relatedMovie.posterPath {
+                                                    let unwrappedPath = URL(string: "\(Constants.imageURL)\(unwrappedPath)")
+                                                    KFImage(unwrappedPath)
+                                                        .placeholder {
+                                                            ProgressView()
+                                                                .frame(width: geo.size.width * 0.3)
+                                                        }
+                                                        .resizable()
+                                                        .scaledToFit()
+                                                        .frame(width: geo.size.width * 0.3, height: geo.size.width * 0.45)
+                                                        .clipped()
+                                                        .cornerRadius(10)
+                                                        .overlay(
+                                                            RoundedRectangle(cornerRadius: 10)
+                                                                .stroke(
+                                                                    Color.gray
+                                                                        .opacity(0.5)
+                                                                )
+                                                        )
+                                                        .padding([.top, .bottom, .trailing], 5)
+                                                    
+                                                } else {
+                                                    Image(systemName: "photo")
+                                                        .font(.system(size: 20))
+                                                        .frame(width: geo.size.width * 0.3, height: geo.size.width * 0.45)
+                                                        .aspectRatio(3.8, contentMode: .fit)
+                                                        .foregroundColor(.white)
+                                                        .background(.gray)
+                                                        .clipped()
+                                                        .cornerRadius(10)
+                                                        .overlay(
+                                                            RoundedRectangle(cornerRadius: 10)
+                                                                .stroke(
+                                                                    Color.gray
+                                                                        .opacity(0.5)
+                                                                )
+                                                        )
+                                                        .padding([.top, .bottom, .trailing], 5)
+                                                }
+                                                
+                                                VStack(spacing: 10) {
+                                                    Text(relatedMovie.title)
+                                                        .font(.headline)
+                                                        .frame(maxWidth: geo.size.width * 0.3, alignment: .leading)
+                                                }
+                                                .frame(alignment: .leading)
                                             }
-                                            
-                                            VStack(spacing: 10) {
-                                                Text(relatedMovie.title)
-                                                    .font(.headline)
-                                                    .frame(maxWidth: geo.size.width * 0.3, alignment: .leading)
-                                            }
-                                            .frame(alignment: .leading)
+                                            .padding(.bottom)
                                         }
-                                        .padding(.bottom)
+                                        .buttonStyle(PlainButtonStyle())
                                     }
-                                    .buttonStyle(PlainButtonStyle())
                                 }
                             }
+                            .task {
+                                await viewModel.fetchRelatedMovies(personId: cast.id)
+                            }
                         }
-                        .task {
-                            await viewModel.fetchRelatedMovies(personId: cast.id)
-                        }
-                        
                     }
                     .padding()
                     

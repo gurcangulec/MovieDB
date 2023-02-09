@@ -24,7 +24,7 @@ struct FullCrewView: View {
                     VStack(alignment: .leading) {
                         Text(c.originalName)
                             .font(.title2)
-                        Text(c.character)
+                        Text(c.character ?? "")
                             .font(.body)
                             .foregroundColor(.gray)
                     }

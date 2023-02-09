@@ -77,7 +77,6 @@ class TheViewModel: ObservableObject {
     // MARK: Search
     @Published var searchedMovies = [Movie]()
     @Published var searchedTvShows = [TVShow]()
-    @Published var cast = [CastMember]()
     
     @Published var categories = ["Movie", "TV Show"]
     @Published var chosenCategory = "Movie"
@@ -266,6 +265,7 @@ class TheViewModel: ObservableObject {
     @Published var movieDetails = MovieDetails()
     @Published var tvShowDetails = TVShowDetails(id: 0, createdBy: [], numberOfEpisodes: 0)
     @Published var crew = [CrewMember]()
+    @Published var cast = [CastMember]()
     
     var writers: [String] {
         var writtenByArray = [String]()
@@ -310,8 +310,10 @@ class TheViewModel: ObservableObject {
     func fetchCastAndCrewTVShow(tvShowId: Int) async {
         do {
             let decodedTVShowCrew = try await httpClient.fetchData(of: Crew.self, Resource(url: URL.forTVShowCastAndCrew(tvShowId: tvShowId)))
+                
             crew = decodedTVShowCrew.results
-            let decodedTVShowCast = try await httpClient.fetchData(of: Cast.self, Resource(url: URL.forTVShowCastAndCrew(tvShowId: tvShowId)))
+            
+            let decodedTVShowCast = try await httpClient.fetchData(of: Cast.self, Resource(url: URL.forTVShowCredits(tvShowId: tvShowId)))
             cast = decodedTVShowCast.results
         } catch {
             print(error.localizedDescription)

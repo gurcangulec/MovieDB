@@ -47,9 +47,21 @@ struct SideScroller: View {
                                             .font(.headline)
                                             .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
                                         
-                                        Text(castMember.character)
-                                            .font(.caption)
-                                            .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
+                                        if let character = castMember.character {
+                                            Text(character)
+                                                .font(.caption)
+                                                .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
+                                        }
+                                        if let character = castMember.roles {
+                                            Text(character[0].character)
+                                                .font(.caption)
+                                                .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
+                                        }
+                                        if let episodeCount = castMember.roles {
+                                            Text("\(episodeCount[0].episodeCount) episodes")
+                                                .font(.caption)
+                                                .frame(maxWidth: geoWidth * 0.27, alignment: .leading)
+                                        }
                                     }
                                     .frame(alignment: .leading)
                                 }

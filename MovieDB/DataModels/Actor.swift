@@ -35,7 +35,7 @@ struct Actor: Codable, Identifiable {
             }
         }
         // If date is nil
-        return "N/A"
+        return "No birthday information."
     }
     
     var formattedBiography: String {

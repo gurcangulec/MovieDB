@@ -78,24 +78,24 @@ struct Creators: Codable, Identifiable {
     
 }
 
-struct TVShowCredits: Codable {
-    let cast: [TVShowCast]
-}
-
-struct TVShowCast: Codable {
-    let id: Int
-    let name: String
-    let roles: [Role]
-    
-    struct Role: Codable {
-        let character: String
-        let episodeCount: Int
-        
-        private enum CodingKeys: String, CodingKey {
-            case character
-            case episodeCount = "episode_count"
-        }
-    }
-}
+//struct TVShowCredits: Codable {
+//    let cast: [TVShowCast]
+//}
+//
+//struct TVShowCast: Codable {
+//    let id: Int
+//    let name: String
+//    let roles: [Role]
+//
+//    struct Role: Codable {
+//        let character: String
+//        let episodeCount: Int
+//
+//        private enum CodingKeys: String, CodingKey {
+//            case character
+//            case episodeCount = "episode_count"
+//        }
+//    }
+//}
 
 

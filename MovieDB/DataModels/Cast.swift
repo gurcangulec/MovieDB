@@ -27,7 +27,7 @@ struct CrewMember: Codable, Identifiable {
         case crewMemberId = "id"
         case originalName = "original_name"
         case profilePath = "profile_path"
-        case job = "job"
+        case job
         case knownForDepartment = "known_for_department"
     }
 }
@@ -44,21 +44,35 @@ struct Cast: Codable {
 struct CastMember: Codable, Identifiable {
     var id: Int
     var originalName: String
-    var character: String
+    var character: String?
     var profilePath: String?
     var job: String?
+    var roles: [Role]?
     
     enum CodingKeys: String, CodingKey {
-        case id = "id"
+        case id
         case originalName = "original_name"
-        case character = "character"
+        case character
         case profilePath = "profile_path"
-        case job = "job"
+        case job
+        case roles
     }
     
     var unwrappedProfilePath: String {
         profilePath ?? "Unknown"
     }
     
-    static let example = CastMember(id: 100, originalName: "Matthew Mcconaughey", character: "Cooper", profilePath: "2mcg07areWJ4EAtDvafRz7eDVvb.jpg", job: "Police")
+    static let example = CastMember(id: 100, originalName: "Matthew Mcconaughey", character: "Cooper", profilePath: "2mcg07areWJ4EAtDvafRz7eDVvb.jpg", job: "Police", roles: [Role.example])
+}
+
+struct Role: Codable {
+    let character: String
+    let episodeCount: Int
+    
+    private enum CodingKeys: String, CodingKey {
+        case character
+        case episodeCount = "episode_count"
+    }
+    
+    static let example = Role(character: "Joel Miller", episodeCount: 9)
 }
