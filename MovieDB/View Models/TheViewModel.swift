@@ -86,7 +86,6 @@ class TheViewModel: ObservableObject {
     
     // Search Movies and TV Shows
     func searchMoviesAndTVShows(searchQuery: String) async {
-        
         do {
             let decodedSearchedMovies = try await httpClient.fetchData(of: Movies.self, Resource(url: URL.forMoviesByName(searchQuery)))
             searchedMovies = decodedSearchedMovies.results

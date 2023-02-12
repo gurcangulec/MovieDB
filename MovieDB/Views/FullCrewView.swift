@@ -17,16 +17,33 @@ struct FullCrewView: View {
 
         ScrollView {
             VStack(alignment: .leading, spacing: 10) {
-                Text("Cast")
-                    .font(.title.bold())
-                Divider()
-                ForEach(cast) { c in
-                    VStack(alignment: .leading) {
-                        Text(c.originalName)
-                            .font(.title2)
-                        Text(c.character ?? "")
-                            .font(.body)
-                            .foregroundColor(.gray)
+                if movie != nil {
+                    Text("Cast")
+                        .font(.title.bold())
+                    Divider()
+                    ForEach(cast) { c in
+                        VStack(alignment: .leading) {
+                            Text(c.originalName)
+                                .font(.title2)
+                            Text(c.character ?? "")
+                                .font(.body)
+                                .foregroundColor(.gray)
+                        }
+                    }
+                } else if tvShow != nil {
+                    Text("Cast")
+                        .font(.title.bold())
+                    Divider()
+                    ForEach(cast) { c in
+                        VStack(alignment: .leading) {
+                            Text(c.originalName)
+                                .font(.title2)
+                            if let character = c.roles {
+                                Text(character[0].character)
+                                    .font(.body)
+                                    .foregroundColor(.gray)
+                            }
+                        }
                     }
                 }
                 Text("Crew")
