@@ -14,11 +14,11 @@ struct WatchlistScreen: View {
         NavigationView {
             if viewModel.watchlistedMovies.isEmpty {
                 VStack {
-                    Image(systemName: "play.circle")
-                        .font(.title)
-                        .padding(.bottom)
-                    Text("You haven't watchlisted anything yet.")
-                        .font(.footnote)
+                    Spacer()
+                    NoItemsView(icon: "🧐",
+                                title: "You haven't watchlisted any movies or TV shows yet.",
+                                message: "You can watchlist movies or TV shows with \"+ Watchlist\" button when you are displaying a movie or a TV show.")
+                    Spacer()
                 }
             } else {
                 List {

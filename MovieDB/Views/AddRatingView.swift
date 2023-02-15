@@ -93,12 +93,11 @@ struct AddRatingView: View {
                         .padding(.bottom)
                     
                     Divider()
-                        .padding(.bottom)
                     
                     if rating != 0 {
                         Text("Your Rating: \(rating)")
                             .font(.title3.bold())
-                            .padding(.bottom)
+                            .padding(.vertical, 3)
                     }
                     
                     Spacer()

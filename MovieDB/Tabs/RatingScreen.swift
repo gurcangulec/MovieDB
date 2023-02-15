@@ -16,11 +16,11 @@ struct RatingsList: View {
         NavigationView {
             if viewModel.ratedMovies.isEmpty {
                 VStack {
-                    Image(systemName: "star.circle")
-                        .font(.title)
-                        .padding(.bottom)
-                    Text("You haven't rated anything yet.")
-                        .font(.footnote)
+                    Spacer()
+                    NoItemsView(icon: "🧐",
+                                title: "You haven't rated any movies or TV shows yet.",
+                                message: "You can rate movies or TV shows with \"⭐️ Rate\" button when you are displaying a movie or a TV show.")
+                    Spacer()
                 }
             } else {
                 List {

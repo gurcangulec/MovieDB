@@ -50,8 +50,13 @@ struct MovieView: View {
 
                             HStack {
                                 Image(systemName: "star.fill")
-                                Text("\(movie.convertRatingToString)/10")
-                                    .font(.body)
+                                
+                                if Double(movie.convertRatingToString) == 0.0 {
+                                    Text("No rating found.")
+                                } else {
+                                    Text("\(movie.convertRatingToString)/10")
+                                        .font(.body)
+                                }
 
                                 Spacer()
 
@@ -77,13 +82,23 @@ struct MovieView: View {
                                 } label: {
                                     if viewModel.fetchWatchlistedMovie(movie: movie) {
                                         Label("In Watchlist", systemImage: "plus")
-                                            .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                            .padding(.horizontal)
+                                            .foregroundColor(.white)
+                                            .font(.headline)
+                                            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                                            .background(Color.accentColor)
+                                            .cornerRadius(10)
                                     } else {
                                         Label("Watchlist", systemImage: "plus")
-                                            .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                            .padding(.horizontal)
+                                            .foregroundColor(.white)
+                                            .font(.headline)
+                                            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                                            .background(Color.accentColor)
+                                            .cornerRadius(10)
                                     }
                                 }
-                                .buttonStyle(.bordered)
+//                                .buttonStyle(.bordered)
                                 .disabled(viewModel.fetchWatchlistedMovie(movie: movie))
 
                                 Button {
@@ -93,13 +108,23 @@ struct MovieView: View {
                                 } label: {
                                     if viewModel.fetchRatedMovie(movie: movie) {
                                         Label("Rated", systemImage: "star.fill")
-                                            .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                            .padding(.horizontal)
+                                            .foregroundColor(.white)
+                                            .font(.headline)
+                                            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                                            .background(Color.accentColor)
+                                            .cornerRadius(10)
                                     } else {
                                         Label("Rate", systemImage: "star.fill")
-                                            .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                            .padding(.horizontal)
+                                            .foregroundColor(.white)
+                                            .font(.headline)
+                                            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                                            .background(Color.accentColor)
+                                            .cornerRadius(10)
                                     }
                                 }
-                                .buttonStyle(.bordered)
+//                                .buttonStyle(.bordered)
                                 .disabled(viewModel.fetchRatedMovie(movie: movie))
                             }
                         }
@@ -114,57 +139,72 @@ struct MovieView: View {
                         }
                         
                         Divider()
-
-                        HStack {
-                            Text("Cast")
-                                .font(.title2.weight(.semibold))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.bottom, geo.size.height * 0.001)
-
-                            NavigationLink {
-                                FullCrewView(movie: movie, tvShow: nil, cast: viewModel.cast, crew: viewModel.crew)
-                            } label: {
-                                Text("Full Cast & Crew")
-
-                                Image(systemName: "chevron.right")
-                            }
-                        }
                         
-                        SideScroller(viewModel: viewModel, tvShows: nil, movies: nil, cast: viewModel.cast, crew: nil, url: Constants.imageURL, geoWidth: geo.size.width)
-
-                        Divider()
-                        
-                        Group {
-                            VStack {
-                                Text("Director(s)")
-                                    .font(.title2.bold())
+                        if viewModel.cast.count == 0 {
+                            Text("No cast information found.")
+                                .padding([.bottom, .top], 10)
+                        } else {
+                            
+                            HStack {
+                                Text("Cast")
+                                    .font(.title2.weight(.semibold))
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding(.bottom, geo.size.height * 0.001)
-
-                                ForEach(viewModel.crew) { crewMember in
-                                    if crewMember.job == "Director" {
-                                        Text(crewMember.originalName)
+                                
+                                NavigationLink {
+                                    FullCrewView(movie: movie, tvShow: nil, cast: viewModel.cast, crew: viewModel.crew)
+                                } label: {
+                                    Text("Full Cast & Crew")
+                                    
+                                    Image(systemName: "chevron.right")
+                                }
+                            }
+                            
+                            SideScroller(viewModel: viewModel, tvShows: nil, movies: nil, cast: viewModel.cast, crew: nil, url: Constants.imageURL, geoWidth: geo.size.width)
+                        }
+                        
+                        Divider()
+                        
+                        if viewModel.crew.count == 0 {
+                            Text("No crew information found.")
+                                .padding([.bottom, .top], 10)
+                        } else {
+                            Group {
+                                VStack {
+                                    Text("Director(s)")
+                                        .font(.title2.bold())
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(.bottom, geo.size.height * 0.001)
+                                    
+                                    ForEach(viewModel.crew) { crewMember in
+                                        if crewMember.job == "Director" {
+                                            Text(crewMember.originalName)
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                                .padding(.bottom, geo.size.height * 0.01)
+                                        }
+                                    }
+                                }
+                                
+                                Divider()
+                                
+                                if viewModel.writers.count == 0 {
+                                    Text("No writer information found.")
+                                        .padding([.bottom, .top], 10)
+                                } else {
+                                    HStack {
+                                        Text("Writer(s)")
+                                            .font(.title2.bold())
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .padding(.bottom, geo.size.height * 0.001)
+                                    }
+                                    
+                                    ForEach(viewModel.writers, id:\.self) { writer in
+                                        Text(writer)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .padding(.bottom, geo.size.height * 0.01)
                                     }
                                 }
                             }
-
-                            Divider()
-
-                            HStack {
-                                Text("Writer(s)")
-                                    .font(.title2.bold())
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.bottom, geo.size.height * 0.001)
-                            }
-                            
-                            ForEach(viewModel.writers, id:\.self) { writer in
-                                    Text(writer)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .padding(.bottom, geo.size.height * 0.01)
-                            }
-                            
                         }
                     }
                     .padding(.horizontal)
@@ -181,40 +221,57 @@ struct MovieView: View {
         .textSelection(.enabled)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            Menu {
-                Menu("Copy Link") {
-                    Button {
-                        viewModel.copyToClipboard(movie: movie, tvShow: nil)
-                    } label: {
-                        Label("Copy TMDB Link", systemImage: "link")
-                    }
-
-                    Button {
-                        viewModel.copyToClipboardIMDB()
-                    } label: {
-                        Label("Copy IMDB Link", systemImage: "link")
-                    }
-                }
-
-                Menu("Share Link") {
-                    Button {
-                        viewModel.shareButton(movie: movie, tvShow: nil)
-                    } label: {
-                        Label("Share TMBD Link", systemImage: "square.and.arrow.up")
-                    }
-
-                    Button {
-                        viewModel.shareImdbButton()
-                    } label: {
-                        Label("Share IMDB Link", systemImage: "square.and.arrow.up")
-                    }
-                }
-            } label: {
-                Label("Share Options", systemImage: "square.and.arrow.up")
-            }
-            .onAppear(perform: hapticEngine.prepareHaptics)
-            .onTapGesture(perform: hapticEngine.complexSuccess)
+            ToolBarMenu(viewModel: viewModel, movie: movie)
         }
+    }
+}
+
+
+struct ToolBarMenu: View {
+    @ObservedObject var viewModel: TheViewModel
+    @ObservedObject var hapticEngine = Haptics()
+    
+    let movie: Movie
+
+    var body: some View {
+        Menu {
+            Menu("Copy Link") {
+                Button {
+                    viewModel.copyToClipboard(movie: movie, tvShow: nil)
+                } label: {
+                    Label("Copy TMDB Link", systemImage: "link")
+                }
+
+                Button {
+                    viewModel.copyToClipboardIMDB()
+                } label: {
+                    Label("Copy IMDB Link", systemImage: "link")
+                }
+                .disabled(viewModel.movieDetails.unwrappedImdbId == "Unknown" ||
+                          viewModel.movieDetails.unwrappedImdbId == "")
+            }
+
+            Menu("Share Link") {
+                Button {
+                    viewModel.shareButton(movie: movie, tvShow: nil)
+                } label: {
+                    Label("Share TMBD Link", systemImage: "square.and.arrow.up")
+                }
+
+                Button {
+                    viewModel.shareImdbButton()
+                } label: {
+                    Label("Share IMDB Link", systemImage: "square.and.arrow.up")
+                }
+                .disabled(viewModel.movieDetails.unwrappedImdbId == "Unknown" ||
+                          viewModel.movieDetails.unwrappedImdbId == "")
+            }
+        } label: {
+            Label("Share Options", systemImage: "square.and.arrow.up")
+        }
+        .onAppear(perform: hapticEngine.prepareHaptics)
+        .onTapGesture(perform: hapticEngine.complexSuccess)
+        
     }
 }
 

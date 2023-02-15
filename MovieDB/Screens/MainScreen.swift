@@ -8,7 +8,23 @@
 import SwiftUI
 
 struct MainScreen: View {
+    
     @ObservedObject var viewModel: TheViewModel
+    
+    // MARK: Theme settings. Not ideal but will do the job for now.
+    @AppStorage("systemThemeVal") private var systemTheme: Int = SchemeType.allCases.first!.rawValue
+    
+    private var selectedScheme: ColorScheme? {
+        guard let theme = SchemeType(rawValue: systemTheme) else { return nil }
+        switch theme {
+        case .light:
+            return .light
+        case .dark:
+            return .dark
+        default:
+            return nil
+        }
+    }
     
     var body: some View {
         TabView {
@@ -39,11 +55,6 @@ struct MainScreen: View {
             tabBarAppearance.configureWithDefaultBackground()
             UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
         }
+        .preferredColorScheme(selectedScheme)
     }
 }
-
-//struct MainScreen_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MainScreen()
-//    }
-//}
