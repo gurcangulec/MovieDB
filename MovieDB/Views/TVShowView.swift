@@ -80,13 +80,23 @@ struct TVShowView: View {
                                 } label: {
                                     if viewModel.fetchWatchlistedTVShow(tvShow: tvShow) {
                                         Label("In Watchlist", systemImage: "plus")
-                                            .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                            .padding(.horizontal)
+                                            .foregroundColor(.white)
+                                            .font(.headline)
+                                            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                                            .background(Color.accentColor)
+                                            .cornerRadius(10)
                                     } else {
                                         Label("Watchlist", systemImage: "plus")
-                                            .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                            .padding(.horizontal)
+                                            .foregroundColor(.white)
+                                            .font(.headline)
+                                            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                                            .background(Color.accentColor)
+                                            .cornerRadius(10)
                                     }
                                 }
-                                .buttonStyle(.bordered)
+                                .buttonStyle(.borderless)
                                 .disabled(viewModel.fetchWatchlistedTVShow(tvShow: tvShow))
 
                                 Button {
@@ -96,13 +106,23 @@ struct TVShowView: View {
                                 } label: {
                                     if viewModel.fetchRatedTVShow(tvShow: tvShow) {
                                         Label("Rated", systemImage: "star.fill")
-                                            .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                            .padding(.horizontal)
+                                            .foregroundColor(.white)
+                                            .font(.headline)
+                                            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                                            .background(Color.accentColor)
+                                            .cornerRadius(10)
                                     } else {
                                         Label("Rate", systemImage: "star.fill")
-                                            .frame(maxWidth: .infinity, minHeight: 32, alignment: .leading)
+                                            .padding(.horizontal)
+                                            .foregroundColor(.white)
+                                            .font(.headline)
+                                            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                                            .background(Color.accentColor)
+                                            .cornerRadius(10)
                                     }
                                 }
-                                .buttonStyle(.bordered)
+                                .buttonStyle(.borderless)
                                 .disabled(viewModel.fetchRatedTVShow(tvShow: tvShow))
                             }
                             .sheet(isPresented: $viewModel.showingSheetWatchlist) {

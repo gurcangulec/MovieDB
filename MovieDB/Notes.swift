@@ -62,6 +62,7 @@ struct Notes: View {
                     ToolbarItem(placement: .confirmationAction) {
                         Button("Done") {
                             dismiss()
+                            viewModel.saveData()
                         }
                     }
                     ToolbarItem(placement: .cancellationAction) {

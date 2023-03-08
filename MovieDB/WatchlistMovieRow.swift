@@ -77,7 +77,6 @@ struct WatchlistMovieRow: View {
                             .font(.subheadline)
                             .padding(.bottom)
                         
-                        HStack(spacing: 10) {
                             VStack(alignment: .leading) {
                                 Text("Date Added")
                                     .font(.headline)
@@ -85,9 +84,7 @@ struct WatchlistMovieRow: View {
                                 Text("\(storedMovie.wMmovieDateAdded)")
                                     .font(.subheadline)
                             }
-                            .padding(.trailing, 10)
-                        }
-                        .padding(.bottom)
+//                            .padding(.trailing, 10)
                         
                         HStack(alignment: .firstTextBaseline) {
                             Image(systemName: "star.fill")
@@ -98,15 +95,18 @@ struct WatchlistMovieRow: View {
                             
                             Spacer()
                             
-                            HStack {
-                                Spacer()
-                                Button(storedMovie.notes == "" ? "Add Note" : "Show Note") {
-                                    isShowingNotes.toggle()
-                                }
-                                .buttonStyle(.bordered)
+                            Button {
+                                isShowingNotes.toggle()
+                            } label: {
+                                Text(storedMovie.notes == "" ? "Add Note" : "Show Note")
+                                    .padding(.horizontal)
+                                    .foregroundColor(.white)
+                                    .font(.headline)
+                                    .frame(minWidth: 120, minHeight: 34, alignment: .center)
+                                    .background(Color.accentColor)
+                                    .cornerRadius(10)
                             }
-                            .frame(width: 150)
-//                            .frame(maxWidth: .infinity, minHeight: 24, alignment: .leading)
+                            .buttonStyle(.borderless)
                         }
 
                     }

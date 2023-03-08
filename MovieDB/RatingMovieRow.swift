@@ -68,7 +68,7 @@ struct RatingMovieRow: View {
                             Text("\(ratedMovie.rMmovieDateAdded)")
                                 .font(.subheadline)
                         }
-                        .padding(.bottom)
+//                        .padding(.bottom)
                         
                         HStack(alignment: .firstTextBaseline) {
                             
@@ -87,17 +87,24 @@ struct RatingMovieRow: View {
                                 
                                 Spacer()
                                 
-                                Menu("Change") {
+                                Menu {
                                     ForEach(1..<11) { value in
                                         Button("\(value)") {
                                             ratedMovie.userRating = Int16(value)
                                             viewModel.saveData()
                                         }
                                     }
+                                } label: {
+                                    Text("Change")
+                                        .padding(.horizontal)
+                                        .foregroundColor(.white)
+                                        .font(.headline)
+                                        .frame(maxWidth: 100, minHeight: 34, alignment: .center)
+                                        .background(Color.accentColor)
+                                        .cornerRadius(10)
                                 }
-                                .buttonStyle(.bordered)
+                                .buttonStyle(.borderless)
                             }
-                            .frame(width: 150)
                             
                         }
 
