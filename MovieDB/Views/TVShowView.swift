@@ -12,6 +12,9 @@ struct TVShowView: View {
     @ObservedObject var viewModel: TheViewModel
     @StateObject var hapticEngine = Haptics()
     
+    @State private var rated = false
+    @State private var watchlisted = false
+    
     let tvShow: TVShow
     private let url = "https://image.tmdb.org/t/p/original/"
     
@@ -126,10 +129,10 @@ struct TVShowView: View {
                                 .disabled(viewModel.fetchRatedTVShow(tvShow: tvShow))
                             }
                             .sheet(isPresented: $viewModel.showingSheetWatchlist) {
-                                AddToWatchlistView(viewModel: viewModel, movie: nil, tvShow: tvShow, width: geo.size.width * 0.54, height: geo.size.width * 0.81)
+                                AddToWatchlistView(viewModel: viewModel, watchlisted: $watchlisted, movie: nil, tvShow: tvShow, width: geo.size.width * 0.54, height: geo.size.width * 0.81)
                             }
                             .sheet(isPresented: $viewModel.showingSheetRating, content: {
-                                AddRatingView(viewModel: viewModel, movie: nil, tvShow: tvShow, width: geo.size.width * 0.54, height: geo.size.width * 0.81)
+                                AddRatingView(viewModel: viewModel, rated: $rated, movie: nil, tvShow: tvShow, width: geo.size.width * 0.54, height: geo.size.width * 0.81)
                             })
                             .onAppear {
                                 hapticEngine.prepareHaptics()

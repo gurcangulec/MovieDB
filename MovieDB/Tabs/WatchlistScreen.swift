@@ -16,8 +16,8 @@ struct WatchlistScreen: View {
                 VStack {
                     Spacer()
                     NoItemsView(icon: "🧐",
-                                title: "You haven't watchlisted any movies or TV shows yet.",
-                                message: "You can watchlist movies or TV shows with \"+ Watchlist\" button when you are displaying a movie or a TV show.")
+                                title: "You haven't added any movies or TV shows to your watchlist yet.",
+                                message: "You can add movies or TV shows to your watchlist by clicking on the \"Watchlist\" button when you're viewing a particular movie or TV show.")
                     Spacer()
                 }
             } else {

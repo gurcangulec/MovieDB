@@ -50,6 +50,8 @@ struct AddRatingView: View {
     
     @ObservedObject var viewModel: TheViewModel
     
+    @Binding var rated: Bool
+    
     let movie: Movie?
     let tvShow: TVShow?
     let width: Double
@@ -105,6 +107,9 @@ struct AddRatingView: View {
                     Button {
                         if let movie {
                             viewModel.addToRated(movie: movie, tvshow: tvShow, rating: rating)
+                            withAnimation {
+                                rated = true
+                            }
                         }
                         
                         if let tvShow {
@@ -113,10 +118,15 @@ struct AddRatingView: View {
                         dismiss()
                     } label: {
                         Label("Rate", systemImage: "star.fill")
-                            .frame(maxWidth: .infinity, minHeight: 32, alignment: .center)
+                            .padding(.horizontal)
+                            .foregroundColor(.white)
+                            .font(.headline)
+                            .frame(maxWidth: .infinity, minHeight: 44, alignment: .center)
+                            .background(Color.accentColor)
+                            .cornerRadius(10)
                     }
                     .disabled(rating == 0)
-                    .buttonStyle(.bordered)
+                    .buttonStyle(.borderless)
                     .padding(.bottom, 10)
                     
                 }

@@ -344,17 +344,22 @@ class TheViewModel: ObservableObject {
         }
     }
     
+    @Published var clipboardChanged: Bool = false
+    
     func copyToClipboard(movie: Movie?, tvShow: TVShow?) {
         if let movie {
             UIPasteboard.general.string = "https://www.themoviedb.org/movie/\(movie.id)"
+            clipboardChanged.toggle()
         }
         if let tvShow {
             UIPasteboard.general.string = "https://www.themoviedb.org/tv/\(tvShow.id)"
+            clipboardChanged.toggle()
         }
     }
     
     func copyToClipboardIMDB() {
         UIPasteboard.general.string = "https://www.imdb.com/title/\(movieDetails.unwrappedImdbId)"
+        clipboardChanged.toggle()
     }
     
     func shareButton(movie: Movie?, tvShow: TVShow?) {

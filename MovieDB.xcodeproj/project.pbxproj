@@ -22,6 +22,8 @@
 		794A0FFC2876FDA4008BF0F5 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A0FFB2876FDA4008BF0F5 /* HTTPClient.swift */; };
 		794A0FFE28782C3B008BF0F5 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A0FFD28782C3B008BF0F5 /* Actor.swift */; };
 		794A1000287831D3008BF0F5 /* ActorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794A0FFF287831D3008BF0F5 /* ActorView.swift */; };
+		794F6EC829B8BBC50014C664 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794F6EC729B8BBC50014C664 /* MailView.swift */; };
+		794F6ECA29B8C6990014C664 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 794F6EC929B8C6990014C664 /* Launch Screen.storyboard */; };
 		795F2173299CFFA8009EEF83 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795F2172299CFFA8009EEF83 /* InfoView.swift */; };
 		796575D5298FFCD100A79C82 /* WatchlistedMovie-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796575D4298FFCD100A79C82 /* WatchlistedMovie-CoreDataHelpers.swift */; };
 		796575D72990003900A79C82 /* RatedMovie-CoreDataHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796575D62990003900A79C82 /* RatedMovie-CoreDataHelpers.swift */; };
@@ -66,6 +68,8 @@
 		794A0FFB2876FDA4008BF0F5 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		794A0FFD28782C3B008BF0F5 /* Actor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
 		794A0FFF287831D3008BF0F5 /* ActorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorView.swift; sourceTree = "<group>"; };
+		794F6EC729B8BBC50014C664 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
+		794F6EC929B8C6990014C664 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "Launch Screen.storyboard"; path = "MovieDB/Utils/Launch Screen.storyboard"; sourceTree = SOURCE_ROOT; };
 		795F2172299CFFA8009EEF83 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		796575D3298FF9A800A79C82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		796575D4298FFCD100A79C82 /* WatchlistedMovie-CoreDataHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WatchlistedMovie-CoreDataHelpers.swift"; sourceTree = "<group>"; };
@@ -110,6 +114,7 @@
 		791187E62989A8C300045FE2 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				794F6EC929B8C6990014C664 /* Launch Screen.storyboard */,
 				79DB77642968DBED0084E08F /* MainScreen.swift */,
 			);
 			path = Screens;
@@ -122,6 +127,7 @@
 				798BF9F4297200810017BAC4 /* AddToWatchlistView.swift */,
 				792F743C2970C0A0007E686E /* ListMovies.swift */,
 				79806DCF2970DF97006B6C0A /* TVShowView.swift */,
+				794F6EC729B8BBC50014C664 /* MailView.swift */,
 				794A0FFF287831D3008BF0F5 /* ActorView.swift */,
 				79CC882A28A40C0B00E1E37E /* FullCrewView.swift */,
 				799EC4742875A73000680D07 /* MovieView.swift */,
@@ -317,6 +323,7 @@
 			files = (
 				79EA9F79287C81A90076D18A /* README.md in Resources */,
 				79C2DD12285DD0FB00D6E6E4 /* Preview Assets.xcassets in Resources */,
+				794F6ECA29B8C6990014C664 /* Launch Screen.storyboard in Resources */,
 				79C2DD0F285DD0FB00D6E6E4 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,6 +358,7 @@
 				79C2DD0B285DD0F900D6E6E4 /* MovieDBApp.swift in Sources */,
 				796575D5298FFCD100A79C82 /* WatchlistedMovie-CoreDataHelpers.swift in Sources */,
 				792F743B297070DB007E686E /* TVShows.swift in Sources */,
+				794F6EC829B8BBC50014C664 /* MailView.swift in Sources */,
 				799EC4752875A73000680D07 /* MovieView.swift in Sources */,
 				79806DD02970DF97006B6C0A /* TVShowView.swift in Sources */,
 				797863CB286F967400A05498 /* Movies.swift in Sources */,
@@ -491,14 +499,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"MovieDB/Preview Content\"";
 				DEVELOPMENT_TEAM = H4P83ZBFWQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MovieDB/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Cinepal;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -523,14 +533,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"MovieDB/Preview Content\"";
 				DEVELOPMENT_TEAM = H4P83ZBFWQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MovieDB/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Cinepal;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (

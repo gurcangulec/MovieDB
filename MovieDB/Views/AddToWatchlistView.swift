@@ -10,6 +10,8 @@ import SwiftUI
 struct AddToWatchlistView: View {
     @ObservedObject var viewModel: TheViewModel
     
+    @Binding var watchlisted: Bool
+    
     let movie: Movie?
     let tvShow: TVShow?
     let width: Double
@@ -72,6 +74,9 @@ struct AddToWatchlistView: View {
                     Button {
                         if let movie {
                             viewModel.addToWatchlist(movie: movie, tvshow: nil, notes: notes)
+                            withAnimation {
+                                watchlisted = true
+                            }
                         }
                         
                         if let tvShow {
@@ -81,9 +86,14 @@ struct AddToWatchlistView: View {
                         dismiss()
                     } label: {
                         Label("Add to Watchlist", systemImage: "plus")
-                            .frame(maxWidth: .infinity, minHeight: 32, alignment: .center)
+                            .padding(.horizontal)
+                            .foregroundColor(.white)
+                            .font(.headline)
+                            .frame(maxWidth: .infinity, minHeight: 44, alignment: .center)
+                            .background(Color.accentColor)
+                            .cornerRadius(10)
                     }
-                    .buttonStyle(.bordered)
+                    .buttonStyle(.borderless)
                     .padding(.bottom, 10)
                     
                 }

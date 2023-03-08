@@ -9,15 +9,7 @@ import SwiftUI
 
 struct HomeScreen: View {
     
-//    @AppStorage("systemThemeVal") private var systemTheme: Int = SchemeType.allCases.first!.rawValue
-    
     @ObservedObject var viewModel: TheViewModel
-//    @State private var showInfoSheet = false
-    
-//    @Environment(\.colorScheme) var colorScheme
-//    @State var myColorScheme: ColorScheme?
-    
-//    let color = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
     
     var body: some View {
         GeometryReader { geo in
@@ -64,12 +56,6 @@ struct HomeScreen: View {
                         HomeSectionsView(viewModel: viewModel, title: viewModel.topRatedTVShowsString, width: width, height: height, movies: nil, tvShows: viewModel.topRatedTVShows)
                     }
                 }
-//                .sheet(isPresented: $showInfoSheet, content: {
-//                    InfoView(myColorScheme: $myColorScheme)
-//                })
-//                .preferredColorScheme(myColorScheme)
-//                .background(.darkBackground)
-//                .preferredColorScheme(.dark)
                 .navigationTitle("Home")
                 .refreshable {
                     Task {

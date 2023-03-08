@@ -6,66 +6,57 @@
 //
 
 import SwiftUI
-
-enum SchemeType: Int, CaseIterable {
-    case system
-    case light
-    case dark
-}
-
-extension SchemeType {
-    var title: String {
-        switch self {
-        case .system:
-            return "Automatic"
-        case .light:
-            return "Light"
-        case .dark:
-            return "Dark"
-        }
-    }
-}
+import MessageUI
 
 struct InfoView: View {
-
-    @AppStorage("systemThemeVal") private var systemTheme: Int = SchemeType.allCases.first!.rawValue
-
-    private var selectedScheme: ColorScheme? {
-        guard let theme = SchemeType(rawValue: systemTheme) else { return nil }
-        switch theme {
-        case .light:
-            return .light
-        case .dark:
-            return .dark
-        default:
-            return nil
-        }
-    }
     
+    @State private var sendEmail = false
+    @State private var sendEmail2 = false
+    let constants = Constants.shared
+    let email = "gurcanglc@gmail.com"
+    let email2 = "bilgehan_duman@hotmail.com"
+
     var body: some View {
             Form {
                 
                 Section {
-                    Picker(selection: $systemTheme, content: {
-                        ForEach(SchemeType.allCases, id:\.self) { item in
-                            Text(item.title)
-                                .tag(item.rawValue)
+                    if MFMailComposeViewController.canSendMail() {
+                        
+                        HStack {
+                            Text("Developer")
+                            Spacer()
+                            Button {
+                                sendEmail.toggle()
+                            } label: {
+                                Text("Gürcan Güleç")
+                            }
                         }
-                    }, label: {
-                        Text("Pick a theme")
-                    })
-                    .pickerStyle(.segmented)
+                    
+                        
+                        HStack {
+                            Text("Icon Design")
+                            Spacer()
+                            Button {
+                                sendEmail2.toggle()
+                            } label: {
+                                Text("Bilgehan Duman")
+                            }
+                        }
+                        
+                    } else {
+                        Text(constants.noSupportText)
+                            .multilineTextAlignment(.center)
+                    }
+                    
                 } header: {
-                    Text("Appearance")
-                } footer: {
-                    Text("Select between light or dark theme or set it to automatic for letting the system decide for you.")
+                    Text("Contact Us")
                 }
                 
                 Section {
                     HStack {
                         Text("Version")
                         Spacer()
-                        Text("0.1.0(7)")
+                        Text("0.1.0(8)")
                     }
                     HStack(alignment: .center, spacing: 20) {
                         Image("themoviedb")
@@ -82,9 +73,15 @@ struct InfoView: View {
                 } header: {
                     Text("About")
                 }
+                
+            }
+            .sheet(isPresented: $sendEmail) {
+                MailView(content: constants.contentPreText, to: email, subject: constants.subject)
+            }
+            .sheet(isPresented: $sendEmail2) {
+                MailView(content: constants.contentPreText, to: email2, subject: constants.subject)
             }
             .navigationTitle("Info")
-            .preferredColorScheme(selectedScheme)
     }
 }
 

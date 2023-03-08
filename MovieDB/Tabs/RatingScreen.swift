@@ -19,7 +19,7 @@ struct RatingsList: View {
                     Spacer()
                     NoItemsView(icon: "🧐",
                                 title: "You haven't rated any movies or TV shows yet.",
-                                message: "You can rate movies or TV shows with \"⭐️ Rate\" button when you are displaying a movie or a TV show.")
+                                message: "You can rate movies or TV shows by clicking on the \"Rate\" button when you're viewing a particular movie or TV show.")
                     Spacer()
                 }
             } else {
