@@ -10,6 +10,7 @@
 		7903111629802CED00BB8153 /* Notes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7903111529802CED00BB8153 /* Notes.swift */; };
 		790E06A8297EA8DC0031997B /* TheViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790E06A7297EA8DC0031997B /* TheViewModel.swift */; };
 		791187EA2989AAF200045FE2 /* URL+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791187E92989AAF200045FE2 /* URL+Extensions.swift */; };
+		7916780929BE65260009957D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7916780829BE65260009957D /* Constants.swift */; };
 		792F73D6296B4355007E686E /* SideScroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792F73D5296B4355007E686E /* SideScroller.swift */; };
 		792F73D8296B6943007E686E /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792F73D7296B6943007E686E /* Haptics.swift */; };
 		792F7405296DB4F4007E686E /* MovieDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 792F7403296DB4F4007E686E /* MovieDB.xcdatamodeld */; };
@@ -56,6 +57,7 @@
 		7903111529802CED00BB8153 /* Notes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notes.swift; sourceTree = "<group>"; };
 		790E06A7297EA8DC0031997B /* TheViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheViewModel.swift; sourceTree = "<group>"; };
 		791187E92989AAF200045FE2 /* URL+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extensions.swift"; sourceTree = "<group>"; };
+		7916780829BE65260009957D /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		792F73D5296B4355007E686E /* SideScroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideScroller.swift; sourceTree = "<group>"; };
 		792F73D7296B6943007E686E /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		792F7404296DB4F4007E686E /* MovieDB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MovieDB.xcdatamodel; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 		791187EB2989AB0B00045FE2 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				7916780829BE65260009957D /* Constants.swift */,
 				79F1EE0A29BE291C00447F24 /* BaseENV.swift */,
 				79F1EE0829BE28F100447F24 /* PROD-Keys.plist */,
 			);
@@ -339,6 +342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				798BFA74297562270017BAC4 /* RatingScreen.swift in Sources */,
+				7916780929BE65260009957D /* Constants.swift in Sources */,
 				798BFA76297564F10017BAC4 /* RatingMovieRow.swift in Sources */,
 				792F74362970625B007E686E /* ImageView.swift in Sources */,
 				792F73D8296B6943007E686E /* Haptics.swift in Sources */,
