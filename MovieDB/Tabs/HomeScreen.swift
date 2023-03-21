@@ -19,6 +19,31 @@ struct HomeScreen: View {
                 VStack {
                     ScrollView(showsIndicators: false) {
                         TabView{
+                            if #available(iOS 15.0, *) {
+                                if viewModel.popularMovies.count >= 0 {
+                                    ForEach(viewModel.popularMovies.indices, id: \.self) { index in
+                                        ZStack(alignment: .center) {
+                                            NavigationLink {
+                                                MovieView(viewModel: viewModel, movie: viewModel.popularMovies[index])
+                                            } label: {
+                                                ImageView(urlString: "\(Constants.imageURL)\(viewModel.popularMovies[index].unwrappedBackdropPath)", width: width * 0.97, height: geo.size.height * 0.3)
+                                            }
+                                            Text(viewModel.popularMovies[index].title)
+                                                .font(.caption)
+                                                .fontWeight(.black)
+                                                .padding(8)
+                                                .foregroundColor(.white)
+                                                .background(.black.opacity(0.75))
+                                                .clipShape(Capsule())
+                                                .offset(y: height * 120)
+                                        }
+                                        .tag(index)
+                                        .padding(.trailing, 5)
+                                    }
+                                } else {
+                                    ProgressView()
+                                }
+                            }
                             if viewModel.popularMovies.count >= 1 {
                                 ForEach(viewModel.popularMovies.indices, id: \.self) { index in
                                     ZStack(alignment: .center) {
